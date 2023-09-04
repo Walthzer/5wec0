@@ -1,0 +1,17 @@
+digraph "adc_read_channel_raw"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="adc_read_channel_raw",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="check_channel_adc",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$adc_8c.html#af1193b8b8fc22626189c3de755e9fd6e",tooltip=" "];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="invalid_channel_adc",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$adc_8c.html#a4a0ad2510ea95f0dafa8303567671689",tooltip=" "];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="check_initialized_adc",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$adc_8c.html#abfec0c3da1defecc0e7f60079f6e59eb",tooltip=" "];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="initialized_adc",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__ADC.html#ga36aebf58ac4baaa01a3a2a6f3bc209e3",tooltip="Check if ADC has been initialized."];
+}

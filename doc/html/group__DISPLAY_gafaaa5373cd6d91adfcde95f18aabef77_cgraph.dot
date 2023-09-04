@@ -1,0 +1,27 @@
+digraph "displayDrawTriangleCenter"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="displayDrawTriangleCenter",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Draws a triangle at a specified angle on the display."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="displayDrawLine",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__DISPLAY.html#ga80ea5d257614d01bf5cda9a630768dbb",tooltip="Draw a line from two coordinates."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="displayDrawPixel",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__DISPLAY.html#gaeae5a9ba9c5f7b780544cf28ce8c9eff",tooltip="Draw a single pixel to the display."];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="spi_master_write_addr",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a6eed2e690959fe65c5e5b63808afd2ed",tooltip=" "];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#ad5a42b84617ecc1b6af7d36ac2d0bea4",tooltip=" "];
+  Node4 -> Node6 [id="edge5_Node000004_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="spi_to_gpio",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a2e84550a5ec7d45e5253d8e82523fe31",tooltip=" "];
+  Node3 -> Node7 [id="edge6_Node000003_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="spi_master_write_command",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a59d25920920ebea3da54ebbf4fd8493c",tooltip=" "];
+  Node7 -> Node5 [id="edge7_Node000007_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node7 -> Node6 [id="edge8_Node000007_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node3 -> Node8 [id="edge9_Node000003_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="spi_master_write_data_word",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a83fc1cb5de388a258140bfe114c9c07b",tooltip=" "];
+  Node8 -> Node5 [id="edge10_Node000008_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node8 -> Node6 [id="edge11_Node000008_Node000006",color="steelblue1",style="solid",tooltip=" "];
+}

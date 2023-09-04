@@ -1,0 +1,37 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "libpynq Clean",
+            "command": "make",
+            "args": [
+                "clean"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "Use libpynq makefile"
+        },
+        {
+            "type": "cppbuild",
+            "label": "libpynq Build",
+            "command": "make",
+            "args": [],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Use libpynq makefile"
+        }
+    ],
+    "version": "2.0.0"
+}

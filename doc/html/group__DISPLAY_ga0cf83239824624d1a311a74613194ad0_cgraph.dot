@@ -1,0 +1,37 @@
+digraph "displayDrawString"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="displayDrawString",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Function to draw a string on the display."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="displayDrawChar",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__DISPLAY.html#ga8a92d604ad9c6f72684a0d0679cb04bf",tooltip="Draws a character on the given coordinates of the display."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="displayDrawFillRect",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__DISPLAY.html#ga1c1688930e03cde2e24c29ad420997ba",tooltip="Draw a filled rectangle to the display."];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="spi_master_write_addr",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a6eed2e690959fe65c5e5b63808afd2ed",tooltip=" "];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#ad5a42b84617ecc1b6af7d36ac2d0bea4",tooltip=" "];
+  Node4 -> Node6 [id="edge5_Node000004_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="spi_to_gpio",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a2e84550a5ec7d45e5253d8e82523fe31",tooltip=" "];
+  Node3 -> Node7 [id="edge6_Node000003_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="spi_master_write_color",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a729094cfa819a15b43bfd161288f10d7",tooltip=" "];
+  Node7 -> Node5 [id="edge7_Node000007_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node7 -> Node6 [id="edge8_Node000007_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node3 -> Node8 [id="edge9_Node000003_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="spi_master_write_command",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a59d25920920ebea3da54ebbf4fd8493c",tooltip=" "];
+  Node8 -> Node5 [id="edge10_Node000008_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node8 -> Node6 [id="edge11_Node000008_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node2 -> Node9 [id="edge12_Node000002_Node000009",color="steelblue1",style="solid",tooltip=" "];
+  Node9 [id="Node000009",label="displayDrawPixel",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__DISPLAY.html#gaeae5a9ba9c5f7b780544cf28ce8c9eff",tooltip="Draw a single pixel to the display."];
+  Node9 -> Node4 [id="edge13_Node000009_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node9 -> Node8 [id="edge14_Node000009_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node9 -> Node10 [id="edge15_Node000009_Node000010",color="steelblue1",style="solid",tooltip=" "];
+  Node10 [id="Node000010",label="spi_master_write_data_word",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a83fc1cb5de388a258140bfe114c9c07b",tooltip=" "];
+  Node10 -> Node5 [id="edge16_Node000010_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node10 -> Node6 [id="edge17_Node000010_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node2 -> Node11 [id="edge18_Node000002_Node000011",color="steelblue1",style="solid",tooltip=" "];
+  Node11 [id="Node000011",label="GetFontx",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__FONTX.html#ga70d9af862f8906a3bedb6cc10b46f3f6",tooltip="Gets the glyph data for the specified ASCII character."];
+}

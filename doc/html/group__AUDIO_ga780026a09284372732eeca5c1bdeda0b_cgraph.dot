@@ -1,0 +1,27 @@
+digraph "audio_init"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="audio_init",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Initializes the audio register. Sets the sampling frequency. defines several values such as audio rec..."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="config_audio_codec",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga4c3476adecb27a3162fabab4af088f0b",tooltip=" "];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="setI2C",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2i2cps_8c.html#a423d97e7bbc2c26785d9a5de31d2f220",tooltip=" "];
+  Node2 -> Node4 [id="edge3_Node000002_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="unsetI2C",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2i2cps_8c.html#a8fbf09bd758928bc8f434d96957ec40f",tooltip=" "];
+  Node2 -> Node5 [id="edge4_Node000002_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="write_audio_reg",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga3ec4d5593965dc8b93d40e80e2143902",tooltip=" "];
+  Node5 -> Node6 [id="edge5_Node000005_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="writeI2C_asFile",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2i2cps_8c.html#a655bf0c0118a9dff569ee054c0a395f1",tooltip=" "];
+  Node1 -> Node7 [id="edge6_Node000001_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="config_audio_pll",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga9c9de79126611d05d3e2bda897ca886e",tooltip=" "];
+  Node7 -> Node8 [id="edge7_Node000007_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="readI2C_asFile",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2i2cps_8c.html#abf82e1e8e8f7974695f541af2526357a",tooltip=" "];
+  Node7 -> Node3 [id="edge8_Node000007_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node7 -> Node4 [id="edge9_Node000007_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node7 -> Node5 [id="edge10_Node000007_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node7 -> Node6 [id="edge11_Node000007_Node000006",color="steelblue1",style="solid",tooltip=" "];
+}

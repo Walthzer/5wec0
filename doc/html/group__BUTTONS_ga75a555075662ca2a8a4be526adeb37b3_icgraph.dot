@@ -1,0 +1,13 @@
+digraph "wait_until_button_state"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="wait_until_button_state",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Wait until the given button is in state (which may be immediately)."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="wait_until_button_pushed",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__BUTTONS.html#ga1635729112b5af83feee6a4255cc2373",tooltip="Wait until the given button is pushed (which may be immediately)."];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="wait_until_button_released",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__BUTTONS.html#gaa3646a1a39ebd3d5d8f375c4352e4d8b",tooltip="Wait until the given button is not pushed (which may be immediately)."];
+}

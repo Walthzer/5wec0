@@ -1,0 +1,11 @@
+digraph "uart_init"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="uart_init",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Initialize the UART specified by the index with a shared memory handle and a buffer size of 4096 byte..."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="arm_shared_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__ARMSHARED.html#gaeb6db0acbe89d1bacc6d83e34d175c26",tooltip=" "];
+}

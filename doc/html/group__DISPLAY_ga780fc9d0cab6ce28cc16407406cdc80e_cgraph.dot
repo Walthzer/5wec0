@@ -1,0 +1,15 @@
+digraph "displayDisplayOff"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="displayDisplayOff",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Turn off the display."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="spi_master_write_command",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a59d25920920ebea3da54ebbf4fd8493c",tooltip=" "];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#ad5a42b84617ecc1b6af7d36ac2d0bea4",tooltip=" "];
+  Node2 -> Node4 [id="edge3_Node000002_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="spi_to_gpio",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a2e84550a5ec7d45e5253d8e82523fe31",tooltip=" "];
+}

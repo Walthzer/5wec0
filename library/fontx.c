@@ -1,0 +1,242 @@
+#include "fontx.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/unistd.h>
+
+#define FontxDebug 0
+
+void AddFontx(FontxFile *fx, const char *path) {
+  memset(fx, 0, sizeof(FontxFile));
+  fx->path = path;
+  fx->opened = false;
+}
+
+void InitFontx(FontxFile *fxs, const char *f0, const char *f1) {
+  AddFontx(&fxs[0], f0);
+  AddFontx(&fxs[1], f1);
+}
+
+bool OpenFontx(FontxFile *fx) {
+  FILE *f;
+  if (!fx->opened) {
+    if (FontxDebug)
+      printf("[openFont]fx->path=[%s]\n", fx->path);
+    f = fopen(fx->path, "r");
+    if (FontxDebug)
+      printf("[openFont]fopen=%p\n", f);
+    if (f == NULL) {
+      fx->valid = false;
+      printf("Fontx:%s not found.\n", fx->path);
+      return fx->valid;
+    }
+    fx->opened = true;
+    fx->file = f;
+    char buf[18];
+    if (fread(buf, 1, sizeof(buf), fx->file) != sizeof(buf)) {
+      fx->valid = false;
+      printf("Fontx:%s not FONTX format.\n", fx->path);
+      fclose(fx->file);
+      return fx->valid;
+    }
+
+    if (FontxDebug) {
+      for (uint32_t i = 0; i < strlen(buf); i++) {
+        printf("buf[%d]=0x%x\n", i, buf[i]);
+      }
+    }
+    memcpy(fx->fxname, &buf[6], 8);
+    fx->w = buf[14];
+    fx->h = buf[15];
+    fx->is_ank = (buf[16] == 0);
+    fx->bc = buf[17];
+    fx->fsz = (fx->w + 7) / 8 * fx->h;
+    if (fx->fsz > FontxGlyphBufSize) {
+      printf("Fontx:%s is too big font size.\n", fx->path);
+      fx->valid = false;
+      fclose(fx->file);
+      return fx->valid;
+    }
+    fx->valid = true;
+  }
+  return fx->valid;
+}
+
+void CloseFontx(FontxFile *fx) {
+  if (fx->opened) {
+    fclose(fx->file);
+    fx->opened = false;
+  }
+}
+
+void DumpFontx(FontxFile *fxs) {
+  for (int i = 0; i < 2; i++) {
+    printf("fxs[%d]->path=%s\n", i, fxs[i].path);
+    printf("fxs[%d]->opened=%d\n", i, fxs[i].opened);
+    printf("fxs[%d]->fxname=%s\n", i, fxs[i].fxname);
+    printf("fxs[%d]->valid=%d\n", i, fxs[i].valid);
+    printf("fxs[%d]->is_ank=%d\n", i, fxs[i].is_ank);
+    printf("fxs[%d]->w=%d\n", i, fxs[i].w);
+    printf("fxs[%d]->h=%d\n", i, fxs[i].h);
+    printf("fxs[%d]->fsz=%d\n", i, fxs[i].fsz);
+    printf("fxs[%d]->bc=%d\n", i, fxs[i].bc);
+  }
+}
+
+uint8_t getFortWidth(FontxFile *fx) {
+  printf("fx->w=%d\n", fx->w);
+  return (fx->w);
+}
+
+uint8_t getFortHeight(FontxFile *fx) {
+  printf("fx->h=%d\n", fx->h);
+  return (fx->h);
+}
+
+bool GetFontx(FontxFile *fxs, uint8_t ascii, uint8_t *pGlyph, uint8_t *pw,
+              uint8_t *ph) {
+  int i;
+  uint32_t offset;
+
+  if (FontxDebug)
+    printf("[GetFontx]ascii=0x%x\n", ascii);
+  for (i = 0; i < 2; i++) {
+    if (!OpenFontx(&fxs[i]))
+      continue;
+    if (FontxDebug)
+      printf("[GetFontx]openFontxFile[%d] ok\n", i);
+
+    if (fxs[i].is_ank) {
+      if (FontxDebug)
+        printf("[GetFontx]fxs.is_ank fxs.fsz=%d\n", fxs[i].fsz);
+      offset = 17 + ascii * fxs[i].fsz;
+      if (FontxDebug)
+        printf("[GetFontx]offset=%d\n", offset);
+      if (fseek(fxs[i].file, offset, SEEK_SET)) {
+        printf("Fontx:seek(%u) failed.\n", offset);
+        return false;
+      }
+      if (fread(pGlyph, 1, fxs[i].fsz, fxs[i].file) != fxs[i].fsz) {
+        printf("Fontx:fread failed.\n");
+        return false;
+      }
+      if (pw)
+        *pw = fxs[i].w;
+      if (ph)
+        *ph = fxs[i].h;
+      return true;
+    }
+  }
+  return false;
+}
+
+void Font2Bitmap(uint8_t *fonts, uint8_t *line, uint8_t w, uint8_t h,
+                 uint8_t inverse) {
+  int x, y;
+  for (y = 0; y < (h / 8); y++) {
+    for (x = 0; x < w; x++) {
+      line[y * 32 + x] = 0;
+    }
+  }
+
+  int mask = 7;
+  int fontp;
+  fontp = 0;
+  for (y = 0; y < h; y++) {
+    for (x = 0; x < w; x++) {
+      uint8_t d = fonts[fontp + x / 8];
+      uint8_t linep = (y / 8) * 32 + x;
+      if (d & (0x80 >> (x % 8)))
+        line[linep] = line[linep] + (1 << mask);
+    }
+    mask--;
+    if (mask < 0)
+      mask = 7;
+    fontp += (w + 7) / 8;
+  }
+
+  if (inverse) {
+    for (y = 0; y < (h / 8); y++) {
+      for (x = 0; x < w; x++) {
+        line[y * 32 + x] = RotateByte(line[y * 32 + x]);
+      }
+    }
+  }
+}
+
+void UnderlineBitmap(uint8_t *line, uint8_t w, uint8_t h) {
+  int x, y;
+  uint8_t wk;
+  for (y = 0; y < (h / 8); y++) {
+    for (x = 0; x < w; x++) {
+      wk = line[y * 32 + x];
+      if ((y + 1) == (h / 8))
+        line[y * 32 + x] = wk + 0x80;
+    }
+  }
+}
+
+void ReversBitmap(uint8_t *line, uint8_t w, uint8_t h) {
+  int x, y;
+  uint8_t wk;
+  for (y = 0; y < (h / 8); y++) {
+    for (x = 0; x < w; x++) {
+      wk = line[y * 32 + x];
+      line[y * 32 + x] = ~wk;
+    }
+  }
+}
+
+void ShowFont(uint8_t *fonts, uint8_t pw, uint8_t ph) {
+  int x, y, fpos;
+  printf("[ShowFont pw=%d ph=%d]\n", pw, ph);
+  fpos = 0;
+  for (y = 0; y < ph; y++) {
+    printf("%02d", y);
+    for (x = 0; x < pw; x++) {
+      if (fonts[fpos + x / 8] & (0x80 >> (x % 8))) {
+        printf("*");
+      } else {
+        printf(".");
+      }
+    }
+    printf("\n");
+    fpos = fpos + (pw + 7) / 8;
+  }
+  printf("\n");
+}
+
+void ShowBitmap(uint8_t *bitmap, uint8_t pw, uint8_t ph) {
+  int x, y, fpos;
+  printf("[ShowBitmap pw=%d ph=%d]\n", pw, ph);
+
+  fpos = 0;
+  for (y = 0; y < ph; y++) {
+    printf("%02d", y);
+    for (x = 0; x < pw; x++) {
+
+      if (bitmap[x + (y / 8) * 32] & (0x80 >> fpos)) {
+        printf("*");
+      } else {
+        printf(".");
+      }
+    }
+    printf("\n");
+    fpos++;
+    if (fpos > 7)
+      fpos = 0;
+  }
+  printf("\n");
+}
+
+uint8_t RotateByte(uint8_t ch1) {
+  uint8_t ch2 = 0;
+  int j;
+  for (j = 0; j < 8; j++) {
+    ch2 = (ch2 << 1) + (ch1 & 0x01);
+    ch1 = ch1 >> 1;
+  }
+  return ch2;
+}

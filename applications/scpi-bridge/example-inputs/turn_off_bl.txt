@@ -1,0 +1,2 @@
+gpio:dir ar10, out
+gpio:value ar10, low

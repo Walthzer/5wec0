@@ -1,0 +1,11 @@
+digraph "color_led_red_onoff"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="color_led_red_onoff",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Switches on/off the red component of color LED 0."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="color_led_onoff",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga17a899bd719b38cfad2b6c69dd75b7ef",tooltip="Switches on/off the red/green/blue components of color LED 0."];
+}

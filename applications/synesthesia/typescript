@@ -1,0 +1,23 @@
+Script started on 2023-09-20 14:19:54+02:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="149" LINES="8"]
+]0;walthzer@Implementation:~/programming/5wec0/applications/synesthesia[?2004h[01;32m[walthzer@Implementation[01;37m synesthesia[01;32m]$[00m ./main
+[?2004lCommand? s
+whatever
+o
+a
+o
+e
+o
+x
+p
+a
+qPlease enter a string? Command? Find first occurrence of which character? The first occurrence of ’a’ is at index 2
+Command? Find first occurrence of which character? The first occurrence of ’e’ is at index 4
+Command? Find first occurrence of which character? The first occurrence of ’x’ is at index -1
+Command? The current string is: "whatever"
+Command? The current array is: [w,h,a,t,e,v,e,r,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0,\0]
+Command? 
+Bye!
+]0;walthzer@Implementation:~/programming/5wec0/applications/synesthesia[?2004h[01;32m[walthzer@Implementation[01;37m synesthesia[01;32m]$[00m exit
+[?2004lexit
+
+Script done on 2023-09-20 14:20:12+02:00 [COMMAND_EXIT_CODE="0"]

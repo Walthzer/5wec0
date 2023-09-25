@@ -1,2 +1,3 @@
 make clean all
-./main
+clear
+cat bubble_test.txt | ./main

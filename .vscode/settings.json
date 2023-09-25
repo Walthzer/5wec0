@@ -4,6 +4,9 @@
         "array": "c",
         "string": "c",
         "string_view": "c",
-        "span": "c"
+        "span": "c",
+        "hash_map": "c",
+        "algorithm": "c",
+        "format": "c"
     }
 }

@@ -1,3 +1,4 @@
+#include <libpynq.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -100,7 +101,44 @@ void replacePerson(person_t persons[], int nrPersons)
   scanf(" %f", &persons[index].height);
 }
 
-//void displayValues(display_t display, struct person_t persons[], int nrPersons, int from, int to)
+void displayValues(display_t display, person_t persons[], int nrPersons, int from, int to)
+{
+  sleep_msec(1000);
+  float min, max;
+  min = minValue (persons,nrPersons);
+  max = maxValue (persons,nrPersons);
+
+  float range = max-min;
+
+  //Setup display
+  displayFillScreen(&display, RGB_BLUE);
+  for (int i = 0; i < nrPersons; i++)
+  {
+    //Skip the bar if its height is the min value
+    if (persons[i].height == min && nrPersons > 1)
+      continue;
+
+    int bar_width = DISPLAY_WIDTH/nrPersons;
+
+    //Select colour for the current bar
+    uint16_t colour = RGB_GREEN;
+    if (i == to || i == from)
+      colour = RGB_RED;
+
+    //Display is rotated on pcb, display_flip is set in main()
+    int x1 = i * bar_width;
+    int y1 = ((persons[i].height - min)/range * DISPLAY_HEIGHT - 1);
+    int x2 = (i + 1) * bar_width - 1;
+    int y2 = 0;
+
+    fflush(NULL);
+
+    displayDrawFillRect(&display, 
+        x1, y1,
+        x2, y2,
+        colour);
+  }
+}
 
 //Compare A to B:
 //Return TRUE if A > B
@@ -120,7 +158,7 @@ int person_cmp(person_t a, person_t b)
 }
 
 //bubbleSort function:
-void bubbleSort(person_t persons[], int nrPersons)
+void bubbleSort(display_t display, person_t persons[], int nrPersons)
 {
   int swaps = 1;
   person_t buffer;
@@ -144,7 +182,7 @@ void bubbleSort(person_t persons[], int nrPersons)
       persons[i + 1] = buffer;
 
       swaps++;
-      //displayValues -> IMPLEMENT DISPLAY
+      displayValues(display, persons, nrPersons, i, i+1);
       printf("after swapping: ");
       printValues(persons, 0, nrPersons - 1);
     }
@@ -173,7 +211,7 @@ void merge (person_t a[], int left, int mid, int right)
 }
 
 //Recursive merge sort function:
-void mrgeSort(person_t persons[], int nrPersons, int left, int right)
+void mrgeSort(display_t display, person_t persons[], int nrPersons, int left, int right)
 {
 
   int mid = (left+right) / 2;
@@ -181,22 +219,23 @@ void mrgeSort(person_t persons[], int nrPersons, int left, int right)
     printf("need to sort      ");
     printValues(persons, left, right);
 
-    mrgeSort (persons, nrPersons, left,mid);
+    mrgeSort (display, persons, nrPersons, left,mid);
     printf("after sorting lhs ");
     printValues(persons, left, mid);
 
-    mrgeSort (persons, nrPersons, mid+1,right);
+    mrgeSort (display, persons, nrPersons, mid+1,right);
     printf("after sorting rhs ");
     printValues(persons, mid+1, right);
 
     merge (persons, left,mid,right);
     printf("after merging     ");
     printValues(persons, left, right);
+    displayValues(display, persons, nrPersons, right, left);
   }
 }
 
 
-void do_sorting(void)
+void do_sorting(display_t* display)
 {
   //Initialize
   char cmd = '\0';
@@ -242,17 +281,18 @@ void do_sorting(void)
       break;
 
       case 'd':
+        displayValues(*display, persons, persons_count, -1, -1);
       break;
 
       case 'b':
-        bubbleSort(persons, persons_count);
+        bubbleSort(*display, persons, persons_count);
       break;
 
       case 'm':
         //Merge sorts condition -> check outside of recursive function!
         if (persons_count < 2)
           break;
-        mrgeSort(persons, persons_count, 0, persons_count-1);
+        mrgeSort(*display, persons, persons_count, 0, persons_count-1);
       break;
       case 's':
         printf("Not Implemented");
@@ -267,10 +307,23 @@ void do_sorting(void)
 }
 
 int main(void) {
+  display_t display;
+  #ifdef PYNQLIB_H
+    pynq_init();
+    display_init(&display);
+    display_set_flip(&display, true, false); //Display is mounted flipped on y-axis
+    displayFillScreen(&display, RGB_BLACK);
+  #endif
+
   //Initialize
-  do_sorting();
+  do_sorting(&display);
 
   printf("Bye!\n");
+
+  #ifdef PYNQLIB_H
+    display_destroy(&display);
+    pynq_destroy();
+  #endif
 
   return EXIT_SUCCESS;
 }

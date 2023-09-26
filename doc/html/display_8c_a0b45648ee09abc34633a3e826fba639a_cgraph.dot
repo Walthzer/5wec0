@@ -21,7 +21,7 @@ digraph "displayInit"
   Node4 -> Node2 [id="edge7_Node000004_Node000002",color="steelblue1",style="solid",tooltip=" "];
   Node4 -> Node3 [id="edge8_Node000004_Node000003",color="steelblue1",style="solid",tooltip=" "];
   Node4 -> Node8 [id="edge9_Node000004_Node000008",color="steelblue1",style="solid",tooltip=" "];
-  Node8 [id="Node000008",label="switchbox_set_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2switchbox_8c.html#a6115df885940054294f0203efd489372",tooltip=" "];
+  Node8 [id="Node000008",label="switchbox_set_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5",tooltip="Set the type of a switch pin."];
   Node1 -> Node9 [id="edge10_Node000001_Node000009",color="steelblue1",style="solid",tooltip=" "];
   Node9 [id="Node000009",label="spi_master_write_command",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a59d25920920ebea3da54ebbf4fd8493c",tooltip=" "];
   Node9 -> Node2 [id="edge11_Node000009_Node000002",color="steelblue1",style="solid",tooltip=" "];

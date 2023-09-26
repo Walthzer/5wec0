@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.1 of 2023-09-01 11:02)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
    </div>
   </td>
  </tr>
@@ -194,6 +194,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga89538efeb5ef838358b0b46f63921a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4be3f426f9b3f5a2eeb5aca6997804c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DISPLAY.html#ga4be3f426f9b3f5a2eeb5aca6997804c7">displayDrawTriangle</a> (<a class="el" href="structdisplay__t.html">display_t</a> *display, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3, uint16_t color)</td></tr>
 <tr class="separator:ga4be3f426f9b3f5a2eeb5aca6997804c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10ab8b136075cbc18b78bcc908065f7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DISPLAY.html#ga10ab8b136075cbc18b78bcc908065f7b">display_set_flip</a> (<a class="el" href="structdisplay__t.html">display_t</a> *display, bool xflip, bool yflip)</td></tr>
+<tr class="separator:ga10ab8b136075cbc18b78bcc908065f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Wrappers to simplify the use of the TFT LCD display. </p>
@@ -228,16 +230,16 @@ Functions</h2></td></tr>
 <div class="line">  <a class="code hl_function" href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
 <div class="line">  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
 <div class="line">}</div>
-<div class="ttc" id="adisplay_8c_html_a2517e0df81bce65cdd059c682d9d28c6"><div class="ttname"><a href="display_8c.html#a2517e0df81bce65cdd059c682d9d28c6">display_destroy</a></div><div class="ttdeci">void display_destroy(display_t *display __attribute__((unused)))</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00279">display.c:279</a></div></div>
+<div class="ttc" id="adisplay_8c_html_a2517e0df81bce65cdd059c682d9d28c6"><div class="ttname"><a href="display_8c.html#a2517e0df81bce65cdd059c682d9d28c6">display_destroy</a></div><div class="ttdeci">void display_destroy(display_t *display __attribute__((unused)))</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00302">display.c:302</a></div></div>
 <div class="ttc" id="aempty-library_2libpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00002">libpynq.c:2</a></div></div>
 <div class="ttc" id="aempty-library_2libpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00003">libpynq.c:3</a></div></div>
-<div class="ttc" id="agroup__DISPLAY_html_ga0cf83239824624d1a311a74613194ad0"><div class="ttname"><a href="group__DISPLAY.html#ga0cf83239824624d1a311a74613194ad0">displayDrawString</a></div><div class="ttdeci">int displayDrawString(display_t *display, FontxFile *fx, uint16_t x, uint16_t y, uint8_t *ascii, uint16_t color)</div><div class="ttdoc">Function to draw a string on the display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00924">display.c:924</a></div></div>
-<div class="ttc" id="agroup__DISPLAY_html_ga1c1688930e03cde2e24c29ad420997ba"><div class="ttname"><a href="group__DISPLAY.html#ga1c1688930e03cde2e24c29ad420997ba">displayDrawFillRect</a></div><div class="ttdeci">void displayDrawFillRect(display_t *display, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color)</div><div class="ttdoc">Draw a filled rectangle to the display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00334">display.c:334</a></div></div>
-<div class="ttc" id="agroup__DISPLAY_html_ga39815054b1bc5c968ae3f553d0196f08"><div class="ttname"><a href="group__DISPLAY.html#ga39815054b1bc5c968ae3f553d0196f08">displaySetFontDirection</a></div><div class="ttdeci">void displaySetFontDirection(display_t *display, uint16_t dir)</div><div class="ttdoc">Changes the direction the characters will be printed.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00955">display.c:955</a></div></div>
-<div class="ttc" id="agroup__DISPLAY_html_ga63290b40f423efdea8918393f7dad591"><div class="ttname"><a href="group__DISPLAY.html#ga63290b40f423efdea8918393f7dad591">display_init</a></div><div class="ttdeci">void display_init(display_t *display)</div><div class="ttdoc">Initialize the display display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00275">display.c:275</a></div></div>
-<div class="ttc" id="agroup__DISPLAY_html_gab324776dd38a2a66365ddc20172c6fcb"><div class="ttname"><a href="group__DISPLAY.html#gab324776dd38a2a66365ddc20172c6fcb">displayDrawCircle</a></div><div class="ttdeci">void displayDrawCircle(display_t *display, uint16_t x_center, uint16_t y_center, uint16_t r, uint16_t color)</div><div class="ttdoc">Draw a circle without infill on the display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00594">display.c:594</a></div></div>
-<div class="ttc" id="agroup__DISPLAY_html_gac8caa3499c1a3f4a26dccfb839ba0255"><div class="ttname"><a href="group__DISPLAY.html#gac8caa3499c1a3f4a26dccfb839ba0255">displayFillScreen</a></div><div class="ttdeci">void displayFillScreen(display_t *display, uint16_t color)</div><div class="ttdoc">Fill entire display with a single color using the ldcDrawFillRect function.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00390">display.c:390</a></div></div>
-<div class="ttc" id="agroup__DISPLAY_html_gaeae5a9ba9c5f7b780544cf28ce8c9eff"><div class="ttname"><a href="group__DISPLAY.html#gaeae5a9ba9c5f7b780544cf28ce8c9eff">displayDrawPixel</a></div><div class="ttdeci">void displayDrawPixel(display_t *display, uint16_t x, uint16_t y, uint16_t color)</div><div class="ttdoc">Draw a single pixel to the display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00290">display.c:290</a></div></div>
+<div class="ttc" id="agroup__DISPLAY_html_ga0cf83239824624d1a311a74613194ad0"><div class="ttname"><a href="group__DISPLAY.html#ga0cf83239824624d1a311a74613194ad0">displayDrawString</a></div><div class="ttdeci">int displayDrawString(display_t *display, FontxFile *fx, uint16_t x, uint16_t y, uint8_t *ascii, uint16_t color)</div><div class="ttdoc">Function to draw a string on the display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00947">display.c:947</a></div></div>
+<div class="ttc" id="agroup__DISPLAY_html_ga1c1688930e03cde2e24c29ad420997ba"><div class="ttname"><a href="group__DISPLAY.html#ga1c1688930e03cde2e24c29ad420997ba">displayDrawFillRect</a></div><div class="ttdeci">void displayDrawFillRect(display_t *display, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color)</div><div class="ttdoc">Draw a filled rectangle to the display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00357">display.c:357</a></div></div>
+<div class="ttc" id="agroup__DISPLAY_html_ga39815054b1bc5c968ae3f553d0196f08"><div class="ttname"><a href="group__DISPLAY.html#ga39815054b1bc5c968ae3f553d0196f08">displaySetFontDirection</a></div><div class="ttdeci">void displaySetFontDirection(display_t *display, uint16_t dir)</div><div class="ttdoc">Changes the direction the characters will be printed.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00978">display.c:978</a></div></div>
+<div class="ttc" id="agroup__DISPLAY_html_ga63290b40f423efdea8918393f7dad591"><div class="ttname"><a href="group__DISPLAY.html#ga63290b40f423efdea8918393f7dad591">display_init</a></div><div class="ttdeci">void display_init(display_t *display)</div><div class="ttdoc">Initialize the display display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00297">display.c:297</a></div></div>
+<div class="ttc" id="agroup__DISPLAY_html_gab324776dd38a2a66365ddc20172c6fcb"><div class="ttname"><a href="group__DISPLAY.html#gab324776dd38a2a66365ddc20172c6fcb">displayDrawCircle</a></div><div class="ttdeci">void displayDrawCircle(display_t *display, uint16_t x_center, uint16_t y_center, uint16_t r, uint16_t color)</div><div class="ttdoc">Draw a circle without infill on the display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00617">display.c:617</a></div></div>
+<div class="ttc" id="agroup__DISPLAY_html_gac8caa3499c1a3f4a26dccfb839ba0255"><div class="ttname"><a href="group__DISPLAY.html#gac8caa3499c1a3f4a26dccfb839ba0255">displayFillScreen</a></div><div class="ttdeci">void displayFillScreen(display_t *display, uint16_t color)</div><div class="ttdoc">Fill entire display with a single color using the ldcDrawFillRect function.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00413">display.c:413</a></div></div>
+<div class="ttc" id="agroup__DISPLAY_html_gaeae5a9ba9c5f7b780544cf28ce8c9eff"><div class="ttname"><a href="group__DISPLAY.html#gaeae5a9ba9c5f7b780544cf28ce8c9eff">displayDrawPixel</a></div><div class="ttdeci">void displayDrawPixel(display_t *display, uint16_t x, uint16_t y, uint16_t color)</div><div class="ttdoc">Draw a single pixel to the display.</div><div class="ttdef"><b>Definition</b> <a href="display_8c_source.html#l00313">display.c:313</a></div></div>
 <div class="ttc" id="agroup__DISPLAY_html_gga94c73cf6934fd835103f0f2794071ee9aafe0a04a7289bc0ecbd5ce44784f3d64"><div class="ttname"><a href="group__DISPLAY.html#gga94c73cf6934fd835103f0f2794071ee9aafe0a04a7289bc0ecbd5ce44784f3d64">TEXT_DIRECTION0</a></div><div class="ttdeci">@ TEXT_DIRECTION0</div><div class="ttdef"><b>Definition</b> <a href="display_8h_source.html#l00101">display.h:101</a></div></div>
 <div class="ttc" id="agroup__DISPLAY_html_ggaedd64c3f92da850b93776c65fd1cced3a96655a1c829f4db35815afedb5aca9b1"><div class="ttname"><a href="group__DISPLAY.html#ggaedd64c3f92da850b93776c65fd1cced3a96655a1c829f4db35815afedb5aca9b1">RGB_YELLOW</a></div><div class="ttdeci">@ RGB_YELLOW</div><div class="ttdef"><b>Definition</b> <a href="display_8h_source.html#l00092">display.h:92</a></div></div>
 <div class="ttc" id="agroup__DISPLAY_html_ggaedd64c3f92da850b93776c65fd1cced3a96753303de7972af7903ae2036ec1636"><div class="ttname"><a href="group__DISPLAY.html#ggaedd64c3f92da850b93776c65fd1cced3a96753303de7972af7903ae2036ec1636">RGB_RED</a></div><div class="ttdeci">@ RGB_RED</div><div class="ttdef"><b>Definition</b> <a href="display_8h_source.html#l00086">display.h:86</a></div></div>
@@ -388,11 +390,67 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00275">275</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00297">297</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="group__DISPLAY_ga63290b40f423efdea8918393f7dad591_cgraph.png" border="0" usemap="#agroup__DISPLAY_ga63290b40f423efdea8918393f7dad591_cgraph" alt=""/></div>
+</div>
+
+</div>
+</div>
+<a id="ga10ab8b136075cbc18b78bcc908065f7b" name="ga10ab8b136075cbc18b78bcc908065f7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga10ab8b136075cbc18b78bcc908065f7b">&#9670;&#160;</a></span>display_set_flip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void display_set_flip </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdisplay__t.html">display_t</a> *&#160;</td>
+          <td class="paramname"><em>display</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>xflip</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>yflip</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flip the drawing off the screen. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">display</td><td>Handle to display </td></tr>
+    <tr><td class="paramname">xflip</td><td>Flip in the X direction </td></tr>
+    <tr><td class="paramname">yflip</td><td>Flip in the Y direction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00275">275</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="group__DISPLAY_ga10ab8b136075cbc18b78bcc908065f7b_cgraph.png" border="0" usemap="#agroup__DISPLAY_ga10ab8b136075cbc18b78bcc908065f7b_cgraph" alt=""/></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="group__DISPLAY_ga10ab8b136075cbc18b78bcc908065f7b_icgraph.png" border="0" usemap="#agroup__DISPLAY_ga10ab8b136075cbc18b78bcc908065f7b_icgraph" alt=""/></div>
 </div>
 
 </div>
@@ -421,7 +479,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00987">987</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l01010">1010</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -454,7 +512,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00996">996</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l01019">1019</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -487,7 +545,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00376">376</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00399">399</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -524,7 +582,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00383">383</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00406">406</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -599,7 +657,7 @@ Here is the call graph for this function:</div>
 <dl class="section warning"><dt>Warning</dt><dd>The font-file path must be valid from the directory in which the executable is called, otherwise the error message "cannot get font from font
 file" will be thrown. Absolute paths (starting with /) are safe. See documentation for InitFontx. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00755">755</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00778">778</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -669,7 +727,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00594">594</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00617">617</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -734,7 +792,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00635">635</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00658">658</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -806,7 +864,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00334">334</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00357">357</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -883,7 +941,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00398">398</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00421">421</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -946,7 +1004,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00290">290</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00313">313</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1023,7 +1081,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00451">451</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00474">474</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1102,7 +1160,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00469">469</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00492">492</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1181,7 +1239,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00681">681</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00704">704</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1256,7 +1314,7 @@ Here is the call graph for this function:</div>
 <dl class="section warning"><dt>Warning</dt><dd>The font-file path must be valid from the directory in which the executable is called, otherwise the error message "cannot get font from font
 file" will be thrown. Absolute paths (starting with /) are safe. See documentation for InitFontx. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00924">924</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00947">947</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1342,7 +1400,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00526">526</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00549">549</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1421,7 +1479,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00553">553</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00576">576</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1465,7 +1523,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00390">390</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00413">413</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1498,7 +1556,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l01005">1005</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l01028">1028</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1531,7 +1589,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l01012">1012</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l01035">1035</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1575,7 +1633,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00955">955</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00978">978</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 
 </div>
 </div>
@@ -1614,7 +1672,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00962">962</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00985">985</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 
 </div>
 </div>
@@ -1653,7 +1711,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00972">972</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00995">995</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 
 </div>
 </div>
@@ -1681,7 +1739,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00970">970</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00993">993</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 
 </div>
 </div>
@@ -1709,7 +1767,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00980">980</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l01003">1003</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 
 </div>
 </div>
@@ -1755,7 +1813,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00751">751</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="display_8c_source.html#l00774">774</a> of file <a class="el" href="display_8c_source.html">display.c</a>.</p>
 
 </div>
 </div>
@@ -1764,7 +1822,7 @@ Here is the call graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Sep 1 2023 11:02:39 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

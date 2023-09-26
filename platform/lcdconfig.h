@@ -22,6 +22,7 @@ SOFTWARE.
 #ifndef LCDCONFIG_H
 #define LCDCONFIG_H
 
+#include <pinmap.h>
 /**
  * @defgroup LCD Pin Config
  *
@@ -31,12 +32,12 @@ SOFTWARE.
  * @{
  */
 
-#define LCD_MOSI    30 // AR_SDA
-#define LCD_SCLK    31 // AR_SCL
-#define LCD_CS      13 // AR13
-#define LCD_DC      12 // AR12
-#define LCD_RESET   11 // AR11
-#define LCD_BL      10 // AR10
+#define LCD_MOSI    SWB_RBPI33 /* AR_SDA */
+#define LCD_SCLK    SWB_RBPI35 /* AR_SCL */
+#define LCD_CS      SWB_RBPI36 /* AR13 */
+#define LCD_DC      SWB_RBPI37 /* AR12 */
+#define LCD_RESET   SWB_RBPI38 /* AR11 */
+#define LCD_BL      SWB_RBPI40 /* AR10 */
 
 /**
  * @}

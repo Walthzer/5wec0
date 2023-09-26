@@ -1,6 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a9a7c7e1228a5914ccf7c82c5b5213491":[0,11,3,5],
 "group__PINMAP.html#ggad20da07c14dade682a840354fb797c35aa2633cdb7660486e0f9384d99970ca86":[0,11,3,8],
 "group__PINMAP.html#ggad20da07c14dade682a840354fb797c35aa3aa71e2e24506425025560d00f08daa":[0,11,3,62],
 "group__PINMAP.html#ggad20da07c14dade682a840354fb797c35aafdefeeae0ab8b6ac57402c314e0efb7":[0,11,3,10],
@@ -249,5 +248,6 @@ var NAVTREEINDEX2 =
 "uio_8c.html#a3dc49c1ca82ae1553a4f77f6ceac0254":[2,0,0,35,0],
 "uio_8c.html#a59a8a2b5a485df4f125d7c4f71f48b6f":[2,0,0,35,1],
 "uio_8c_source.html":[2,0,0,35],
-"uio_8h.html":[2,0,0,36]
+"uio_8h.html":[2,0,0,36],
+"uio_8h.html#a3dc49c1ca82ae1553a4f77f6ceac0254":[2,0,0,36,0]
 };

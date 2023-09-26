@@ -35,6 +35,7 @@ var group__DISPLAY =
     ] ],
     [ "display_destroy", "group__DISPLAY.html#ga31832bfc263f6a3d108d6ece389717e7", null ],
     [ "display_init", "group__DISPLAY.html#ga63290b40f423efdea8918393f7dad591", null ],
+    [ "display_set_flip", "group__DISPLAY.html#ga10ab8b136075cbc18b78bcc908065f7b", null ],
     [ "displayBacklightOff", "group__DISPLAY.html#gacfd18ade843e35872ae932c942ea7b31", null ],
     [ "displayBacklightOn", "group__DISPLAY.html#ga99adebf27ed4e77da85b61ad86f01e13", null ],
     [ "displayDisplayOff", "group__DISPLAY.html#ga780fc9d0cab6ce28cc16407406cdc80e", null ],

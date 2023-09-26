@@ -395,6 +395,13 @@ extern void displayDrawTriangle(display_t *display, uint16_t x1, uint16_t y1,
                                 uint16_t y3, uint16_t color);
 
 /**
+ * @brief Flip the drawing off the screen.
+ * @param display Handle to display
+ * @param xflip Flip in the X direction
+ * @param yflip Flip in the Y direction
+ */
+void display_set_flip(display_t *display, bool xflip, bool yflip);
+/**
  * @}
  */
 

@@ -41,3 +41,4 @@ void displayInversionOn(display_t *display){};
 void displayDrawTriangle(display_t *display, uint16_t x1, uint16_t y1,
                          uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3,
                          uint16_t color){};
+void display_set_flip(display_t *display, bool xflip, bool yflip){};

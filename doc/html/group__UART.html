@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.1 of 2023-09-01 11:02)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
    </div>
   </td>
  </tr>
@@ -123,11 +123,11 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Functions to use the Universal Asynchronous Receiver-Transmitter (UART). </p>
-<p>Two UART channels can be instantiated, UART0 and UART1. Before sending and receiving bytes the UART must be connect to some I/O pins through the switchbox, e.g. </p><div class="fragment"><div class="line"><a class="code hl_function" href="empty-library_2switchbox_8c.html#a6115df885940054294f0203efd489372">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0">SWB_AR0</a>, <a class="code hl_enumvalue" href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153">SWB_UART0_RX</a>);</div>
-<div class="line"><a class="code hl_function" href="empty-library_2switchbox_8c.html#a6115df885940054294f0203efd489372">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af">SWB_AR1</a>, <a class="code hl_enumvalue" href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf">SWB_UART0_TX</a>);</div>
-<div class="ttc" id="aempty-library_2switchbox_8c_html_a6115df885940054294f0203efd489372"><div class="ttname"><a href="empty-library_2switchbox_8c.html#a6115df885940054294f0203efd489372">switchbox_set_pin</a></div><div class="ttdeci">void switchbox_set_pin(const int32_t pin_number, const uint8_t pin_type)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2switchbox_8c_source.html#l00004">switchbox.c:4</a></div></div>
+<p>Two UART channels can be instantiated, UART0 and UART1. Before sending and receiving bytes the UART must be connect to some I/O pins through the switchbox, e.g. </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0">SWB_AR0</a>, <a class="code hl_enumvalue" href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153">SWB_UART0_RX</a>);</div>
+<div class="line"><a class="code hl_function" href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af">SWB_AR1</a>, <a class="code hl_enumvalue" href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf">SWB_UART0_TX</a>);</div>
 <div class="ttc" id="agroup__PINMAP_html_ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af"><div class="ttname"><a href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af">SWB_AR1</a></div><div class="ttdeci">@ SWB_AR1</div><div class="ttdef"><b>Definition</b> <a href="pinmap_8h_source.html#l00050">pinmap.h:50</a></div></div>
 <div class="ttc" id="agroup__PINMAP_html_ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0"><div class="ttname"><a href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0">SWB_AR0</a></div><div class="ttdeci">@ SWB_AR0</div><div class="ttdoc">Analog reference pins.</div><div class="ttdef"><b>Definition</b> <a href="pinmap_8h_source.html#l00049">pinmap.h:49</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_gaf00e8e471d78f9a6a238bd0b4c3437f5"><div class="ttname"><a href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a></div><div class="ttdeci">void switchbox_set_pin(const pin_t pin_number, const uint8_t pin_type)</div><div class="ttdoc">Set the type of a switch pin.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2switchbox_8c_source.html#l00004">switchbox.c:4</a></div></div>
 <div class="ttc" id="agroup__SWITCHBOX_html_gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf"><div class="ttname"><a href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf">SWB_UART0_TX</a></div><div class="ttdeci">@ SWB_UART0_TX</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8h_source.html#l00067">switchbox.h:67</a></div></div>
 <div class="ttc" id="agroup__SWITCHBOX_html_gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153"><div class="ttname"><a href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153">SWB_UART0_RX</a></div><div class="ttdeci">@ SWB_UART0_RX</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8h_source.html#l00069">switchbox.h:69</a></div></div>
 </div><!-- fragment --><p>After that, an example of how to use this library for the MASTER. </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="libpynq_8h.html">libpynq.h</a>&gt;</span></div>
@@ -445,7 +445,7 @@ Fails with program exit if the UART channel is outside valid range. </dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Sep 1 2023 11:02:39 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

@@ -9,5 +9,5 @@ digraph "color_leds_init_pwm"
   Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="pwm_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__PWM.html#ga0fb151b18be0800bbc4eba629126fd9c",tooltip="Initializes the PWM channel with the specified period."];
   Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
-  Node3 [id="Node000003",label="switchbox_set_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2switchbox_8c.html#a6115df885940054294f0203efd489372",tooltip=" "];
+  Node3 [id="Node000003",label="switchbox_set_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5",tooltip="Set the type of a switch pin."];
 }

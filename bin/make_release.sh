@@ -31,17 +31,17 @@ if [ ! -f external/scpi-parser/README.md ] ; then
   exit 1
 fi
 read -p "do you want to clean non-git files (yes for real release; no while testing) [yn]? " cleanit
-[ "$cleanit" = "y" ] && git clean -dxf
 make clean
 # copy everything over
 cp -r `pwd` ../$RELEASE_BASENAME
-grep 'url =' .git/config | sed 's/.*url = //' > ../$RELEASE_BASENAME/tmp
+grep 'url =' .git/config | sed 's/.*url = //' > ../tmp
 (
   cd ../$RELEASE_BASENAME
+  [ "$cleanit" = "y" ] && git clean -dxf
   echo $LABEL > RELEASE
   git show --raw | head -1 >> RELEASE
-  cat tmp >> RELEASE
-  rm -r tmp
+  cat ../tmp >> RELEASE
+  rm -r ../tmp
   echo making documentation - this takes some time, do not interrupt
   make doc >/dev/null 2>&1 
   mv build/latex/refman.pdf build

@@ -272,8 +272,31 @@ void displayInit(display_t *display, int width, int height, int offsetx,
   }
 }
 
+void display_set_flip(display_t *display, bool xflip, bool yflip) {
+  if (display == NULL) {
+    pynq_error("display_destroy: display has not been initialized\n");
+  }
+  if (display->_width != DISPLAY_WIDTH || display->_height != DISPLAY_HEIGHT) {
+    pynq_error("display_destroy: internal error (wrong display hardware)\n");
+  }
+  spi_master_write_command(display, 0x36); // Memory Data Access Control
+  uint8_t set = (yflip << 7) | (xflip << 6);
+  spi_master_write_data_byte(display, set);
+  if (yflip) {
+    display->_offsety = 320 - display->_height;
+  } else {
+    display->_offsety = 0;
+  }
+  if (xflip) {
+    display->_offsetx = 240 - display->_width;
+  } else {
+    display->_offsetx = 0;
+  }
+}
+
 void display_init(display_t *display) {
   displayInit(display, DISPLAY_WIDTH, DISPLAY_HEIGHT, 0, 0);
+  display_set_flip(display, true, true);
 }
 
 void display_destroy(display_t *display __attribute__((unused))) {

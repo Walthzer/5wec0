@@ -7,6 +7,9 @@
         "span": "c",
         "hash_map": "c",
         "algorithm": "c",
-        "format": "c"
+        "format": "c",
+        "string.h": "c",
+        "chrono": "c",
+        "typeinfo": "c"
     }
 }

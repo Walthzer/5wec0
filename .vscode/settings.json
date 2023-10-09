@@ -1,15 +1,3 @@
 {
-    "files.associations": {
-        "cstdlib": "c",
-        "array": "c",
-        "string": "c",
-        "string_view": "c",
-        "span": "c",
-        "hash_map": "c",
-        "algorithm": "c",
-        "format": "c",
-        "string.h": "c",
-        "chrono": "c",
-        "typeinfo": "c"
-    }
+    "cmake.configureOnOpen": false,
 }

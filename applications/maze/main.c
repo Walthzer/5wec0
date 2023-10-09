@@ -34,7 +34,8 @@ typedef struct
 {
   int x, y;
 } coordinate_t;
-
+//Print a coordinate with text
+#define PRNT_COORD(text,coord) printf("%-27s (%3d,%3d)\n",text,coord.x,coord.y)
 
 
 //Primary Maze type with the grid and size.
@@ -49,16 +50,16 @@ typedef struct
 #define SIZE_Y(maze) maze->size.y
 //Get the section of the maze at X and Y
 #define SEC(maze,x,y) maze->grid[y][x]
+//Get the section of the maze by coordinate
+#define SEC_COORD(maze,coord) SEC(maze,coord.x,coord.y)
+
+//Polulators for For loops
+//idx_x for loop condition
+#define FOR_COLUMNS(maze,modf) for (int idx_x = 0; idx_x < SIZE_X(maze); idx_x+=modf)
+//idx_y for loop condition
+#define FOR_ROWS(maze,modf) for (int idx_y = 0; idx_y < SIZE_Y(maze); idx_y+=modf)
 
 //TYPE FUNCTIONS
-//Coordinate creation function
-coordinate_t makeCoord(int i_x, int i_y)
-{
-  coordinate_t coord;
-  coord.x = i_x;
-  coord.y = i_y;
-  return coord;
-}
 
 //LOGIC FUNCTIONS
 
@@ -74,14 +75,14 @@ void input_maze(maze_t* ptr_maze)
   if(ptr_maze_s->x < 2 || ptr_maze_s->y < 2)
   {
     printf("The number of rows and columns must be at least two\n");
-    *ptr_maze_s = makeCoord(-1, -1);
+    *ptr_maze_s = (coordinate_t){-1, -1};
     return;
   }
 
   int nrStarts = 0;
 
   //Rows are presented by prompts:
-  for (int idx_y = 0; idx_y < ptr_maze_s->y; idx_y++)
+  FOR_ROWS(ptr_maze,1)
   {
     char* maze_row_str = ptr_maze->grid[idx_y];
 
@@ -90,7 +91,7 @@ void input_maze(maze_t* ptr_maze)
     scanf(" %s", maze_row_str);
 
     //Remove extra starting points from the row
-    for (int idx_x = 0; idx_x < ptr_maze_s->x; idx_x++)
+    FOR_COLUMNS(ptr_maze,1)
     {
       if (maze_row_str[idx_x] == START)
       {
@@ -105,15 +106,15 @@ void input_maze(maze_t* ptr_maze)
   }
 }
 //Output the maze to stdout
-void print_maze(maze_t* maze)
+void print_maze(maze_t* ptr_maze)
 {
   //Do nothing if maze is empty
-  if (maze->size.x == -1)
+  if (ptr_maze->size.x == -1)
     return;
 
-  for (int idx_y = 0; idx_y < maze->size.y; idx_y++)
+  FOR_ROWS(ptr_maze,1)
   {
-    printf("%s\n", maze->grid[idx_y]);
+    printf("%s\n", ptr_maze->grid[idx_y]);
   } 
 }
 //Give the colour a maze section should be on the display
@@ -155,31 +156,120 @@ void display_maze(display_t* display, maze_t* ptr_maze)
   #endif
 
   //Row by Row drawing of the maze
-  for (int idx_y = 0; idx_y < SIZE_Y(ptr_maze); idx_y++)
+  FOR_ROWS(ptr_maze,1)
   {
-    for (int idx_x = 0; idx_x < SIZE_X(ptr_maze); idx_x++)
+    FOR_COLUMNS(ptr_maze,1)
     {
       colour = resolve_colour(SEC(ptr_maze,idx_x,idx_y));
 
       //Create the drawing coordinates 
-      coordinate_t upper_l = makeCoord( idx_x*scale_x, 
-                                        idx_y*scale_y);
+      coordinate_t upper_l = (coordinate_t){idx_x*scale_x, 
+                                            idx_y*scale_y};
                                         
-      coordinate_t lower_r = makeCoord( (idx_x + 1)*scale_x - (1),
-                                        (idx_y + 1)*scale_y - (1));
+      coordinate_t lower_r = (coordinate_t){(idx_x + 1)*scale_x - (1),
+                                            (idx_y + 1)*scale_y - (1)};
       draw_section(display, upper_l, lower_r, colour);
     } 
   } 
   
 }
+//Mirror the maze grid around the diagonal -> (x,y) to (y,x)
+void mirror_maze(maze_t* ptr_o_maze)
+{
+  //New maze of inverted size x->y and y->x:
+  maze_t inverted_maze = {{"\0"}, {ptr_o_maze->size.y, ptr_o_maze->size.x}};
 
+  FOR_ROWS(ptr_o_maze,1)
+  {
+    FOR_COLUMNS(ptr_o_maze,1)
+    {
+      SEC((&inverted_maze),idx_y,idx_x) = SEC(ptr_o_maze,idx_x,idx_y);
+    }
+  }
+  //Set maze
+  *ptr_o_maze = inverted_maze;
+}
+//PATH FINDING
+//Find the coordinate of the start section and the smallest goal section
+coordinate_t find_start_setGoal(maze_t* ptr_maze, coordinate_t* ptr_goal)
+{
+  //Initialise to invalid
+  coordinate_t start = *ptr_goal = (coordinate_t){-1, -1};
+
+  //Row by row scanning of the maze
+  FOR_ROWS(ptr_maze,1)
+  {
+    FOR_COLUMNS(ptr_maze,1)
+    {
+      if(SEC(ptr_maze,idx_x,idx_y) == 'S')
+        start = (coordinate_t){idx_x,idx_y};
+
+      //We have already found a goal -> skip
+      if(ptr_goal->x > -1)
+      {
+        //If we also have a start end the search:
+        if(start.x > -1)
+          break;
+        
+        continue;
+      }
+
+      if(SEC(ptr_maze,idx_x,idx_y) == 'D')
+        *ptr_goal = (coordinate_t){idx_x,idx_y};
+    } 
+  } 
+  //Return the start by value -> the goal is modified in place
+  return start;
+}
+//Swap two sections of the maze
+void swap_sections(maze_t* ptr_maze, coordinate_t* sec_a, coordinate_t* sec_b)
+{
+  //Do nothing if maze is empty
+  if (SIZE_X(ptr_maze) == -1)
+    return;
+
+  char buffer = SEC_COORD(ptr_maze,(*sec_a));
+  SEC_COORD(ptr_maze,(*sec_a)) = SEC_COORD(ptr_maze,(*sec_b));
+  SEC_COORD(ptr_maze,(*sec_b)) = buffer;
+}
+//Recursive Pathfinding function
+int find_path(display_t* display, maze_t* ptr_maze, coordinate_t coord, int length)
+{
+  //Prevent an out-of-bound coordinate
+  int x_outside = SIZE_X(ptr_maze) < coord.x || coord.x < 0;
+  int y_outside = SIZE_Y(ptr_maze) < coord.y || coord.y < 0;
+  if(x_outside || y_outside)
+    return 0;
+
+  
+  switch (SEC_COORD(ptr_maze,coord))
+  {
+    //Our desired coordinate is blocked
+    case PATH:
+    case WALL:
+        return 0;
+      break;
+    
+    case DESTINATION:
+        return length;
+  }
+
+  if(SEC_COORD(ptr_maze,coord) != START)
+  {
+    SEC_COORD(ptr_maze,coord) = PATH;
+    display_maze(display, ptr_maze);
+  }
+}
 void do_maze(display_t *display)
 {
 //Initialize
   char cmd = '\0';
   maze_t maze;
-  maze.size = makeCoord(-1, -1);
+  maze.size = (coordinate_t){-1, -1};
   
+  coordinate_t goal;
+  coordinate_t start;
+
   PRNT_CMD;
   while (TRUE)
   {
@@ -189,17 +279,36 @@ void do_maze(display_t *display)
     {
       case 'q':
         return;
-
       case 'p':
         print_maze(&maze);
       break;
-
       case 'd':
         display_maze(display, &maze);
       break;
-
       case 'i':
         input_maze(&maze);
+      break;
+      case 's':
+        //Prints the coordiante of the start and smallest goal
+        start = find_start_setGoal(&maze, &goal);
+        if (start.x > -1) //Printing values only if valid coordinate
+           PRNT_COORD("The start is at",start);
+        else
+          printf("Maze contains no start\n");
+
+        if (goal.x > -1) //Printing values only if valid coordinate
+           PRNT_COORD("The first destination is at",goal);
+        else
+          printf("Maze contains no destination\n");
+      break;
+      case 'S':
+        //Swaps the start and smallest goal section in the grid
+        start = find_start_setGoal(&maze, &goal);
+        swap_sections(&maze, &start, &goal);
+      break;
+      case 'm':
+        //Mirror the grid -> (x,y) to (y,x)
+        mirror_maze(&maze);
       break;
       default:
         printf("Unknown command \'%c\'\n", cmd);

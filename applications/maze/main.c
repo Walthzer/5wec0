@@ -10,6 +10,7 @@
 #ifndef MANJAROO
   #include <libpynq.h>
 #else
+  //#define DEBUG_MAX
   #include <display.h>
 #endif
 
@@ -62,6 +63,14 @@ typedef struct
 //TYPE FUNCTIONS
 
 //LOGIC FUNCTIONS
+//get the max between two int
+int maximum(int a, int b)
+{
+  if (a > b)
+    return a;
+  
+  return b;
+}
 
 //Build the maze from prompts
 void input_maze(maze_t* ptr_maze)
@@ -69,7 +78,7 @@ void input_maze(maze_t* ptr_maze)
   coordinate_t* ptr_maze_s = &ptr_maze->size;
 
   PROMPT_INT("Number of rows? ", &ptr_maze_s->y);
-  PROMPT_INT("Number of colums? ", &ptr_maze_s->x);
+  PROMPT_INT("Number of columns? ", &ptr_maze_s->x);
 
   //Prevent incorrect maze size
   if(ptr_maze_s->x < 2 || ptr_maze_s->y < 2)
@@ -135,7 +144,6 @@ void draw_section(display_t* display, coordinate_t upper_l, coordinate_t lower_r
   #ifdef PYNQLIB_H
   displayDrawFillRect(display, upper_l.x, upper_l.y, lower_r.x, lower_r.y, colour);
   #endif
-  printf("dfr %d %d %d %d %d\n", upper_l.x, upper_l.y, lower_r.x, lower_r.y, colour);
 }
 //Display the maze onto the PYNQ display
 void display_maze(display_t* display, maze_t* ptr_maze)
@@ -232,33 +240,130 @@ void swap_sections(maze_t* ptr_maze, coordinate_t* sec_a, coordinate_t* sec_b)
   SEC_COORD(ptr_maze,(*sec_a)) = SEC_COORD(ptr_maze,(*sec_b));
   SEC_COORD(ptr_maze,(*sec_b)) = buffer;
 }
+//Clear all path related sections back to NOT_VISITED
+void clear_path(maze_t* ptr_maze)
+{
+  FOR_ROWS(ptr_maze,1)
+  {
+    FOR_COLUMNS(ptr_maze,1)
+    {
+      char* section = &SEC(ptr_maze,idx_x,idx_y);
+      if (*section == VISITED || *section == PATH)
+        *section = NOT_VISITED;
+    }
+  }
+}
 //Recursive Pathfinding function
 int find_path(display_t* display, maze_t* ptr_maze, coordinate_t coord, int length)
 {
+  #ifdef DEBUG_MAX
+  printf("COORD: %3d, %3d\n", coord.x, coord.y);
+  #endif
   //Prevent an out-of-bound coordinate
-  int x_outside = SIZE_X(ptr_maze) < coord.x || coord.x < 0;
-  int y_outside = SIZE_Y(ptr_maze) < coord.y || coord.y < 0;
+  int x_outside = SIZE_X(ptr_maze) <= coord.x || coord.x < 0;
+  int y_outside = SIZE_Y(ptr_maze) <= coord.y || coord.y < 0;
+  if(x_outside || y_outside)
+    return 0;
+
+  #ifdef DEBUG_MAX
+  if(SEC_COORD(ptr_maze,coord) == NOT_VISITED)
+  {
+    SEC_COORD(ptr_maze,coord) = '@';
+    print_maze(ptr_maze);
+    printf("\n");
+  }
+  #endif
+
+  switch (SEC_COORD(ptr_maze,coord))
+  {
+    case START:
+      //We have encountered start again
+      if (length > 0)
+        return 0;
+    break;
+      
+    //Our desired coordinate is blocked
+    case PATH:
+    case WALL:
+        return 0;
+    
+    case DESTINATION:
+        return length;
+      
+    default:
+      SEC_COORD(ptr_maze,coord) = PATH;
+    break;
+  }
+
+  int len = length;
+
+  // try to find a path in North, East, South, and West directions
+  len = find_path(display, ptr_maze, (coordinate_t){coord.x, coord.y-1}, length+1); if (len > 0) return len;
+  len = find_path(display, ptr_maze, (coordinate_t){coord.x+1, coord.y}, length+1); if (len > 0) return len;
+  len = find_path(display, ptr_maze, (coordinate_t){coord.x, coord.y+1}, length+1); if (len > 0) return len;
+  len = find_path(display, ptr_maze, (coordinate_t){coord.x-1, coord.y}, length+1); if (len > 0) return len;
+
+  // if we get here we didn’t find a solution in N,E,S, or W directions
+  if(SEC_COORD(ptr_maze,coord) != START)
+  {
+    SEC_COORD(ptr_maze,coord) = VISITED;
+  }
+  //display_maze(display, ptr_maze);
+  return 0;
+
+}
+//Moification of find_path that returns all possible paths
+int find_longest_path(display_t* display, maze_t* ptr_maze, coordinate_t coord, int length)
+{
+  //Prevent an out-of-bound coordinate
+  int x_outside = SIZE_X(ptr_maze) <= coord.x || coord.x < 0;
+  int y_outside = SIZE_Y(ptr_maze) <= coord.y || coord.y < 0;
   if(x_outside || y_outside)
     return 0;
 
   
   switch (SEC_COORD(ptr_maze,coord))
   {
+    case START:
+      //We have encountered start again
+      if (length > 0)
+        return 0;
+    break;
+
     //Our desired coordinate is blocked
     case PATH:
     case WALL:
         return 0;
-      break;
     
     case DESTINATION:
+        printf("Found a path of length %d\n", length);
         return length;
+      
+    default:
+      SEC_COORD(ptr_maze,coord) = PATH;
+    break;
   }
+
+  int len0, len1, len2, len3 = length;
+
+  // try to find a path in North, East, South, and West directions
+  len0 = find_longest_path(display, ptr_maze, (coordinate_t){coord.x, coord.y-1}, length+1);
+  len1 = find_longest_path(display, ptr_maze, (coordinate_t){coord.x+1, coord.y}, length+1);
+  len2 = find_longest_path(display, ptr_maze, (coordinate_t){coord.x, coord.y+1}, length+1);
+  len3 = find_longest_path(display, ptr_maze, (coordinate_t){coord.x-1, coord.y}, length+1);
 
   if(SEC_COORD(ptr_maze,coord) != START)
   {
-    SEC_COORD(ptr_maze,coord) = PATH;
-    display_maze(display, ptr_maze);
+    SEC_COORD(ptr_maze,coord) = NOT_VISITED;
   }
+
+  int max_length = maximum(maximum(len0, len1), maximum(len2, len3));
+  if (max_length > 0)
+    return max_length;
+
+  //display_maze(display, ptr_maze);
+  return 0;
+
 }
 void do_maze(display_t *display)
 {
@@ -269,6 +374,7 @@ void do_maze(display_t *display)
   
   coordinate_t goal;
   coordinate_t start;
+  int length = 0;
 
   PRNT_CMD;
   while (TRUE)
@@ -309,6 +415,31 @@ void do_maze(display_t *display)
       case 'm':
         //Mirror the grid -> (x,y) to (y,x)
         mirror_maze(&maze);
+      break;
+      case 'f':
+        //Mirror the grid -> (x,y) to (y,x)
+        start = find_start_setGoal(&maze, &goal);
+        length = 0;
+        length = find_path(display, &maze, start, length);
+        if (length <= 0)
+          printf("No path found\n");
+        else
+          printf("Found a path of length %d\n", length);
+        print_maze(&maze);
+      break;
+      case 'r':
+        clear_path(&maze);
+      break;
+      case 'l':
+        //Mirror the grid -> (x,y) to (y,x)
+        start = find_start_setGoal(&maze, &goal);
+        length = 0;
+        length = find_longest_path(display, &maze, start, length);
+        if (length <= 0)
+          printf("No path found\n");
+        else
+          printf("The length of the longest path is %d\n", length);
+        print_maze(&maze);
       break;
       default:
         printf("Unknown command \'%c\'\n", cmd);

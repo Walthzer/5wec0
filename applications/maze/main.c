@@ -146,40 +146,55 @@ void draw_section(display_t* display, coordinate_t upper_l, coordinate_t lower_r
   #endif
 }
 //Display the maze onto the PYNQ display
-void display_maze(display_t* display, maze_t* ptr_maze)
+void display_maze(display_t *display, maze_t *maze)
 {
-  //Do nothing if maze is empty
-  if (SIZE_X(ptr_maze) == -1)
-    return;
-
-  //Setup variables for the draw operations
-  int colour = 0;
-  //Scaling factors
-  int scale_x = DISPLAY_WIDTH / SIZE_X(ptr_maze);
-  int scale_y = DISPLAY_HEIGHT / SIZE_Y(ptr_maze);
-
-  //Clear Display
-  #ifdef PYNQLIB_H
-  displayFillScreen(display, RGB_BLACK);
-  #endif
-
-  //Row by Row drawing of the maze
-  FOR_ROWS(ptr_maze,1)
-  {
-    FOR_COLUMNS(ptr_maze,1)
+    if (maze->size.x == -1 || maze->size.y == -1)
     {
-      colour = resolve_colour(SEC(ptr_maze,idx_x,idx_y));
+        return;
+    }    
+    
+    //blacking out the screen.
+    //displayFillScreen(display, RGB_BLACK);
+    
+    //proportioning each cell, so that the maze fills up the display.
+    int rectangleWidth = DISPLAY_WIDTH/ maze->size.x;
+    int rectangleHeight = DISPLAY_HEIGHT/ maze->size.y;
+    
+    for (int i = 0; i < (maze->size.x); i++)
+    {
+        for (int j = 0; j < (maze->size.y); j++)
+        {
+            int c;
+            //Picked up from the homework
+            switch (maze->grid[i][j])
+            {
+                case WALL:
+                    c = RGB_RED;
+                    break;
+                case PATH:
+                    c = RGB_YELLOW;
+                    break;
+                case START:
+                    c = RGB_BLUE;
+                    break;
+                case DESTINATION:
+                    c = RGB_GREEN;
+                    break;
+                case VISITED:
+                    c = rgb_conv(100, 100, 100);
+                    break;
+                case NOT_VISITED:
+                    c = RGB_BLACK;
+                    break;
+                default:
+                    c = RGB_BLACK;
+                    break;
+            }
 
-      //Create the drawing coordinates 
-      coordinate_t upper_l = (coordinate_t){idx_x*scale_x, 
-                                            idx_y*scale_y};
-                                        
-      coordinate_t lower_r = (coordinate_t){(idx_x + 1)*scale_x - (1),
-                                            (idx_y + 1)*scale_y - (1)};
-      draw_section(display, upper_l, lower_r, colour);
-    } 
-  } 
-  
+            // Draw a filled rectangle for each maze cell
+            printf("dfr %d %d %d %d %d\n",i * rectangleWidth, j * rectangleHeight, ((i + 1) * rectangleWidth) - 1, ((j + 1) * rectangleHeight) - 1, c);
+        }
+    }
 }
 //Mirror the maze grid around the diagonal -> (x,y) to (y,x)
 void mirror_maze(maze_t* ptr_o_maze)

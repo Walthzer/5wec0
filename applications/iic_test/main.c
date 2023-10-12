@@ -19,8 +19,8 @@ void do_iic_test(void)
   switchbox_init();
   pn("Done\n");
   pn("  Pinset: ");
-  switchbox_set_pin((pin_t)SWB_IIC0_SCL, SWB_RBPI12);
-  switchbox_set_pin((pin_t)SWB_IIC0_SDA, SWB_RBPI13);
+  switchbox_set_pin((pin_t)SWB_IIC0_SCL, SWB_RBPI38);
+  switchbox_set_pin((pin_t)SWB_IIC0_SDA, SWB_RBPI40);
   pn("Done\n");
   pn("  IIC: ");
   iic_init(0);

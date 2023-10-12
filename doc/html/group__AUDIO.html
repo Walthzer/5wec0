@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -224,23 +224,23 @@ Functions</h2></td></tr>
 <p>An example of using this library to play audio from line_in to mic+Ph: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="libpynq_8h.html">libpynq.h</a>&gt;</span></div>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
-<div class="line"> <a class="code hl_function" href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>();</div>
+<div class="line"> <a class="code hl_function" href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>();</div>
 <div class="line"> <a class="code hl_function" href="group__AUDIO.html#ga780026a09284372732eeca5c1bdeda0b">audio_init</a>();</div>
 <div class="line"> <a class="code hl_function" href="group__AUDIO.html#ga61af1e13a8f338966a17f07a518ef207">audio_select_input</a>(<a class="code hl_define" href="group__AUDIO.html#ga6636551bd86d7647ce3e09781b4d5e4e">MIC</a>);</div>
 <div class="line"> <span class="keywordflow">while</span>(1) {</div>
 <div class="line">   <a class="code hl_function" href="group__AUDIO.html#ga5fee8d77c208512f18f4273213520249">audio_bypass</a>(64*1024, 32*1024, 50, 0);</div>
 <div class="line"> }</div>
 <div class="line"> <a class="code hl_function" href="group__AUDIO.html#ga0ae77235b32f5522d5d881baf2c52210">deselect</a>();</div>
-<div class="line"> <a class="code hl_function" href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
+<div class="line"> <a class="code hl_function" href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
 <div class="line"> <span class="keywordflow">return</span> EXIT_SUCCES;</div>
 <div class="line">}</div>
-<div class="ttc" id="aempty-library_2libpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00002">libpynq.c:2</a></div></div>
-<div class="ttc" id="aempty-library_2libpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00003">libpynq.c:3</a></div></div>
 <div class="ttc" id="agroup__AUDIO_html_ga0ae77235b32f5522d5d881baf2c52210"><div class="ttname"><a href="group__AUDIO.html#ga0ae77235b32f5522d5d881baf2c52210">deselect</a></div><div class="ttdeci">void deselect(void)</div><div class="ttdoc">Function to deselect input, either LINE_IN, or MIC.</div><div class="ttdef"><b>Definition</b> <a href="audio_8c_source.html#l00286">audio.c:286</a></div></div>
 <div class="ttc" id="agroup__AUDIO_html_ga5fee8d77c208512f18f4273213520249"><div class="ttname"><a href="group__AUDIO.html#ga5fee8d77c208512f18f4273213520249">audio_bypass</a></div><div class="ttdeci">void audio_bypass(unsigned int audio_mmap_size, unsigned int nsamples, unsigned int volume, int uio_index)</div><div class="ttdoc">Record and play the audio without storing in DRAM.</div><div class="ttdef"><b>Definition</b> <a href="audio_8c_source.html#l00304">audio.c:304</a></div></div>
 <div class="ttc" id="agroup__AUDIO_html_ga61af1e13a8f338966a17f07a518ef207"><div class="ttname"><a href="group__AUDIO.html#ga61af1e13a8f338966a17f07a518ef207">audio_select_input</a></div><div class="ttdeci">void audio_select_input(int input)</div><div class="ttdoc">selects the audio input channel.</div><div class="ttdef"><b>Definition</b> <a href="audio_8c_source.html#l00077">audio.c:77</a></div></div>
 <div class="ttc" id="agroup__AUDIO_html_ga6636551bd86d7647ce3e09781b4d5e4e"><div class="ttname"><a href="group__AUDIO.html#ga6636551bd86d7647ce3e09781b4d5e4e">MIC</a></div><div class="ttdeci">#define MIC</div><div class="ttdef"><b>Definition</b> <a href="audio_8h_source.html#l00033">audio.h:33</a></div></div>
 <div class="ttc" id="agroup__AUDIO_html_ga780026a09284372732eeca5c1bdeda0b"><div class="ttname"><a href="group__AUDIO.html#ga780026a09284372732eeca5c1bdeda0b">audio_init</a></div><div class="ttdeci">void audio_init(void)</div><div class="ttdoc">Initializes the audio register. Sets the sampling frequency. defines several values such as audio rec...</div><div class="ttdef"><b>Definition</b> <a href="audio_8c_source.html#l00072">audio.c:72</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00024">libpynq.c:24</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00035">libpynq.c:35</a></div></div>
 <div class="ttc" id="alibpynq_8h_html"><div class="ttname"><a href="libpynq_8h.html">libpynq.h</a></div></div>
 </div><!-- fragment --> <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gac54bdb2ac315f3c2648ca1e0adc5efe8" name="gac54bdb2ac315f3c2648ca1e0adc5efe8"></a>
@@ -997,7 +997,7 @@ Here is the caller graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:02 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

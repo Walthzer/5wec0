@@ -1,0 +1,11 @@
+digraph "gpio_disable_interrupt"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="gpio_disable_interrupt",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Disables interrupts from occuring on the specific pin. Hereafter, the pin will not trigger an interru..."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="check_initialization",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$interrupt_8c.html#a9b67e3d1a1cb47210459207e80747ad1",tooltip=" "];
+}

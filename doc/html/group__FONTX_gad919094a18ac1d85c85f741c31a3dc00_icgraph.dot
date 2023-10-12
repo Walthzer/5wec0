@@ -8,4 +8,8 @@ digraph "OpenFontx"
   Node1 [id="Node000001",label="OpenFontx",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Opens the font file and reads the font data into the FontxFile structure."];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="GetFontx",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__FONTX.html#ga70d9af862f8906a3bedb6cc10b46f3f6",tooltip="Gets the glyph data for the specified ASCII character."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="displayDrawChar",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__DISPLAY.html#ga8a92d604ad9c6f72684a0d0679cb04bf",tooltip="Draws a character on the given coordinates of the display."];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="displayDrawString",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__DISPLAY.html#ga0cf83239824624d1a311a74613194ad0",tooltip="Function to draw a string on the display."];
 }

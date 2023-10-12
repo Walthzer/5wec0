@@ -26,9 +26,7 @@ CFLAGS+= -ggdb -g3
 # C version
 CFLAGS+= -std=c99
 CFLAGS+=-D_POSIX_C_SOURCE=200809L
-
-# Prevent Loading of PYNQ libraries on MANJAROO
-CFLAGS+=-DMANJAROO=1
+CFLAGS+=-MANJAROO=1
 
 # Warnings
 CFLAGS+= -Wall -Wextra

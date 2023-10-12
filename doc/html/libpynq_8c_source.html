@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -115,31 +115,31 @@ $(document).ready(function(){initNavTree('libpynq_8c_source.html',''); initResiz
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="libpynq_8h.html">libpynq.h</a>&quot;</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">   24</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">   24</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>(<span class="keywordtype">void</span>) {</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <a class="code hl_function" href="group__GPIO.html#gafdbe206b3c49f019757ab09b3cf52b9c">gpio_init</a>();</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <a class="code hl_function" href="group__GPIO.html#ga50c7fd3ea0ff2a823de87a74c19ffb1e">gpio_reset</a>();</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <a class="code hl_function" href="group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f">switchbox_init</a>();</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <a class="code hl_function" href="group__SWITCHBOX.html#ga74a66c9d9da08623ed4698e4ba7978a6">switchbox_reset</a>();</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="comment">// set line buffering on the output, should help with logging</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  setlinebuf(stdout);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  setlinebuf(stderr);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="comment">//  setlinebuf(stdout);</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <span class="comment">//  setlinebuf(stderr);</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>}</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">   35</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">   35</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>(<span class="keywordtype">void</span>) {</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <a class="code hl_function" href="group__GPIO.html#ga50c7fd3ea0ff2a823de87a74c19ffb1e">gpio_reset</a>();</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <a class="code hl_function" href="group__GPIO.html#gade823711d8824fe39b22677239c87c1d">gpio_destroy</a>();</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <a class="code hl_function" href="group__SWITCHBOX.html#ga74a66c9d9da08623ed4698e4ba7978a6">switchbox_reset</a>();</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <a class="code hl_function" href="group__SWITCHBOX.html#ga3287b962efdc35dce05a4c0a6d899e61">switchbox_destroy</a>();</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
-<div class="ttc" id="aempty-library_2libpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00002">libpynq.c:2</a></div></div>
-<div class="ttc" id="aempty-library_2libpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00003">libpynq.c:3</a></div></div>
-<div class="ttc" id="agroup__GPIO_html_ga50c7fd3ea0ff2a823de87a74c19ffb1e"><div class="ttname"><a href="group__GPIO.html#ga50c7fd3ea0ff2a823de87a74c19ffb1e">gpio_reset</a></div><div class="ttdeci">void gpio_reset(void)</div><div class="ttdoc">Reset all GPIO pins.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2gpio_8c_source.html#l00018">gpio.c:18</a></div></div>
-<div class="ttc" id="agroup__GPIO_html_gade823711d8824fe39b22677239c87c1d"><div class="ttname"><a href="group__GPIO.html#gade823711d8824fe39b22677239c87c1d">gpio_destroy</a></div><div class="ttdeci">void gpio_destroy(void)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2gpio_8c_source.html#l00003">gpio.c:3</a></div></div>
-<div class="ttc" id="agroup__GPIO_html_gafdbe206b3c49f019757ab09b3cf52b9c"><div class="ttname"><a href="group__GPIO.html#gafdbe206b3c49f019757ab09b3cf52b9c">gpio_init</a></div><div class="ttdeci">void gpio_init(void)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2gpio_8c_source.html#l00002">gpio.c:2</a></div></div>
-<div class="ttc" id="agroup__SWITCHBOX_html_ga3287b962efdc35dce05a4c0a6d899e61"><div class="ttname"><a href="group__SWITCHBOX.html#ga3287b962efdc35dce05a4c0a6d899e61">switchbox_destroy</a></div><div class="ttdeci">void switchbox_destroy(void)</div><div class="ttdoc">Resets all pins of the switch box to be input.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2switchbox_8c_source.html#l00006">switchbox.c:6</a></div></div>
-<div class="ttc" id="agroup__SWITCHBOX_html_ga74a66c9d9da08623ed4698e4ba7978a6"><div class="ttname"><a href="group__SWITCHBOX.html#ga74a66c9d9da08623ed4698e4ba7978a6">switchbox_reset</a></div><div class="ttdeci">void switchbox_reset(void)</div><div class="ttdoc">Resets all pins of the switch box to be input.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2switchbox_8c_source.html#l00005">switchbox.c:5</a></div></div>
-<div class="ttc" id="agroup__SWITCHBOX_html_gaa08d84687c6b7fcfae8d1ea0e067306f"><div class="ttname"><a href="group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f">switchbox_init</a></div><div class="ttdeci">void switchbox_init(void)</div><div class="ttdoc">Initializes the switch box.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2switchbox_8c_source.html#l00003">switchbox.c:3</a></div></div>
+<div class="ttc" id="agroup__GPIO_html_ga50c7fd3ea0ff2a823de87a74c19ffb1e"><div class="ttname"><a href="group__GPIO.html#ga50c7fd3ea0ff2a823de87a74c19ffb1e">gpio_reset</a></div><div class="ttdeci">void gpio_reset(void)</div><div class="ttdoc">Reset all IO pins.</div><div class="ttdef"><b>Definition</b> <a href="gpio_8c_source.html#l00062">gpio.c:62</a></div></div>
+<div class="ttc" id="agroup__GPIO_html_gade823711d8824fe39b22677239c87c1d"><div class="ttname"><a href="group__GPIO.html#gade823711d8824fe39b22677239c87c1d">gpio_destroy</a></div><div class="ttdeci">void gpio_destroy(void)</div><div class="ttdef"><b>Definition</b> <a href="gpio_8c_source.html#l00047">gpio.c:47</a></div></div>
+<div class="ttc" id="agroup__GPIO_html_gafdbe206b3c49f019757ab09b3cf52b9c"><div class="ttname"><a href="group__GPIO.html#gafdbe206b3c49f019757ab09b3cf52b9c">gpio_init</a></div><div class="ttdeci">void gpio_init(void)</div><div class="ttdef"><b>Definition</b> <a href="gpio_8c_source.html#l00040">gpio.c:40</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_ga3287b962efdc35dce05a4c0a6d899e61"><div class="ttname"><a href="group__SWITCHBOX.html#ga3287b962efdc35dce05a4c0a6d899e61">switchbox_destroy</a></div><div class="ttdeci">void switchbox_destroy(void)</div><div class="ttdoc">Resets all pins of the switch box to be input.</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8c_source.html#l00112">switchbox.c:112</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_ga74a66c9d9da08623ed4698e4ba7978a6"><div class="ttname"><a href="group__SWITCHBOX.html#ga74a66c9d9da08623ed4698e4ba7978a6">switchbox_reset</a></div><div class="ttdeci">void switchbox_reset(void)</div><div class="ttdoc">Resets all pins of the switch box to be input.</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8c_source.html#l00118">switchbox.c:118</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_gaa08d84687c6b7fcfae8d1ea0e067306f"><div class="ttname"><a href="group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f">switchbox_init</a></div><div class="ttdeci">void switchbox_init(void)</div><div class="ttdoc">Initializes the switch box.</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8c_source.html#l00105">switchbox.c:105</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00024">libpynq.c:24</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00035">libpynq.c:35</a></div></div>
 <div class="ttc" id="alibpynq_8h_html"><div class="ttname"><a href="libpynq_8h.html">libpynq.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('libpynq_8c_source.html',''); initResiz
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3d620c6b6fdb93ed3bc6186215bde2e.html">library</a></li><li class="navelem"><a class="el" href="libpynq_8c.html">libpynq.c</a></li>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:01 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

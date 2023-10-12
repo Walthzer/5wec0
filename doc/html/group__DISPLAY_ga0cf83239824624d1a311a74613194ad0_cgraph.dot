@@ -13,7 +13,7 @@ digraph "displayDrawString"
   Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
   Node4 [id="Node000004",label="spi_master_write_addr",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a6eed2e690959fe65c5e5b63808afd2ed",tooltip=" "];
   Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
-  Node5 [id="Node000005",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#ad5a42b84617ecc1b6af7d36ac2d0bea4",tooltip=" "];
+  Node5 [id="Node000005",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga6d929f90f89a8bccbe40da10a323a508",tooltip="Set the level of the output IO pin. If the pin is configured as input, this function does nothing."];
   Node4 -> Node6 [id="edge5_Node000004_Node000006",color="steelblue1",style="solid",tooltip=" "];
   Node6 [id="Node000006",label="spi_to_gpio",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a2e84550a5ec7d45e5253d8e82523fe31",tooltip=" "];
   Node3 -> Node7 [id="edge6_Node000003_Node000007",color="steelblue1",style="solid",tooltip=" "];
@@ -34,4 +34,6 @@ digraph "displayDrawString"
   Node10 -> Node6 [id="edge17_Node000010_Node000006",color="steelblue1",style="solid",tooltip=" "];
   Node2 -> Node11 [id="edge18_Node000002_Node000011",color="steelblue1",style="solid",tooltip=" "];
   Node11 [id="Node000011",label="GetFontx",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__FONTX.html#ga70d9af862f8906a3bedb6cc10b46f3f6",tooltip="Gets the glyph data for the specified ASCII character."];
+  Node11 -> Node12 [id="edge19_Node000011_Node000012",color="steelblue1",style="solid",tooltip=" "];
+  Node12 [id="Node000012",label="OpenFontx",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__FONTX.html#gad919094a18ac1d85c85f741c31a3dc00",tooltip="Opens the font file and reads the font data into the FontxFile structure."];
 }

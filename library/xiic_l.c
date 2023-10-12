@@ -69,7 +69,11 @@
 
 /***************************** Include Files *******************************/
 #define _DEFAULT_SOURCE
+#include <stdio.h>
+#include <time.h>
 #include <unistd.h>
+
+#define IIC_TIMEOUT 5
 
 #include "xiic_l.h"
 #include "xil_types.h"
@@ -411,9 +415,15 @@ unsigned XIic_Send(UINTPTR BaseAddress, u8 Address, u8 *BufferPtr,
      * status for the bus not busy bit which must be done while
      * the bus is busy
      */
+    time_t s = time(NULL);
     StatusReg = XIic_ReadReg(BaseAddress, XIIC_SR_REG_OFFSET);
     while ((StatusReg & XIIC_SR_BUS_BUSY_MASK) == 0) {
       StatusReg = XIic_ReadReg(BaseAddress, XIIC_SR_REG_OFFSET);
+      time_t n = time(NULL);
+      if ((n - s) > IIC_TIMEOUT) {
+        printf("IIC timeout bus not busy.\n");
+        return 0;
+      }
     }
 
     XIic_ClearIisr(BaseAddress, XIIC_INTR_BNB_MASK);

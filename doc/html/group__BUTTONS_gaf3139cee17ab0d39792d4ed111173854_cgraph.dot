@@ -7,5 +7,5 @@ digraph "sleep_msec_buttons_pushed"
   rankdir="LR";
   Node1 [id="Node000001",label="sleep_msec_buttons\l_pushed",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Check if any button is pushed in msec milliseconds. The function does NOT return early."];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
-  Node2 [id="Node000002",label="gpio_get_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#a939422be5ec42d4d24d952839206ec0f",tooltip=" "];
+  Node2 [id="Node000002",label="gpio_get_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#gada071d5764fd998b331c31b867bfc88e",tooltip="Return the level of the IO pin."];
 }

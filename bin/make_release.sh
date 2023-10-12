@@ -43,6 +43,8 @@ grep 'url =' .git/config | sed 's/.*url = //' > ../tmp
   cat ../tmp >> RELEASE
   rm -r ../tmp
   echo making documentation - this takes some time, do not interrupt
+  echo removing empty-lib to avoid confusing doxygen
+  rm -r library/empty-library
   make doc >/dev/null 2>&1 
   mv build/latex/refman.pdf build
   rm -r build/latex

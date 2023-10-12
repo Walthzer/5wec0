@@ -11,7 +11,7 @@ digraph "displayDrawLine"
   Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
   Node3 [id="Node000003",label="spi_master_write_addr",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a6eed2e690959fe65c5e5b63808afd2ed",tooltip=" "];
   Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
-  Node4 [id="Node000004",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#ad5a42b84617ecc1b6af7d36ac2d0bea4",tooltip=" "];
+  Node4 [id="Node000004",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga6d929f90f89a8bccbe40da10a323a508",tooltip="Set the level of the output IO pin. If the pin is configured as input, this function does nothing."];
   Node3 -> Node5 [id="edge4_Node000003_Node000005",color="steelblue1",style="solid",tooltip=" "];
   Node5 [id="Node000005",label="spi_to_gpio",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a2e84550a5ec7d45e5253d8e82523fe31",tooltip=" "];
   Node2 -> Node6 [id="edge5_Node000002_Node000006",color="steelblue1",style="solid",tooltip=" "];

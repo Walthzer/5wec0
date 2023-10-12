@@ -37,7 +37,7 @@ void sleep_msec(int msec) {
 void mapping_info(void) {
   const char *const dir[2] = {"Input", "Output"};
   printf("Pin\tName\tI/O\tLevel\tChannel\tCh_Name\t\tState\n");
-  for (int i = 0; i < SWB_NUM_PINS; i++) {
+  for (int i = 0; i < IO_NUM_PINS; i++) {
     pin_state_t pin_array = {
         0,
     };

@@ -59,12 +59,12 @@ SOFTWARE.
  * @endcode
  *
  * Buttons can also be used through GPIO (see gpio.h and pinmap.h). Note that
- * GPIO numbering (SWB_BTN0..SWB_BTN3) is then used instead of 0..NUM_BUTTONS-1
+ * GPIO numbering (IO_BTN0..IO_BTN3) is then used instead of 0..NUM_BUTTONS-1
  * (BUTTON0..BUTTON3). GPIO return values are GPIO_LEVEL_LOW/HIGH
  * instead of BUTTON_(NOT_)PUSHED.
  *
  * Switches can also be used through GPIO (see gpio.h and pinmap.h). Note that
- * GPIO numbering (SWB_SW0..SWB_SW1) is then used instead of 0..NUM_SWITCHES-1
+ * GPIO numbering (IO_SW0..IO_SW1) is then used instead of 0..NUM_SWITCHES-1
  * (SWITCH0..SWITCH1). GPIO return values are GPIO_LEVEL_LOW/HIGH
  * instead of SWITCH_ON/OFF.
  *

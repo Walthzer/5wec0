@@ -32,12 +32,12 @@ SOFTWARE.
  * @{
  */
 
-#define LCD_MOSI    SWB_RBPI33 /* AR_SDA */
-#define LCD_SCLK    SWB_RBPI35 /* AR_SCL */
-#define LCD_CS      SWB_RBPI36 /* AR13 */
-#define LCD_DC      SWB_RBPI37 /* AR12 */
-#define LCD_RESET   SWB_RBPI38 /* AR11 */
-#define LCD_BL      SWB_RBPI40 /* AR10 */
+#define LCD_MOSI    IO_RBPI33 /* AR_SDA */
+#define LCD_SCLK    IO_RBPI35 /* AR_SCL */
+#define LCD_CS      IO_RBPI36 /* AR13 */
+#define LCD_DC      IO_RBPI37 /* AR12 */
+#define LCD_RESET   IO_RBPI38 /* AR11 */
+#define LCD_BL      IO_RBPI40 /* AR10 */
 
 /**
  * @}

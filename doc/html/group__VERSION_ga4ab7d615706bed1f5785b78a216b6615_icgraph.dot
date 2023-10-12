@@ -8,6 +8,9 @@ digraph "check_version"
   Node1 [id="Node000001",label="check_version",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="gpio_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#gafdbe206b3c49f019757ab09b3cf52b9c",tooltip=" "];
-  Node1 -> Node3 [id="edge2_Node000001_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
-  Node3 [id="Node000003",label="switchbox_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f",tooltip="Initializes the switch box."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="pynq_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$libpynq_8c.html#a3c76b9633e9988436c3e3555be805728",tooltip="Initialise the switchbox and GPIO of the PYNQ."];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="switchbox_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f",tooltip="Initializes the switch box."];
+  Node4 -> Node3 [id="edge4_Node000004_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
 }

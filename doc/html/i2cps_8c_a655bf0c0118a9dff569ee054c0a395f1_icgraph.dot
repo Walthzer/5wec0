@@ -1,0 +1,36 @@
+digraph "writeI2C_asFile"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="writeI2C_asFile",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="config_audio_pll",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga9c9de79126611d05d3e2bda897ca886e",tooltip=" "];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="audio_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga780026a09284372732eeca5c1bdeda0b",tooltip="Initializes the audio register. Sets the sampling frequency. defines several values such as audio rec..."];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="write_audio_reg",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga3ec4d5593965dc8b93d40e80e2143902",tooltip=" "];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="audio_bypass",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga5fee8d77c208512f18f4273213520249",tooltip="Record and play the audio without storing in DRAM."];
+  Node4 -> Node6 [id="edge5_Node000004_Node000006",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="audio_generate_tone",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga061d146b990619c8f7ebd37ee18cbe23",tooltip=" "];
+  Node4 -> Node7 [id="edge6_Node000004_Node000007",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="audio_play",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga52d0f4ea75ee4d027430bb25a2f8b7a9",tooltip=" "];
+  Node4 -> Node8 [id="edge7_Node000004_Node000008",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="audio_repeat_play",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga4b430bbc9a47b8160f2596cc625683ff",tooltip="Function to play one audio fragment for multiple repititions."];
+  Node4 -> Node9 [id="edge8_Node000004_Node000009",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node9 [id="Node000009",label="config_audio_codec",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga4c3476adecb27a3162fabab4af088f0b",tooltip=" "];
+  Node9 -> Node3 [id="edge9_Node000009_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 -> Node2 [id="edge10_Node000004_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 -> Node10 [id="edge11_Node000004_Node000010",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node10 [id="Node000010",label="deselect",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga0ae77235b32f5522d5d881baf2c52210",tooltip="Function to deselect input, either LINE_IN, or MIC."];
+  Node4 -> Node11 [id="edge12_Node000004_Node000011",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node11 [id="Node000011",label="select_line_in",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#gaec4645b89d23204e90f880d09da94525",tooltip="Function to select LINE_IN as input."];
+  Node11 -> Node12 [id="edge13_Node000011_Node000012",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node12 [id="Node000012",label="audio_select_input",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga61af1e13a8f338966a17f07a518ef207",tooltip="selects the audio input channel."];
+  Node4 -> Node13 [id="edge14_Node000004_Node000013",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node13 [id="Node000013",label="select_mic",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__AUDIO.html#ga2203ea82d55c60566ab868a82292aedf",tooltip="Function to select MIC as input."];
+  Node13 -> Node12 [id="edge15_Node000013_Node000012",dir="back",color="steelblue1",style="solid",tooltip=" "];
+}

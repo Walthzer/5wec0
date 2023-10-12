@@ -11,7 +11,7 @@ digraph "display_init"
   Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
   Node3 [id="Node000003",label="spi_master_write_command",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a59d25920920ebea3da54ebbf4fd8493c",tooltip=" "];
   Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
-  Node4 [id="Node000004",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#ad5a42b84617ecc1b6af7d36ac2d0bea4",tooltip=" "];
+  Node4 [id="Node000004",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga6d929f90f89a8bccbe40da10a323a508",tooltip="Set the level of the output IO pin. If the pin is configured as input, this function does nothing."];
   Node3 -> Node5 [id="edge4_Node000003_Node000005",color="steelblue1",style="solid",tooltip=" "];
   Node5 [id="Node000005",label="spi_to_gpio",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$display_8c.html#a2e84550a5ec7d45e5253d8e82523fe31",tooltip=" "];
   Node2 -> Node6 [id="edge5_Node000002_Node000006",color="steelblue1",style="solid",tooltip=" "];
@@ -28,13 +28,20 @@ digraph "display_init"
   Node9 -> Node10 [id="edge12_Node000009_Node000010",color="steelblue1",style="solid",tooltip=" "];
   Node10 [id="Node000010",label="arm_shared_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__ARMSHARED.html#gaeb6db0acbe89d1bacc6d83e34d175c26",tooltip=" "];
   Node9 -> Node11 [id="edge13_Node000009_Node000011",color="steelblue1",style="solid",tooltip=" "];
-  Node11 [id="Node000011",label="gpio_reset_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#ad790f17473bb5b3c0c23a7f53164db39",tooltip=" "];
-  Node9 -> Node12 [id="edge14_Node000009_Node000012",color="steelblue1",style="solid",tooltip=" "];
-  Node12 [id="Node000012",label="gpio_set_direction",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#ae61888b4d2e494ef13d5d38def949a07",tooltip=" "];
-  Node9 -> Node4 [id="edge15_Node000009_Node000004",color="steelblue1",style="solid",tooltip=" "];
-  Node9 -> Node8 [id="edge16_Node000009_Node000008",color="steelblue1",style="solid",tooltip=" "];
-  Node9 -> Node13 [id="edge17_Node000009_Node000013",color="steelblue1",style="solid",tooltip=" "];
-  Node13 [id="Node000013",label="switchbox_set_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5",tooltip="Set the type of a switch pin."];
-  Node7 -> Node3 [id="edge18_Node000007_Node000003",color="steelblue1",style="solid",tooltip=" "];
-  Node7 -> Node6 [id="edge19_Node000007_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node11 [id="Node000011",label="gpio_reset_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#gaf90ef8cd71cfbebb9a0ab85a92a7e9b7",tooltip="Function is currently a no-op placeholder for arduino compatibility."];
+  Node11 -> Node12 [id="edge14_Node000011_Node000012",color="steelblue1",style="solid",tooltip=" "];
+  Node12 [id="Node000012",label="gpio_set_direction",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga4ad28b4a23b0fcaafc290f6a6fbb12e6",tooltip="Set the IO pin as in input or output."];
+  Node11 -> Node4 [id="edge15_Node000011_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node9 -> Node12 [id="edge16_Node000009_Node000012",color="steelblue1",style="solid",tooltip=" "];
+  Node9 -> Node4 [id="edge17_Node000009_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node9 -> Node8 [id="edge18_Node000009_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node9 -> Node13 [id="edge19_Node000009_Node000013",color="steelblue1",style="solid",tooltip=" "];
+  Node13 [id="Node000013",label="switchbox_set_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#gadb0f900c7b5b5c0404844915b649e9b6",tooltip="Set the type of a switch pin."];
+  Node13 -> Node14 [id="edge20_Node000013_Node000014",color="steelblue1",style="solid",tooltip=" "];
+  Node14 [id="Node000014",label="gpio_get_direction",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga438e7f5cf810811e63ca7d7495b6e274",tooltip="Returns the direction the set pin is initialized in."];
+  Node13 -> Node15 [id="edge21_Node000013_Node000015",color="steelblue1",style="solid",tooltip=" "];
+  Node15 [id="Node000015",label="gpio_is_initialized",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga4523dbc24733009cd04cea2c0d89a3f1",tooltip=" "];
+  Node13 -> Node12 [id="edge22_Node000013_Node000012",color="steelblue1",style="solid",tooltip=" "];
+  Node7 -> Node3 [id="edge23_Node000007_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node7 -> Node6 [id="edge24_Node000007_Node000006",color="steelblue1",style="solid",tooltip=" "];
 }

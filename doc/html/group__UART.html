@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -123,18 +123,18 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Functions to use the Universal Asynchronous Receiver-Transmitter (UART). </p>
-<p>Two UART channels can be instantiated, UART0 and UART1. Before sending and receiving bytes the UART must be connect to some I/O pins through the switchbox, e.g. </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0">SWB_AR0</a>, <a class="code hl_enumvalue" href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153">SWB_UART0_RX</a>);</div>
-<div class="line"><a class="code hl_function" href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af">SWB_AR1</a>, <a class="code hl_enumvalue" href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf">SWB_UART0_TX</a>);</div>
-<div class="ttc" id="agroup__PINMAP_html_ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af"><div class="ttname"><a href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af">SWB_AR1</a></div><div class="ttdeci">@ SWB_AR1</div><div class="ttdef"><b>Definition</b> <a href="pinmap_8h_source.html#l00050">pinmap.h:50</a></div></div>
-<div class="ttc" id="agroup__PINMAP_html_ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0"><div class="ttname"><a href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0">SWB_AR0</a></div><div class="ttdeci">@ SWB_AR0</div><div class="ttdoc">Analog reference pins.</div><div class="ttdef"><b>Definition</b> <a href="pinmap_8h_source.html#l00049">pinmap.h:49</a></div></div>
-<div class="ttc" id="agroup__SWITCHBOX_html_gaf00e8e471d78f9a6a238bd0b4c3437f5"><div class="ttname"><a href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a></div><div class="ttdeci">void switchbox_set_pin(const pin_t pin_number, const uint8_t pin_type)</div><div class="ttdoc">Set the type of a switch pin.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2switchbox_8c_source.html#l00004">switchbox.c:4</a></div></div>
-<div class="ttc" id="agroup__SWITCHBOX_html_gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf"><div class="ttname"><a href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf">SWB_UART0_TX</a></div><div class="ttdeci">@ SWB_UART0_TX</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8h_source.html#l00067">switchbox.h:67</a></div></div>
-<div class="ttc" id="agroup__SWITCHBOX_html_gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153"><div class="ttname"><a href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153">SWB_UART0_RX</a></div><div class="ttdeci">@ SWB_UART0_RX</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8h_source.html#l00069">switchbox.h:69</a></div></div>
+<p>Two UART channels can be instantiated, UART0 and UART1. Before sending and receiving bytes the UART must be connect to some I/O pins through the switchbox, e.g. </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__SWITCHBOX.html#gadb0f900c7b5b5c0404844915b649e9b6">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#gga423620ef7d69894833f70cfc395caaa9a2a3b22883774dbca93b35ec864908854">IO_AR0</a>, <a class="code hl_enumvalue" href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153">SWB_UART0_RX</a>);</div>
+<div class="line"><a class="code hl_function" href="group__SWITCHBOX.html#gadb0f900c7b5b5c0404844915b649e9b6">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#gga423620ef7d69894833f70cfc395caaa9a24bef438d1294ca550d16d793f90e0c0">IO_AR1</a>, <a class="code hl_enumvalue" href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf">SWB_UART0_TX</a>);</div>
+<div class="ttc" id="agroup__PINMAP_html_gga423620ef7d69894833f70cfc395caaa9a24bef438d1294ca550d16d793f90e0c0"><div class="ttname"><a href="group__PINMAP.html#gga423620ef7d69894833f70cfc395caaa9a24bef438d1294ca550d16d793f90e0c0">IO_AR1</a></div><div class="ttdeci">@ IO_AR1</div><div class="ttdef"><b>Definition</b> <a href="pinmap_8h_source.html#l00050">pinmap.h:50</a></div></div>
+<div class="ttc" id="agroup__PINMAP_html_gga423620ef7d69894833f70cfc395caaa9a2a3b22883774dbca93b35ec864908854"><div class="ttname"><a href="group__PINMAP.html#gga423620ef7d69894833f70cfc395caaa9a2a3b22883774dbca93b35ec864908854">IO_AR0</a></div><div class="ttdeci">@ IO_AR0</div><div class="ttdoc">Analog reference pins (Arduino header).</div><div class="ttdef"><b>Definition</b> <a href="pinmap_8h_source.html#l00049">pinmap.h:49</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_gadb0f900c7b5b5c0404844915b649e9b6"><div class="ttname"><a href="group__SWITCHBOX.html#gadb0f900c7b5b5c0404844915b649e9b6">switchbox_set_pin</a></div><div class="ttdeci">void switchbox_set_pin(const io_t pin_number, const io_configuration_t io_type)</div><div class="ttdoc">Set the type of a switch pin.</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8c_source.html#l00126">switchbox.c:126</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf"><div class="ttname"><a href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf">SWB_UART0_TX</a></div><div class="ttdeci">@ SWB_UART0_TX</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8h_source.html#l00068">switchbox.h:68</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153"><div class="ttname"><a href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9afc61ba7be43962c4b3b5537b0612b153">SWB_UART0_RX</a></div><div class="ttdeci">@ SWB_UART0_RX</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8h_source.html#l00070">switchbox.h:70</a></div></div>
 </div><!-- fragment --><p>After that, an example of how to use this library for the MASTER. </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="libpynq_8h.html">libpynq.h</a>&gt;</span></div>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line"> <span class="comment">// initialise all I/O</span></div>
-<div class="line"> <a class="code hl_function" href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>();</div>
+<div class="line"> <a class="code hl_function" href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>();</div>
 <div class="line"> </div>
 <div class="line"> <span class="comment">// initialize UART 0</span></div>
 <div class="line"> <a class="code hl_function" href="group__UART.html#gaed068a60cfab2ede6bf62c524db8860e">uart_init</a>(<a class="code hl_enumvalue" href="group__UART.html#gga45928ea0a0c86049068887d70beab0d3a9283de1a2e6eea552574a50ca586df8e">UART0</a>);</div>
@@ -150,21 +150,21 @@ Functions</h2></td></tr>
 <div class="line"> }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// clean up after use</span></div>
-<div class="line">  <a class="code hl_function" href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
+<div class="line">  <a class="code hl_function" href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
 <div class="line">  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
 <div class="line">}</div>
-<div class="ttc" id="aempty-library_2libpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00002">libpynq.c:2</a></div></div>
-<div class="ttc" id="aempty-library_2libpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00003">libpynq.c:3</a></div></div>
-<div class="ttc" id="agroup__UART_html_ga30646b4c6a0eac892062150f38756c8d"><div class="ttname"><a href="group__UART.html#ga30646b4c6a0eac892062150f38756c8d">uart_reset_fifos</a></div><div class="ttdeci">void uart_reset_fifos(const int uart)</div><div class="ttdoc">This function resets both the transmit and receive FIFOs of the UART specified by the uart parameter....</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2uart_8c_source.html#l00008">uart.c:8</a></div></div>
-<div class="ttc" id="agroup__UART_html_gae1d74f3c7b13ce5f38c9c4d928669eba"><div class="ttname"><a href="group__UART.html#gae1d74f3c7b13ce5f38c9c4d928669eba">uart_send</a></div><div class="ttdeci">void uart_send(const int uart, const uint8_t data)</div><div class="ttdoc">Send a byte of data on the specified UART index by waiting for the transmit FIFO to have space and th...</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2uart_8c_source.html#l00004">uart.c:4</a></div></div>
-<div class="ttc" id="agroup__UART_html_gaed068a60cfab2ede6bf62c524db8860e"><div class="ttname"><a href="group__UART.html#gaed068a60cfab2ede6bf62c524db8860e">uart_init</a></div><div class="ttdeci">void uart_init(const int uart)</div><div class="ttdoc">Initialize the UART specified by the index with a shared memory handle and a buffer size of 4096 byte...</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2uart_8c_source.html#l00002">uart.c:2</a></div></div>
+<div class="ttc" id="agroup__UART_html_ga30646b4c6a0eac892062150f38756c8d"><div class="ttname"><a href="group__UART.html#ga30646b4c6a0eac892062150f38756c8d">uart_reset_fifos</a></div><div class="ttdeci">void uart_reset_fifos(const int uart)</div><div class="ttdoc">This function resets both the transmit and receive FIFOs of the UART specified by the uart parameter....</div><div class="ttdef"><b>Definition</b> <a href="uart_8c_source.html#l00121">uart.c:121</a></div></div>
+<div class="ttc" id="agroup__UART_html_gae1d74f3c7b13ce5f38c9c4d928669eba"><div class="ttname"><a href="group__UART.html#gae1d74f3c7b13ce5f38c9c4d928669eba">uart_send</a></div><div class="ttdeci">void uart_send(const int uart, const uint8_t data)</div><div class="ttdoc">Send a byte of data on the specified UART index by waiting for the transmit FIFO to have space and th...</div><div class="ttdef"><b>Definition</b> <a href="uart_8c_source.html#l00072">uart.c:72</a></div></div>
+<div class="ttc" id="agroup__UART_html_gaed068a60cfab2ede6bf62c524db8860e"><div class="ttname"><a href="group__UART.html#gaed068a60cfab2ede6bf62c524db8860e">uart_init</a></div><div class="ttdeci">void uart_init(const int uart)</div><div class="ttdoc">Initialize the UART specified by the index with a shared memory handle and a buffer size of 4096 byte...</div><div class="ttdef"><b>Definition</b> <a href="uart_8c_source.html#l00048">uart.c:48</a></div></div>
 <div class="ttc" id="agroup__UART_html_gga45928ea0a0c86049068887d70beab0d3a9283de1a2e6eea552574a50ca586df8e"><div class="ttname"><a href="group__UART.html#gga45928ea0a0c86049068887d70beab0d3a9283de1a2e6eea552574a50ca586df8e">UART0</a></div><div class="ttdeci">@ UART0</div><div class="ttdef"><b>Definition</b> <a href="uart_8h_source.html#l00107">uart.h:107</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00024">libpynq.c:24</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00035">libpynq.c:35</a></div></div>
 <div class="ttc" id="alibpynq_8h_html"><div class="ttname"><a href="libpynq_8h.html">libpynq.h</a></div></div>
 </div><!-- fragment --><p>An example of how to use this library for the SLAVE. </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="libpynq_8h.html">libpynq.h</a>&gt;</span></div>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line"> <span class="comment">// initialise all I/O</span></div>
-<div class="line"> <a class="code hl_function" href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>();</div>
+<div class="line"> <a class="code hl_function" href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>();</div>
 <div class="line"> </div>
 <div class="line"> <span class="comment">// initialize UART channel 0</span></div>
 <div class="line"> <a class="code hl_function" href="group__UART.html#gaed068a60cfab2ede6bf62c524db8860e">uart_init</a>(<a class="code hl_enumvalue" href="group__UART.html#gga45928ea0a0c86049068887d70beab0d3a9283de1a2e6eea552574a50ca586df8e">UART0</a>);</div>
@@ -179,11 +179,11 @@ Functions</h2></td></tr>
 <div class="line"> } <span class="keywordflow">while</span> (1);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// clean up after use</span></div>
-<div class="line">  <a class="code hl_function" href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
+<div class="line">  <a class="code hl_function" href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
 <div class="line">  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__UART_html_ga6c42f275362e428d5ea415dcd6a4f74d"><div class="ttname"><a href="group__UART.html#ga6c42f275362e428d5ea415dcd6a4f74d">uart_recv</a></div><div class="ttdeci">uint8_t uart_recv(const int uart)</div><div class="ttdoc">Receive a byte of data from the specified UART index by waiting for the receive FIFO to have data and...</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2uart_8c_source.html#l00005">uart.c:5</a></div></div>
-</div><!-- fragment --><p>UARTs can also be used through GPIO (see <a class="el" href="gpio_8h.html">gpio.h</a> and <a class="el" href="pinmap_8h.html">pinmap.h</a>). Note that GPIO numbering (SWB_UART0..SWB_UART1) is then used instead of 0..NUM_UARTS-1 (UART0..UART1). </p>
+<div class="ttc" id="agroup__UART_html_ga6c42f275362e428d5ea415dcd6a4f74d"><div class="ttname"><a href="group__UART.html#ga6c42f275362e428d5ea415dcd6a4f74d">uart_recv</a></div><div class="ttdeci">uint8_t uart_recv(const int uart)</div><div class="ttdoc">Receive a byte of data from the specified UART index by waiting for the receive FIFO to have data and...</div><div class="ttdef"><b>Definition</b> <a href="uart_8c_source.html#l00085">uart.c:85</a></div></div>
+</div><!-- fragment --><p>UARTs can be routed through the switch box (see <a class="el" href="switchbox_8h.html">switchbox.h</a>). Note that switchbox numbering (SWB_UART0..SWB_UART1) is then used instead of 0..NUM_UARTS-1 (UART0..UART1). </p>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga45928ea0a0c86049068887d70beab0d3" name="ga45928ea0a0c86049068887d70beab0d3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga45928ea0a0c86049068887d70beab0d3">&#9670;&#160;</a></span>uart_index_t</h2>
@@ -234,7 +234,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit if the UART channel is outside valid range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2uart_8c_source.html#l00003">3</a> of file <a class="el" href="empty-library_2uart_8c_source.html">uart.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uart_8c_source.html#l00061">61</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -269,7 +269,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>True if the receive FIFO has data, false otherwise. </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit if the UART channel is outside valid range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2uart_8c_source.html#l00006">6</a> of file <a class="el" href="empty-library_2uart_8c_source.html">uart.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uart_8c_source.html#l00098">98</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 
 </div>
 </div>
@@ -299,7 +299,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>True if the FIFO has space, false otherwise. </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit if the UART channel is outside valid range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2uart_8c_source.html#l00007">7</a> of file <a class="el" href="empty-library_2uart_8c_source.html">uart.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uart_8c_source.html#l00110">110</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 
 </div>
 </div>
@@ -328,7 +328,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit if the UART channel is outside valid range or when the shared memory system has not been instantiated. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2uart_8c_source.html#l00002">2</a> of file <a class="el" href="empty-library_2uart_8c_source.html">uart.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uart_8c_source.html#l00048">48</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -363,7 +363,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>The received data byte. </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit if the UART channel is outside valid range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2uart_8c_source.html#l00005">5</a> of file <a class="el" href="empty-library_2uart_8c_source.html">uart.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uart_8c_source.html#l00085">85</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 
 </div>
 </div>
@@ -396,7 +396,7 @@ Resetting the FIFOs will result in the loss of any data that is currently in the
 <dd>
 Fails with program exit if the UART channel is outside valid range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2uart_8c_source.html#l00008">8</a> of file <a class="el" href="empty-library_2uart_8c_source.html">uart.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uart_8c_source.html#l00121">121</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 
 </div>
 </div>
@@ -436,7 +436,7 @@ Fails with program exit if the UART channel is outside valid range. </dd></dl>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit if the UART channel is outside valid range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2uart_8c_source.html#l00004">4</a> of file <a class="el" href="empty-library_2uart_8c_source.html">uart.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uart_8c_source.html#l00072">72</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 
 </div>
 </div>
@@ -445,7 +445,7 @@ Fails with program exit if the UART channel is outside valid range. </dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:02 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

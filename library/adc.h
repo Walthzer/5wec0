@@ -29,9 +29,9 @@ SOFTWARE.
  * @defgroup ADC ADC library
  *
  * @brief Functions to use the Analog to Digital Conversion (ADC) of analog pins
- * (A0..A5).
+ * (A0..A5 on the PYNQ board).
  *
- * Note that GPIO numbering (SWB_A0..SWB_A5) used in gpio.h and pinmap.h is
+ * Note that GPIO numbering (IO_A0..IO_A5) used in gpio.h and pinmap.h is
  * different from A0..A5.
  *
  * @{
@@ -41,17 +41,17 @@ SOFTWARE.
  * @brief Enumerate the different available ADC channels.
  */
 typedef enum {
-  /** ADC channel for pin SWB_A0 */
+  /** ADC channel for pin IO_A0 */
   ADC0 = ((0x240 / 4) + 1),
-  /** ADC channel for pin SWB_A1 */
+  /** ADC channel for pin IO_A1 */
   ADC1 = ((0x240 / 4) + 9),
-  /** ADC channel for pin SWB_A2 */
+  /** ADC channel for pin IO_A2 */
   ADC2 = ((0x240 / 4) + 6),
-  /** ADC channel for pin SWB_A3 */
+  /** ADC channel for pin IO_A3 */
   ADC3 = ((0x240 / 4) + 15),
-  /** ADC channel for pin SWB_A4 */
+  /** ADC channel for pin IO_A4 */
   ADC4 = ((0x240 / 4) + 5),
-  /** ADC channel for pin SWB_A5 */
+  /** ADC channel for pin IO_A5 */
   ADC5 = ((0x240 / 4) + 13),
 } adc_channel_t;
 

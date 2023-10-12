@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('group__SWITCHBOX.html',''); initResiza
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
@@ -102,6 +103,11 @@ $(document).ready(function(){initNavTree('group__SWITCHBOX.html',''); initResiza
 Macros</h2></td></tr>
 <tr class="memitem:ga68427604f8617d5fb9ce6c22c455528d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#ga68427604f8617d5fb9ce6c22c455528d">NUM_SWITCHBOX_NAMES</a>&#160;&#160;&#160;40</td></tr>
 <tr class="separator:ga68427604f8617d5fb9ce6c22c455528d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaff5256ebf82f8c6a10cfd668b91e0fe3"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="group__SWITCHBOX.html#ga0eb2b30968ee6d2206889ba667fc47b9">io_configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3">io_configuration_t</a></td></tr>
+<tr class="separator:gaff5256ebf82f8c6a10cfd668b91e0fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -165,14 +171,14 @@ Enumerations</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:gaa08d84687c6b7fcfae8d1ea0e067306f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f">switchbox_init</a> (void)</td></tr>
 <tr class="separator:gaa08d84687c6b7fcfae8d1ea0e067306f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf00e8e471d78f9a6a238bd0b4c3437f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a> (const <a class="el" href="group__PINMAP.html#gad20da07c14dade682a840354fb797c35">pin_t</a> pin_number, const uint8_t pin_type)</td></tr>
-<tr class="separator:gaf00e8e471d78f9a6a238bd0b4c3437f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb0f900c7b5b5c0404844915b649e9b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gadb0f900c7b5b5c0404844915b649e9b6">switchbox_set_pin</a> (const <a class="el" href="group__PINMAP.html#ga423620ef7d69894833f70cfc395caaa9">io_t</a> pin_number, const <a class="el" href="group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3">io_configuration_t</a> pin_type)</td></tr>
+<tr class="separator:gadb0f900c7b5b5c0404844915b649e9b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga74a66c9d9da08623ed4698e4ba7978a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#ga74a66c9d9da08623ed4698e4ba7978a6">switchbox_reset</a> (void)</td></tr>
 <tr class="separator:ga74a66c9d9da08623ed4698e4ba7978a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3287b962efdc35dce05a4c0a6d899e61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#ga3287b962efdc35dce05a4c0a6d899e61">switchbox_destroy</a> (void)</td></tr>
 <tr class="separator:ga3287b962efdc35dce05a4c0a6d899e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac02f8b23d20f08e225d1362017510608"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gac02f8b23d20f08e225d1362017510608">switchbox_get_pin</a> (const <a class="el" href="group__PINMAP.html#gad20da07c14dade682a840354fb797c35">pin_t</a> pin_number)</td></tr>
-<tr class="separator:gac02f8b23d20f08e225d1362017510608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33109c8bc1a5cbc80ed63ff9fe284c28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3">io_configuration_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#ga33109c8bc1a5cbc80ed63ff9fe284c28">switchbox_get_pin</a> (const <a class="el" href="group__PINMAP.html#ga423620ef7d69894833f70cfc395caaa9">io_t</a> pin_number)</td></tr>
+<tr class="separator:ga33109c8bc1a5cbc80ed63ff9fe284c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -181,27 +187,28 @@ Variables</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The switchbox enables run-time (re)mapping of I/O pins. </p>
-<p>For example, output pin of UART 0 (SWB_UART0_TX) can be mapped to analog pins 0 and 1 (SWB_AR0 &amp; SWB_AR1). Or output pin PWM 0 (SWB_PWM0) can be mapped to green LED 0 (SWB_LD0). Or output pin PWM 0 (SWB_PWM0) can be mapped to the green component of color LED 0 (SWB_LD0).</p>
-<dl class="section warning"><dt>Warning</dt><dd>For switchbox functions use the SWB_* naming of pins that is part of <a class="el" href="switchbox_8h.html">switchbox.h</a> (enum io_configuration), <em>not</em> the names in <a class="el" href="pinmap_8h.html">pinmap.h</a>.</dd></dl>
+<p>For example, the transmit output of UART 0 (SWB_UART0_TX) can be mapped to analog pins IO_AR0 &amp; IO_AR1. Or the output of PWM 0 (SWB_PWM0) can be mapped to green LED 0 (pin IO_LD0). Or the output of PWM 0 (pin SWB_PWM0) can be mapped to the green component of color LED 0 (pin IOB_LD0).</p>
+<dl class="section warning"><dt>Warning</dt><dd>Switchbox functions (dis)connect IO pins (outside world) to FPGA hardware (on the Zynq 7020). IO pins are named IO_* (e.g. IO_LD0) and are of type io_t defined in <a class="el" href="pinmap_8h.html">pinmap.h</a>. The FPGA hardware is named SWB_* (e.g. SWB_UART0) of type (io_configuration_t) defined in <a class="el" href="switchbox_8h.html">switchbox.h</a>.</dd></dl>
 <div class="fragment"><div class="line"><span class="preprocessor">#include&lt;<a class="code" href="pinmap_8h.html">pinmap.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include&lt;<a class="code" href="switchbox_8h.html">switchbox.h</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
+<div class="line">  <a class="code hl_function" href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>();</div>
 <div class="line">  <a class="code hl_function" href="group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f">switchbox_init</a>();</div>
-<div class="line">  <span class="comment">// setup UART here (not shown)</span></div>
-<div class="line">  <span class="comment">// remap pin SWB_AR0 (analog reference pin 0) to UART 0 transmit</span></div>
-<div class="line">  <a class="code hl_function" href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0">SWB_AR0</a>, UART0_TX);</div>
-<div class="line">  <span class="comment">// remap pin SWB_AR1 (analog reference pin 1) to UART 0 receive</span></div>
-<div class="line">  <a class="code hl_function" href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af">SWB_AR1</a>, UART0_RX);</div>
-<div class="line">  <span class="comment">// your code here</span></div>
+<div class="line">  <span class="comment">// connect pin A0 to UART0&#39;s TX pin</span></div>
+<div class="line">  <a class="code hl_function" href="group__SWITCHBOX.html#gadb0f900c7b5b5c0404844915b649e9b6">switchbox_set_pin</a>(<a class="code hl_enumvalue" href="group__PINMAP.html#gga423620ef7d69894833f70cfc395caaa9a2a3b22883774dbca93b35ec864908854">IO_AR0</a>, <a class="code hl_enumvalue" href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf">SWB_UART0_TX</a>);</div>
+<div class="line">  <span class="comment">// also see examples in gpio.h</span></div>
 <div class="line">  <a class="code hl_function" href="group__SWITCHBOX.html#ga3287b962efdc35dce05a4c0a6d899e61">switchbox_destroy</a>();</div>
+<div class="line">  <a class="code hl_function" href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__PINMAP_html_ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af"><div class="ttname"><a href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a05049733303607071ad7d557c4ead3af">SWB_AR1</a></div><div class="ttdeci">@ SWB_AR1</div><div class="ttdef"><b>Definition</b> <a href="pinmap_8h_source.html#l00050">pinmap.h:50</a></div></div>
-<div class="ttc" id="agroup__PINMAP_html_ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0"><div class="ttname"><a href="group__PINMAP.html#ggad20da07c14dade682a840354fb797c35a0f321cbcfa8fa2da84deba3e3009eaa0">SWB_AR0</a></div><div class="ttdeci">@ SWB_AR0</div><div class="ttdoc">Analog reference pins.</div><div class="ttdef"><b>Definition</b> <a href="pinmap_8h_source.html#l00049">pinmap.h:49</a></div></div>
-<div class="ttc" id="agroup__SWITCHBOX_html_ga3287b962efdc35dce05a4c0a6d899e61"><div class="ttname"><a href="group__SWITCHBOX.html#ga3287b962efdc35dce05a4c0a6d899e61">switchbox_destroy</a></div><div class="ttdeci">void switchbox_destroy(void)</div><div class="ttdoc">Resets all pins of the switch box to be input.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2switchbox_8c_source.html#l00006">switchbox.c:6</a></div></div>
-<div class="ttc" id="agroup__SWITCHBOX_html_gaa08d84687c6b7fcfae8d1ea0e067306f"><div class="ttname"><a href="group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f">switchbox_init</a></div><div class="ttdeci">void switchbox_init(void)</div><div class="ttdoc">Initializes the switch box.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2switchbox_8c_source.html#l00003">switchbox.c:3</a></div></div>
-<div class="ttc" id="agroup__SWITCHBOX_html_gaf00e8e471d78f9a6a238bd0b4c3437f5"><div class="ttname"><a href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a></div><div class="ttdeci">void switchbox_set_pin(const pin_t pin_number, const uint8_t pin_type)</div><div class="ttdoc">Set the type of a switch pin.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2switchbox_8c_source.html#l00004">switchbox.c:4</a></div></div>
+<div class="ttc" id="agroup__PINMAP_html_gga423620ef7d69894833f70cfc395caaa9a2a3b22883774dbca93b35ec864908854"><div class="ttname"><a href="group__PINMAP.html#gga423620ef7d69894833f70cfc395caaa9a2a3b22883774dbca93b35ec864908854">IO_AR0</a></div><div class="ttdeci">@ IO_AR0</div><div class="ttdoc">Analog reference pins (Arduino header).</div><div class="ttdef"><b>Definition</b> <a href="pinmap_8h_source.html#l00049">pinmap.h:49</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_ga3287b962efdc35dce05a4c0a6d899e61"><div class="ttname"><a href="group__SWITCHBOX.html#ga3287b962efdc35dce05a4c0a6d899e61">switchbox_destroy</a></div><div class="ttdeci">void switchbox_destroy(void)</div><div class="ttdoc">Resets all pins of the switch box to be input.</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8c_source.html#l00112">switchbox.c:112</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_gaa08d84687c6b7fcfae8d1ea0e067306f"><div class="ttname"><a href="group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f">switchbox_init</a></div><div class="ttdeci">void switchbox_init(void)</div><div class="ttdoc">Initializes the switch box.</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8c_source.html#l00105">switchbox.c:105</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_gadb0f900c7b5b5c0404844915b649e9b6"><div class="ttname"><a href="group__SWITCHBOX.html#gadb0f900c7b5b5c0404844915b649e9b6">switchbox_set_pin</a></div><div class="ttdeci">void switchbox_set_pin(const io_t pin_number, const io_configuration_t io_type)</div><div class="ttdoc">Set the type of a switch pin.</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8c_source.html#l00126">switchbox.c:126</a></div></div>
+<div class="ttc" id="agroup__SWITCHBOX_html_gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf"><div class="ttname"><a href="group__SWITCHBOX.html#gga0eb2b30968ee6d2206889ba667fc47b9a3ef464495589525eeaf6f735865c2bcf">SWB_UART0_TX</a></div><div class="ttdeci">@ SWB_UART0_TX</div><div class="ttdef"><b>Definition</b> <a href="switchbox_8h_source.html#l00068">switchbox.h:68</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00024">libpynq.c:24</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00035">libpynq.c:35</a></div></div>
 <div class="ttc" id="apinmap_8h_html"><div class="ttname"><a href="pinmap_8h.html">pinmap.h</a></div></div>
 <div class="ttc" id="aswitchbox_8h_html"><div class="ttname"><a href="switchbox_8h.html">switchbox.h</a></div></div>
 </div><!-- fragment --> <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -217,7 +224,22 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="switchbox_8h_source.html#l00134">134</a> of file <a class="el" href="switchbox_8h_source.html">switchbox.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="switchbox_8h_source.html#l00135">135</a> of file <a class="el" href="switchbox_8h_source.html">switchbox.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="gaff5256ebf82f8c6a10cfd668b91e0fe3" name="gaff5256ebf82f8c6a10cfd668b91e0fe3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaff5256ebf82f8c6a10cfd668b91e0fe3">&#9670;&#160;</a></span>io_configuration_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="group__SWITCHBOX.html#ga0eb2b30968ee6d2206889ba667fc47b9">io_configuration</a> <a class="el" href="group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3">io_configuration_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -306,7 +328,7 @@ Variables</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="switchbox_8h_source.html#l00061">61</a> of file <a class="el" href="switchbox_8h_source.html">switchbox.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="switchbox_8h_source.html#l00062">62</a> of file <a class="el" href="switchbox_8h_source.html">switchbox.h</a>.</p>
 
 </div>
 </div>
@@ -329,7 +351,7 @@ Variables</h2></td></tr>
 
 <p>Resets all pins of the switch box to be input. </p>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2switchbox_8c_source.html#l00006">6</a> of file <a class="el" href="empty-library_2switchbox_8c_source.html">switchbox.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="switchbox_8c_source.html#l00112">112</a> of file <a class="el" href="switchbox_8c_source.html">switchbox.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -343,16 +365,16 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="gac02f8b23d20f08e225d1362017510608" name="gac02f8b23d20f08e225d1362017510608"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac02f8b23d20f08e225d1362017510608">&#9670;&#160;</a></span>switchbox_get_pin()</h2>
+<a id="ga33109c8bc1a5cbc80ed63ff9fe284c28" name="ga33109c8bc1a5cbc80ed63ff9fe284c28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga33109c8bc1a5cbc80ed63ff9fe284c28">&#9670;&#160;</a></span>switchbox_get_pin()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t switchbox_get_pin </td>
+          <td class="memname"><a class="el" href="group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3">io_configuration_t</a> switchbox_get_pin </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="group__PINMAP.html#gad20da07c14dade682a840354fb797c35">pin_t</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__PINMAP.html#ga423620ef7d69894833f70cfc395caaa9">io_t</a>&#160;</td>
           <td class="paramname"><em>pin_number</em></td><td>)</td>
           <td></td>
         </tr>
@@ -362,18 +384,17 @@ Here is the caller graph for this function:</div>
 <p>Sets the mode of a specified pin. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pin_number</td><td>The pin number to set the mode for </td></tr>
-    <tr><td class="paramname">pin_type</td><td>The mode to set the pin to (input/output)</td></tr>
+    <tr><td class="paramname">pin_number</td><td>The IO pin number. </td></tr>
   </table>
   </dd>
 </dl>
-<p>Sets the mode of the specified pin on the io switch </p>
+<dl class="section return"><dt>Returns</dt><dd>The FPGA hardware the IO pin is connected to. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2switchbox_8c_source.html#l00007">7</a> of file <a class="el" href="empty-library_2switchbox_8c_source.html">switchbox.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="switchbox_8c_source.html#l00162">162</a> of file <a class="el" href="switchbox_8c_source.html">switchbox.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="group__SWITCHBOX_gac02f8b23d20f08e225d1362017510608_icgraph.png" border="0" usemap="#agroup__SWITCHBOX_gac02f8b23d20f08e225d1362017510608_icgraph" alt=""/></div>
+<div class="center"><img src="group__SWITCHBOX_ga33109c8bc1a5cbc80ed63ff9fe284c28_icgraph.png" border="0" usemap="#agroup__SWITCHBOX_ga33109c8bc1a5cbc80ed63ff9fe284c28_icgraph" alt=""/></div>
 </div>
 
 </div>
@@ -397,7 +418,7 @@ Here is the caller graph for this function:</div>
 <p>Initializes the switch box. </p>
 <p>Initializes the shared memory and sets the io switch base address </p>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2switchbox_8c_source.html#l00003">3</a> of file <a class="el" href="empty-library_2switchbox_8c_source.html">switchbox.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="switchbox_8c_source.html#l00105">105</a> of file <a class="el" href="switchbox_8c_source.html">switchbox.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -429,7 +450,7 @@ Here is the caller graph for this function:</div>
 
 <p>Resets all pins of the switch box to be input. </p>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2switchbox_8c_source.html#l00005">5</a> of file <a class="el" href="empty-library_2switchbox_8c_source.html">switchbox.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="switchbox_8c_source.html#l00118">118</a> of file <a class="el" href="switchbox_8c_source.html">switchbox.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -438,8 +459,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="gaf00e8e471d78f9a6a238bd0b4c3437f5" name="gaf00e8e471d78f9a6a238bd0b4c3437f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf00e8e471d78f9a6a238bd0b4c3437f5">&#9670;&#160;</a></span>switchbox_set_pin()</h2>
+<a id="gadb0f900c7b5b5c0404844915b649e9b6" name="gadb0f900c7b5b5c0404844915b649e9b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadb0f900c7b5b5c0404844915b649e9b6">&#9670;&#160;</a></span>switchbox_set_pin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -447,13 +468,13 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">void switchbox_set_pin </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="group__PINMAP.html#gad20da07c14dade682a840354fb797c35">pin_t</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__PINMAP.html#ga423620ef7d69894833f70cfc395caaa9">io_t</a>&#160;</td>
           <td class="paramname"><em>pin_number</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3">io_configuration_t</a>&#160;</td>
           <td class="paramname"><em>pin_type</em>&#160;</td>
         </tr>
         <tr>
@@ -467,22 +488,22 @@ Here is the caller graph for this function:</div>
 <p>Set the type of a switch pin. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pin_number</td><td>The number of the pin to set </td></tr>
-    <tr><td class="paramname">pin_type</td><td>The type of the pin (0 for input, 1 for output) </td></tr>
+    <tr><td class="paramname">pin_number</td><td>The number of the IO pin to connect (IO_*, IO_LD0). </td></tr>
+    <tr><td class="paramname">pin_type</td><td>The FPGA hardware to connect to (SWB_*, e.g. SWB_PWM0). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2switchbox_8c_source.html#l00004">4</a> of file <a class="el" href="empty-library_2switchbox_8c_source.html">switchbox.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="switchbox_8c_source.html#l00126">126</a> of file <a class="el" href="switchbox_8c_source.html">switchbox.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="group__SWITCHBOX_gaf00e8e471d78f9a6a238bd0b4c3437f5_cgraph.png" border="0" usemap="#agroup__SWITCHBOX_gaf00e8e471d78f9a6a238bd0b4c3437f5_cgraph" alt=""/></div>
+<div class="center"><img src="group__SWITCHBOX_gadb0f900c7b5b5c0404844915b649e9b6_cgraph.png" border="0" usemap="#agroup__SWITCHBOX_gadb0f900c7b5b5c0404844915b649e9b6_cgraph" alt=""/></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="group__SWITCHBOX_gaf00e8e471d78f9a6a238bd0b4c3437f5_icgraph.png" border="0" usemap="#agroup__SWITCHBOX_gaf00e8e471d78f9a6a238bd0b4c3437f5_icgraph" alt=""/></div>
+<div class="center"><img src="group__SWITCHBOX_gadb0f900c7b5b5c0404844915b649e9b6_icgraph.png" border="0" usemap="#agroup__SWITCHBOX_gadb0f900c7b5b5c0404844915b649e9b6_icgraph" alt=""/></div>
 </div>
 
 </div>
@@ -510,7 +531,7 @@ Here is the caller graph for this function:</div>
 
 <p>Taken from scpi_names.h, lookup table for channels in the mapping_info function. </p>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2switchbox_8c_source.html#l00002">2</a> of file <a class="el" href="empty-library_2switchbox_8c_source.html">switchbox.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="switchbox_8c_source.html#l00025">25</a> of file <a class="el" href="switchbox_8c_source.html">switchbox.c</a>.</p>
 
 </div>
 </div>
@@ -519,7 +540,7 @@ Here is the caller graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:02 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

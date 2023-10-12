@@ -6,7 +6,7 @@ var searchData=
   ['findsetbitpositions_3',['findSetBitPositions',['../interrupt_8c.html#acc11d21a596fbb1965d2bbbc9dbe5c1e',1,'interrupt.c']]],
   ['font_20library_4',['Font library',['../group__FONTX.html',1,'']]],
   ['font2bitmap_5',['Font2Bitmap',['../group__FONTX.html#gac1d318d453f0aa890880e1929c2f0d9a',1,'Font2Bitmap(uint8_t *fonts, uint8_t *line, uint8_t w, uint8_t h, uint8_t inverse):&#160;fontx.c'],['../group__FONTX.html#gac1d318d453f0aa890880e1929c2f0d9a',1,'Font2Bitmap(uint8_t *fonts, uint8_t *line, uint8_t w, uint8_t h, uint8_t inverse):&#160;fontx.c']]],
-  ['fontx_2ec_6',['fontx.c',['../empty-library_2fontx_8c.html',1,'(Global Namespace)'],['../fontx_8c.html',1,'(Global Namespace)']]],
+  ['fontx_2ec_6',['fontx.c',['../fontx_8c.html',1,'']]],
   ['fontx_2eh_7',['fontx.h',['../fontx_8h.html',1,'']]],
   ['fontxdebug_8',['FontxDebug',['../fontx_8c.html#a7ddc949c2147f61bf01b9f72b684cf1a',1,'fontx.c']]],
   ['fontxfile_9',['FontxFile',['../structFontxFile.html',1,'']]],

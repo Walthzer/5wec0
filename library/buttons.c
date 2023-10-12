@@ -40,10 +40,10 @@ void buttons_init(void) {
   if (buttons_initialized == true) {
     pynq_error("buttons_destroy: buttons already initialized\n");
   }
-  gpio_set_direction(SWB_BTN0, GPIO_DIR_INPUT);
-  gpio_set_direction(SWB_BTN1, GPIO_DIR_INPUT);
-  gpio_set_direction(SWB_BTN2, GPIO_DIR_INPUT);
-  gpio_set_direction(SWB_BTN3, GPIO_DIR_INPUT);
+  gpio_set_direction(IO_BTN0, GPIO_DIR_INPUT);
+  gpio_set_direction(IO_BTN1, GPIO_DIR_INPUT);
+  gpio_set_direction(IO_BTN2, GPIO_DIR_INPUT);
+  gpio_set_direction(IO_BTN3, GPIO_DIR_INPUT);
   buttons_initialized = true;
 }
 
@@ -57,8 +57,8 @@ void switches_init(void) {
   if (switches_initialized == true) {
     pynq_error("switches_destroy: switches already initialized\n");
   }
-  gpio_set_direction(SWB_SW0, GPIO_DIR_INPUT);
-  gpio_set_direction(SWB_SW1, GPIO_DIR_INPUT);
+  gpio_set_direction(IO_SW0, GPIO_DIR_INPUT);
+  gpio_set_direction(IO_SW1, GPIO_DIR_INPUT);
   switches_initialized = true;
 }
 
@@ -76,9 +76,8 @@ int get_button_state(const int button) {
     pynq_error("get_button_state: invalid button=%d, must be 0..%d-1\n",
                NUM_BUTTONS);
   }
-  return (gpio_get_level(SWB_BTN0 + button) == GPIO_LEVEL_LOW
-              ? BUTTON_NOT_PUSHED
-              : BUTTON_PUSHED);
+  return (gpio_get_level(IO_BTN0 + button) == GPIO_LEVEL_LOW ? BUTTON_NOT_PUSHED
+                                                             : BUTTON_PUSHED);
 }
 
 int wait_until_button_state(const int button, const int state) {
@@ -89,7 +88,7 @@ int wait_until_button_state(const int button, const int state) {
     pynq_error("get_button_state: invalid button=%d, must be 0..%d-1\n", button,
                NUM_BUTTONS);
   }
-  const pin_t btn = SWB_BTN0 + button;
+  const io_t btn = IO_BTN0 + button;
   if (gpio_get_direction(btn) != GPIO_DIR_INPUT) {
     pynq_error("get_button_state: button %d has not been set as input\n",
                button);
@@ -115,7 +114,7 @@ int sleep_msec_button_pushed(const int button, const int ms) {
     pynq_error("sleep_msec_button_pushed: invalid button=%d, must be 0..%d-1\n",
                button, NUM_BUTTONS);
   }
-  const pin_t btn = SWB_BTN0 + button;
+  const io_t btn = IO_BTN0 + button;
   if (gpio_get_direction(btn) != GPIO_DIR_INPUT) {
     pynq_error(
         "sleep_msec_button_pushed: button %d has not been set as input\n",
@@ -147,7 +146,7 @@ void sleep_msec_buttons_pushed(int button_states[], const int ms) {
   }
   struct timeval call, close;
   int dTime;
-  const pin_t buttons[NUM_BUTTONS] = {SWB_BTN0, SWB_BTN1, SWB_BTN2, SWB_BTN3};
+  const io_t buttons[NUM_BUTTONS] = {IO_BTN0, IO_BTN1, IO_BTN2, IO_BTN3};
   // mapping call time to call struct
   (void)gettimeofday(&call, NULL);
   do {
@@ -175,7 +174,7 @@ int wait_until_button_released(const int button) {
 }
 
 int wait_until_any_button_pushed(void) {
-  const pin_t buttons[NUM_BUTTONS] = {SWB_BTN0, SWB_BTN1, SWB_BTN2, SWB_BTN3};
+  const io_t buttons[NUM_BUTTONS] = {IO_BTN0, IO_BTN1, IO_BTN2, IO_BTN3};
   if (buttons_initialized == false) {
     pynq_error("wait_until_any_button_pushed: buttons weren't initialized\n");
   }
@@ -196,7 +195,7 @@ int wait_until_any_button_pushed(void) {
 }
 
 int wait_until_any_button_released(void) {
-  const pin_t buttons[NUM_BUTTONS] = {SWB_BTN0, SWB_BTN1, SWB_BTN2, SWB_BTN3};
+  const io_t buttons[NUM_BUTTONS] = {IO_BTN0, IO_BTN1, IO_BTN2, IO_BTN3};
   if (buttons_initialized == false) {
     pynq_error("wait_until_any_button_released: buttons weren't initialized\n");
   }
@@ -223,6 +222,6 @@ int get_switch_state(const int switch_num) {
     pynq_error("get_switch_state: invalid switch_num=%d, must be 0..%i-1\n",
                switch_num, NUM_SWITCHES);
   }
-  return (gpio_get_level(SWB_SW0 + switch_num) == GPIO_LEVEL_LOW ? SWITCH_ON
-                                                                 : SWITCH_OFF);
+  return (gpio_get_level(IO_SW0 + switch_num) == GPIO_LEVEL_LOW ? SWITCH_ON
+                                                                : SWITCH_OFF);
 }

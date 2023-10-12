@@ -40,16 +40,16 @@ void leds_init_onoff(void) {
   if (mode != uninitialized) {
     pynq_error("leds_init_onoff: mode=%d should be uninitialized\n", mode);
   }
-  gpio_set_direction(SWB_LD0, GPIO_DIR_OUTPUT);
-  gpio_set_direction(SWB_LD1, GPIO_DIR_OUTPUT);
-  gpio_set_direction(SWB_LD2, GPIO_DIR_OUTPUT);
-  gpio_set_direction(SWB_LD3, GPIO_DIR_OUTPUT);
-  gpio_set_direction(SWB_LD4B, GPIO_DIR_OUTPUT);
-  gpio_set_direction(SWB_LD4G, GPIO_DIR_OUTPUT);
-  gpio_set_direction(SWB_LD4R, GPIO_DIR_OUTPUT);
-  gpio_set_direction(SWB_LD5B, GPIO_DIR_OUTPUT);
-  gpio_set_direction(SWB_LD5G, GPIO_DIR_OUTPUT);
-  gpio_set_direction(SWB_LD5R, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD0, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD1, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD2, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD3, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD4B, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD4G, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD4R, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD5B, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD5G, GPIO_DIR_OUTPUT);
+  gpio_set_direction(IO_LD5R, GPIO_DIR_OUTPUT);
   mode = binary;
 }
 
@@ -62,10 +62,10 @@ void green_leds_init_pwm(void) {
     pynq_error("green_leds_init_pwm: mode=%d should be uninitialized\n", mode);
   }
   // initialize switchbox and routing PWM to LEDs
-  switchbox_set_pin(SWB_LD0, SWB_PWM0);
-  switchbox_set_pin(SWB_LD1, SWB_PWM1);
-  switchbox_set_pin(SWB_LD2, SWB_PWM2);
-  switchbox_set_pin(SWB_LD3, SWB_PWM3);
+  switchbox_set_pin(IO_LD0, SWB_PWM0);
+  switchbox_set_pin(IO_LD1, SWB_PWM1);
+  switchbox_set_pin(IO_LD2, SWB_PWM2);
+  switchbox_set_pin(IO_LD3, SWB_PWM3);
   // initialize the PWM channels
   pwm_init(PWM0, 256);
   pwm_init(PWM1, 256);
@@ -83,9 +83,9 @@ void color_leds_init_pwm(void) {
     pynq_error("color_leds_init_pwm: mode=%d should be uninitialized\n", mode);
   }
   // initialize switchbox and routing PWM to LEDs
-  switchbox_set_pin(SWB_LD4R, SWB_PWM0);
-  switchbox_set_pin(SWB_LD4G, SWB_PWM1);
-  switchbox_set_pin(SWB_LD4B, SWB_PWM2);
+  switchbox_set_pin(IO_LD4R, SWB_PWM0);
+  switchbox_set_pin(IO_LD4G, SWB_PWM1);
+  switchbox_set_pin(IO_LD4B, SWB_PWM2);
   // initialize the PWM channels
   pwm_init(PWM0, 256);
   pwm_init(PWM1, 256);
@@ -122,7 +122,7 @@ void green_led_onoff(const int led, const int onoff) {
   int oo = onoff;
   switch (mode) {
   case binary:
-    gpio_set_level(SWB_LD0 + led,
+    gpio_set_level(IO_LD0 + led,
                    (onoff == LED_OFF ? GPIO_LEVEL_LOW : GPIO_LEVEL_HIGH));
     break;
   case pwm_green:
@@ -149,7 +149,7 @@ void color_led_red_onoff(const int onoff) {
   int oo = onoff;
   switch (mode) {
   case binary:
-    gpio_set_level(SWB_LD4R,
+    gpio_set_level(IO_LD4R,
                    (onoff == LED_OFF ? GPIO_LEVEL_LOW : GPIO_LEVEL_HIGH));
     break;
   case pwm_green:
@@ -173,7 +173,7 @@ void color_led_green_onoff(const int onoff) {
   int oo = onoff;
   switch (mode) {
   case binary:
-    gpio_set_level(SWB_LD4G,
+    gpio_set_level(IO_LD4G,
                    (onoff == LED_OFF ? GPIO_LEVEL_LOW : GPIO_LEVEL_HIGH));
     break;
   case pwm_color:
@@ -196,7 +196,7 @@ void color_led_blue_onoff(const int onoff) {
   int oo = onoff;
   switch (mode) {
   case binary:
-    gpio_set_level(SWB_LD4B,
+    gpio_set_level(IO_LD4B,
                    (onoff == LED_OFF ? GPIO_LEVEL_LOW : GPIO_LEVEL_HIGH));
     break;
   case pwm_color:

@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -167,7 +167,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// initialise all I/O</span></div>
-<div class="line">  <a class="code hl_function" href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>();</div>
+<div class="line">  <a class="code hl_function" href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a>();</div>
 <div class="line">  <a class="code hl_function" href="group__BUTTONS.html#gacef6dd444cb6560da652897ee43ab306">buttons_init</a>();</div>
 <div class="line"> </div>
 <div class="line">  printf(<span class="stringliteral">&quot;Waiting until button 0 is pushed...\n&quot;</span>);</div>
@@ -177,18 +177,18 @@ Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// clean up after use</span></div>
 <div class="line">  <a class="code hl_function" href="group__BUTTONS.html#ga3633aee67ac18052de38fb71d13811f3">buttons_destroy</a>();</div>
-<div class="line">  <a class="code hl_function" href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
+<div class="line">  <a class="code hl_function" href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
 <div class="line">  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
 <div class="line">}</div>
-<div class="ttc" id="aempty-library_2libpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="empty-library_2libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00002">libpynq.c:2</a></div></div>
-<div class="ttc" id="aempty-library_2libpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00003">libpynq.c:3</a></div></div>
-<div class="ttc" id="agroup__BUTTONS_html_ga1635729112b5af83feee6a4255cc2373"><div class="ttname"><a href="group__BUTTONS.html#ga1635729112b5af83feee6a4255cc2373">wait_until_button_pushed</a></div><div class="ttdeci">int wait_until_button_pushed(const int button)</div><div class="ttdoc">Wait until the given button is pushed (which may be immediately).</div><div class="ttdef"><b>Definition</b> <a href="buttons_8c_source.html#l00167">buttons.c:167</a></div></div>
+<div class="ttc" id="agroup__BUTTONS_html_ga1635729112b5af83feee6a4255cc2373"><div class="ttname"><a href="group__BUTTONS.html#ga1635729112b5af83feee6a4255cc2373">wait_until_button_pushed</a></div><div class="ttdeci">int wait_until_button_pushed(const int button)</div><div class="ttdoc">Wait until the given button is pushed (which may be immediately).</div><div class="ttdef"><b>Definition</b> <a href="buttons_8c_source.html#l00166">buttons.c:166</a></div></div>
 <div class="ttc" id="agroup__BUTTONS_html_ga3633aee67ac18052de38fb71d13811f3"><div class="ttname"><a href="group__BUTTONS.html#ga3633aee67ac18052de38fb71d13811f3">buttons_destroy</a></div><div class="ttdeci">void buttons_destroy(void)</div><div class="ttdoc">Unitialize the buttons.</div><div class="ttdef"><b>Definition</b> <a href="buttons_8c_source.html#l00050">buttons.c:50</a></div></div>
-<div class="ttc" id="agroup__BUTTONS_html_gaa3646a1a39ebd3d5d8f375c4352e4d8b"><div class="ttname"><a href="group__BUTTONS.html#gaa3646a1a39ebd3d5d8f375c4352e4d8b">wait_until_button_released</a></div><div class="ttdeci">int wait_until_button_released(const int button)</div><div class="ttdoc">Wait until the given button is not pushed (which may be immediately).</div><div class="ttdef"><b>Definition</b> <a href="buttons_8c_source.html#l00172">buttons.c:172</a></div></div>
+<div class="ttc" id="agroup__BUTTONS_html_gaa3646a1a39ebd3d5d8f375c4352e4d8b"><div class="ttname"><a href="group__BUTTONS.html#gaa3646a1a39ebd3d5d8f375c4352e4d8b">wait_until_button_released</a></div><div class="ttdeci">int wait_until_button_released(const int button)</div><div class="ttdoc">Wait until the given button is not pushed (which may be immediately).</div><div class="ttdef"><b>Definition</b> <a href="buttons_8c_source.html#l00171">buttons.c:171</a></div></div>
 <div class="ttc" id="agroup__BUTTONS_html_gacef6dd444cb6560da652897ee43ab306"><div class="ttname"><a href="group__BUTTONS.html#gacef6dd444cb6560da652897ee43ab306">buttons_init</a></div><div class="ttdeci">void buttons_init(void)</div><div class="ttdoc">Initialise the buttons before they can be used.</div><div class="ttdef"><b>Definition</b> <a href="buttons_8c_source.html#l00039">buttons.c:39</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_a3c76b9633e9988436c3e3555be805728"><div class="ttname"><a href="libpynq_8c.html#a3c76b9633e9988436c3e3555be805728">pynq_init</a></div><div class="ttdeci">void pynq_init(void)</div><div class="ttdoc">Initialise the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00024">libpynq.c:24</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00035">libpynq.c:35</a></div></div>
 <div class="ttc" id="alibpynq_8h_html"><div class="ttname"><a href="libpynq_8h.html">libpynq.h</a></div></div>
-</div><!-- fragment --><p>Buttons can also be used through GPIO (see <a class="el" href="gpio_8h.html">gpio.h</a> and <a class="el" href="pinmap_8h.html">pinmap.h</a>). Note that GPIO numbering (SWB_BTN0..SWB_BTN3) is then used instead of 0..NUM_BUTTONS-1 (BUTTON0..BUTTON3). GPIO return values are GPIO_LEVEL_LOW/HIGH instead of BUTTON_(NOT_)PUSHED.</p>
-<p>Switches can also be used through GPIO (see <a class="el" href="gpio_8h.html">gpio.h</a> and <a class="el" href="pinmap_8h.html">pinmap.h</a>). Note that GPIO numbering (SWB_SW0..SWB_SW1) is then used instead of 0..NUM_SWITCHES-1 (SWITCH0..SWITCH1). GPIO return values are GPIO_LEVEL_LOW/HIGH instead of SWITCH_ON/OFF. </p>
+</div><!-- fragment --><p>Buttons can also be used through GPIO (see <a class="el" href="gpio_8h.html">gpio.h</a> and <a class="el" href="pinmap_8h.html">pinmap.h</a>). Note that GPIO numbering (IO_BTN0..IO_BTN3) is then used instead of 0..NUM_BUTTONS-1 (BUTTON0..BUTTON3). GPIO return values are GPIO_LEVEL_LOW/HIGH instead of BUTTON_(NOT_)PUSHED.</p>
+<p>Switches can also be used through GPIO (see <a class="el" href="gpio_8h.html">gpio.h</a> and <a class="el" href="pinmap_8h.html">pinmap.h</a>). Note that GPIO numbering (IO_SW0..IO_SW1) is then used instead of 0..NUM_SWITCHES-1 (SWITCH0..SWITCH1). GPIO return values are GPIO_LEVEL_LOW/HIGH instead of SWITCH_ON/OFF. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ga443698782d954e8e4c5822cdf9f7dc2d" name="ga443698782d954e8e4c5822cdf9f7dc2d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga443698782d954e8e4c5822cdf9f7dc2d">&#9670;&#160;</a></span>BUTTON_NOT_PUSHED</h2>
@@ -410,7 +410,7 @@ Here is the call graph for this function:</div>
 <dd>
 Fails with program exit when the direction of any switch was not set to input (e.g. because buttons_init was not called before). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00218">218</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00217">217</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -458,7 +458,7 @@ Here is the call graph for this function:</div>
 <dd>
 Fails with program exit when the direction of the button was not set to input (e.g. because buttons_init was not called before). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00110">110</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00109">109</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -502,7 +502,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when the direction of any button was not set to input (e.g. because buttons_init was not called before). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00141">141</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00140">140</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -580,7 +580,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>Wait until any button is pushed, return the number of the button that was pushed (0..NUM_BUTTONS-1). </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when the direction of any button was not set to input (e.g. because buttons_init was not called before). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00177">177</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00176">176</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -609,7 +609,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>Wait until any button is released, return the number of the button that was pushed (0..NUM_BUTTONS-1). </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when the direction of any button was not set to input (e.g. because buttons_init was not called before). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00198">198</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00197">197</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -646,7 +646,7 @@ Here is the call graph for this function:</div>
 <dd>
 Fails with program exit when the direction of the button was not set to input (e.g. because buttons_init was not called before). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00167">167</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00166">166</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -683,7 +683,7 @@ Here is the call graph for this function:</div>
 <dd>
 Fails with program exit when the direction of the button was not set to input (e.g. because buttons_init was not called before). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00172">172</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00171">171</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -731,7 +731,7 @@ Here is the call graph for this function:</div>
 <dd>
 Fails with program exit when the direction of the button was not set to input (e.g. because buttons_init was not called before). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00084">84</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="buttons_8c_source.html#l00083">83</a> of file <a class="el" href="buttons_8c_source.html">buttons.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -750,7 +750,7 @@ Here is the caller graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:02 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

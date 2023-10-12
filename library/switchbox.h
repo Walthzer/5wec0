@@ -30,13 +30,15 @@ SOFTWARE.
  *
  * @brief The switchbox enables run-time (re)mapping of I/O pins.
  *
- * For example, output pin of UART 0 (SWB_UART0_TX) can be mapped to analog pins
- * 0 and 1 (SWB_AR0 & SWB_AR1). Or output pin PWM 0 (SWB_PWM0) can be mapped to
- * green LED 0 (SWB_LD0). Or output pin PWM 0 (SWB_PWM0) can be mapped to the
- * green component of color LED 0 (SWB_LD0).
+ * For example, the transmit output of UART 0 (SWB_UART0_TX) can be mapped to
+ * analog pins IO_AR0 & IO_AR1. Or the output of PWM 0 (SWB_PWM0) can be mapped
+ * to green LED 0 (pin IO_LD0). Or the output of PWM 0 (pin SWB_PWM0) can be
+ * mapped to the green component of color LED 0 (pin IOB_LD0).
  *
- * @warning For switchbox functions use the SWB_* naming of pins that is part of
- * switchbox.h (enum io_configuration), _not_ the names in pinmap.h.
+ * @warning Switchbox functions (dis)connect IO pins (outside world) to FPGA
+ * hardware (on the Zynq 7020).  IO pins are named IO_* (e.g. IO_LD0) and are of
+ * type io_t defined in pinmap.h. The FPGA hardware is named SWB_* (e.g.
+ * SWB_UART0) of type (io_configuration_t) defined in switchbox.h.
  *
  * @code
  * #include<pinmap.h>
@@ -44,21 +46,20 @@ SOFTWARE.
  *
  * int main (void)
  * {
+ *   pynq_init();
  *   switchbox_init();
- *   // setup UART here (not shown)
- *   // remap pin SWB_AR0 (analog reference pin 0) to UART 0 transmit
- *   switchbox_set_pin(SWB_AR0, UART0_TX);
- *   // remap pin SWB_AR1 (analog reference pin 1) to UART 0 receive
- *   switchbox_set_pin(SWB_AR1, UART0_RX);
- *   // your code here
+ *   // connect pin A0 to UART0's TX pin
+ *   switchbox_set_pin(IO_AR0, SWB_UART0_TX);
+ *   // also see examples in gpio.h
  *   switchbox_destroy();
+ *   pynq_destroy();
  * }
  * @endcode
  *
  * @{
  */
 
-enum io_configuration {
+typedef enum io_configuration {
   /** Map pin to GPIO */
   SWB_GPIO = 0x00,
   /** Map pin to internal interrupt (UNUSED) */
@@ -129,7 +130,7 @@ enum io_configuration {
   SWB_TIMER_IC7 = 0x3F,
   /** number elements in this enum */
   NUM_IO_CONFIGURATIONS,
-};
+} io_configuration_t;
 
 #define NUM_SWITCHBOX_NAMES 40
 /**
@@ -148,10 +149,11 @@ extern void switchbox_init(void);
 /**
  * @brief Set the type of a switch pin
  *
- * @param pin_number The number of the pin to set
- * @param pin_type The type of the pin (0 for input, 1 for output)
+ * @param pin_number The number of the IO pin to connect (IO_*, IO_LD0).
+ * @param pin_type The FPGA hardware to connect to (SWB_*, e.g. SWB_PWM0).
  */
-extern void switchbox_set_pin(const pin_t pin_number, const uint8_t pin_type);
+extern void switchbox_set_pin(const io_t pin_number,
+                              const io_configuration_t pin_type);
 
 /**
  * @brief Resets all pins of the switch box to be input
@@ -167,12 +169,10 @@ extern void switchbox_destroy(void);
 /**
  * @brief Sets the mode of a specified pin
  *
- * @param pin_number The pin number to set the mode for
- * @param pin_type The mode to set the pin to (input/output)
- *
- * Sets the mode of the specified pin on the io switch
+ * @param pin_number The IO pin number.
+ * @returns The FPGA hardware the IO pin is connected to.
  */
-extern uint8_t switchbox_get_pin(const pin_t pin_number);
+extern io_configuration_t switchbox_get_pin(const io_t pin_number);
 
 /**
  * @}

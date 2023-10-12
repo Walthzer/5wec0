@@ -28,8 +28,8 @@ void pynq_init(void) {
   switchbox_reset();
 
   // set line buffering on the output, should help with logging
-  setlinebuf(stdout);
-  setlinebuf(stderr);
+  //  setlinebuf(stdout);
+  //  setlinebuf(stderr);
 }
 
 void pynq_destroy(void) {

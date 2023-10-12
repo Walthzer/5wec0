@@ -8,6 +8,14 @@ digraph "green_leds_init_pwm"
   Node1 [id="Node000001",label="green_leds_init_pwm",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Initialize the green LEDs for use with variable intensity. The LED intensity can range from 0...."];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="pwm_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__PWM.html#ga0fb151b18be0800bbc4eba629126fd9c",tooltip="Initializes the PWM channel with the specified period."];
-  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
-  Node3 [id="Node000003",label="switchbox_set_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5",tooltip="Set the type of a switch pin."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="arm_shared_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__ARMSHARED.html#gaeb6db0acbe89d1bacc6d83e34d175c26",tooltip=" "];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="switchbox_set_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#gadb0f900c7b5b5c0404844915b649e9b6",tooltip="Set the type of a switch pin."];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="gpio_get_direction",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga438e7f5cf810811e63ca7d7495b6e274",tooltip="Returns the direction the set pin is initialized in."];
+  Node4 -> Node6 [id="edge5_Node000004_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="gpio_is_initialized",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga4523dbc24733009cd04cea2c0d89a3f1",tooltip=" "];
+  Node4 -> Node7 [id="edge6_Node000004_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="gpio_set_direction",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga4ad28b4a23b0fcaafc290f6a6fbb12e6",tooltip="Set the IO pin as in input or output."];
 }

@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -95,7 +95,9 @@ $(document).ready(function(){initNavTree('xiic__l_8c.html',''); initResizable();
   <div class="headertitle"><div class="title">xiic_l.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;unistd.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="xiic__l_8h_source.html">xiic_l.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="xil__types_8h_source.html">xil_types.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -110,6 +112,8 @@ Include dependency graph for xiic_l.c:</div>
 Macros</h2></td></tr>
 <tr class="memitem:a8fb447618db946a9e2a596d9ea18763f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xiic__l_8c.html#a8fb447618db946a9e2a596d9ea18763f">_DEFAULT_SOURCE</a></td></tr>
 <tr class="separator:a8fb447618db946a9e2a596d9ea18763f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9bf256de7a341ea03a8659c3be169a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xiic__l_8c.html#ae9bf256de7a341ea03a8659c3be169a6">IIC_TIMEOUT</a>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:ae9bf256de7a341ea03a8659c3be169a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -192,6 +196,22 @@ Ver   Who  Date     Changes
 
 </div>
 </div>
+<a id="ae9bf256de7a341ea03a8659c3be169a6" name="ae9bf256de7a341ea03a8659c3be169a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9bf256de7a341ea03a8659c3be169a6">&#9670;&#160;</a></span>IIC_TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_TIMEOUT&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="xiic__l_8c_source.html#l00076">76</a> of file <a class="el" href="xiic__l_8c_source.html">xiic_l.c</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a666950a34ecedafb419839935b62fb7f" name="a666950a34ecedafb419839935b62fb7f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a666950a34ecedafb419839935b62fb7f">&#9670;&#160;</a></span>XIic_CheckIsBusBusy()</h2>
@@ -209,7 +229,12 @@ Ver   Who  Date     Changes
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="xiic__l_8c_source.html#l00604">604</a> of file <a class="el" href="xiic__l_8c_source.html">xiic_l.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="xiic__l_8c_source.html#l00614">614</a> of file <a class="el" href="xiic__l_8c_source.html">xiic_l.c</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="xiic__l_8c_a666950a34ecedafb419839935b62fb7f_icgraph.png" border="0" usemap="#axiic__l_8c_a666950a34ecedafb419839935b62fb7f_icgraph" alt=""/></div>
+</div>
 
 </div>
 </div>
@@ -270,11 +295,16 @@ Ver   Who  Date     Changes
 <dl class="section return"><dt>Returns</dt><dd>The number of bytes received.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>None. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="xiic__l_8c_source.html#l00113">113</a> of file <a class="el" href="xiic__l_8c_source.html">xiic_l.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="xiic__l_8c_source.html#l00117">117</a> of file <a class="el" href="xiic__l_8c_source.html">xiic_l.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="xiic__l_8c_a7a848238d75ff57837afa5a58f11f326_cgraph.png" border="0" usemap="#axiic__l_8c_a7a848238d75ff57837afa5a58f11f326_cgraph" alt=""/></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="xiic__l_8c_a7a848238d75ff57837afa5a58f11f326_icgraph.png" border="0" usemap="#axiic__l_8c_a7a848238d75ff57837afa5a58f11f326_icgraph" alt=""/></div>
 </div>
 
 </div>
@@ -336,11 +366,16 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>The number of bytes sent.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>None. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="xiic__l_8c_source.html#l00369">369</a> of file <a class="el" href="xiic__l_8c_source.html">xiic_l.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="xiic__l_8c_source.html#l00373">373</a> of file <a class="el" href="xiic__l_8c_source.html">xiic_l.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="xiic__l_8c_a907c577b53407fb0bfc98d0ca37ee221_cgraph.png" border="0" usemap="#axiic__l_8c_a907c577b53407fb0bfc98d0ca37ee221_cgraph" alt=""/></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="xiic__l_8c_a907c577b53407fb0bfc98d0ca37ee221_icgraph.png" border="0" usemap="#axiic__l_8c_a907c577b53407fb0bfc98d0ca37ee221_icgraph" alt=""/></div>
 </div>
 
 </div>
@@ -374,11 +409,16 @@ Here is the call graph for this function:</div>
 </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>None. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="xiic__l_8c_source.html#l00628">628</a> of file <a class="el" href="xiic__l_8c_source.html">xiic_l.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="xiic__l_8c_source.html#l00638">638</a> of file <a class="el" href="xiic__l_8c_source.html">xiic_l.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="xiic__l_8c_a90f3806cf4817250596f6f68f2c066a3_cgraph.png" border="0" usemap="#axiic__l_8c_a90f3806cf4817250596f6f68f2c066a3_cgraph" alt=""/></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="xiic__l_8c_a90f3806cf4817250596f6f68f2c066a3_icgraph.png" border="0" usemap="#axiic__l_8c_a90f3806cf4817250596f6f68f2c066a3_icgraph" alt=""/></div>
 </div>
 
 </div>
@@ -389,7 +429,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3d620c6b6fdb93ed3bc6186215bde2e.html">library</a></li><li class="navelem"><a class="el" href="xiic__l_8c.html">xiic_l.c</a></li>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:01 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

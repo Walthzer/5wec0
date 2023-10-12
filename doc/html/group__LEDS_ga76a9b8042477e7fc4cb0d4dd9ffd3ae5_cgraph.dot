@@ -8,6 +8,17 @@ digraph "leds_destroy"
   Node1 [id="Node000001",label="leds_destroy",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="green_led_off",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga2f369349851e22f870bd49d595aa507a",tooltip="Same as green_led_onoff(led, LED_OFF). Works in all modes."];
-  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
-  Node3 [id="Node000003",label="pwm_destroy",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__PWM.html#ga6bff6e05dd03cd7dc161662f235ae9f7",tooltip="Removes the instantiated shared memory system of the PWM channel."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="green_led_onoff",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#gac45e0ed1821b39737d3387471d6f37f9",tooltip=" "];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga6d929f90f89a8bccbe40da10a323a508",tooltip="Set the level of the output IO pin. If the pin is configured as input, this function does nothing."];
+  Node3 -> Node5 [id="edge4_Node000003_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="pwm_set_duty_cycle",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__PWM.html#ga80cf5c97176cf7d9108edd18fdf58cd6",tooltip="Sets the duty cycle for the specified PWM channel."];
+  Node5 -> Node6 [id="edge5_Node000005_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="check_initialized_pwm",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$pwm_8c.html#abcae3c5f25f1aec206ba8f64f0bed39e",tooltip=" "];
+  Node1 -> Node7 [id="edge6_Node000001_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="pwm_destroy",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__PWM.html#ga6bff6e05dd03cd7dc161662f235ae9f7",tooltip="Removes the instantiated shared memory system of the PWM channel."];
+  Node7 -> Node8 [id="edge7_Node000007_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="arm_shared_close",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__ARMSHARED.html#ga12c3557dfcb0ebbf3386b52068c56618",tooltip=" "];
+  Node7 -> Node6 [id="edge8_Node000007_Node000006",color="steelblue1",style="solid",tooltip=" "];
 }

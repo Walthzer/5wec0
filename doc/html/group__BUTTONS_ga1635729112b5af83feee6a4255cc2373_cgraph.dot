@@ -9,7 +9,7 @@ digraph "wait_until_button_pushed"
   Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="wait_until_button_state",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__BUTTONS.html#ga75a555075662ca2a8a4be526adeb37b3",tooltip="Wait until the given button is in state (which may be immediately)."];
   Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
-  Node3 [id="Node000003",label="gpio_get_direction",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#a783b475bfefd5d4cf8296fa864d544a0",tooltip=" "];
+  Node3 [id="Node000003",label="gpio_get_direction",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga438e7f5cf810811e63ca7d7495b6e274",tooltip="Returns the direction the set pin is initialized in."];
   Node2 -> Node4 [id="edge3_Node000002_Node000004",color="steelblue1",style="solid",tooltip=" "];
-  Node4 [id="Node000004",label="gpio_get_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#a939422be5ec42d4d24d952839206ec0f",tooltip=" "];
+  Node4 [id="Node000004",label="gpio_get_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#gada071d5764fd998b331c31b867bfc88e",tooltip="Return the level of the IO pin."];
 }

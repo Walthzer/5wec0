@@ -52,7 +52,7 @@ void gpio_destroy(void) {
   intc0 = NULL;
 }
 
-void gpio_reset_pin(const pin_t pin) {
+void gpio_reset_pin(const io_t pin) {
   PIN_CHECK(pin);
   pynq_info("Reset pin: %d", pin);
   gpio_set_direction(pin, GPIO_DIR_INPUT);
@@ -78,7 +78,7 @@ void gpio_reset(void) {
   intc0[3] = 0;
 }
 
-void gpio_set_direction(const pin_t pin, const gpio_direction_t dir) {
+void gpio_set_direction(const io_t pin, const gpio_direction_t dir) {
   PIN_CHECK(pin);
   if (!(dir == GPIO_DIR_INPUT || dir == GPIO_DIR_OUTPUT)) {
     pynq_error("gpio_set_direction: invalid direction %d", dir);
@@ -92,7 +92,7 @@ void gpio_set_direction(const pin_t pin, const gpio_direction_t dir) {
   }
 }
 
-gpio_direction_t gpio_get_direction(const pin_t pin) {
+gpio_direction_t gpio_get_direction(const io_t pin) {
   PIN_CHECK(pin);
   int pin_bank = pin % 32;
   int bank = pin < 32 ? 1 : 3;
@@ -101,7 +101,7 @@ gpio_direction_t gpio_get_direction(const pin_t pin) {
   return dir;
 }
 
-void gpio_set_level(const pin_t pin, const gpio_level_t level) {
+void gpio_set_level(const io_t pin, const gpio_level_t level) {
   PIN_CHECK(pin);
   if (!(level == GPIO_LEVEL_HIGH || level == GPIO_LEVEL_LOW)) {
     pynq_error("gpio_set_level: level %d is invalid", level);
@@ -115,7 +115,7 @@ void gpio_set_level(const pin_t pin, const gpio_level_t level) {
   }
 }
 
-gpio_level_t gpio_get_level(const pin_t pin) {
+gpio_level_t gpio_get_level(const io_t pin) {
   PIN_CHECK(pin);
   int pin_bank = pin % 32;
   int bank = pin < 32 ? 0 : 2;

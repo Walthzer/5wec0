@@ -7,5 +7,5 @@ digraph "write_audio_reg"
   rankdir="LR";
   Node1 [id="Node000001",label="write_audio_reg",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
-  Node2 [id="Node000002",label="writeI2C_asFile",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2i2cps_8c.html#a655bf0c0118a9dff569ee054c0a395f1",tooltip=" "];
+  Node2 [id="Node000002",label="writeI2C_asFile",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$i2cps_8c.html#a655bf0c0118a9dff569ee054c0a395f1",tooltip=" "];
 }

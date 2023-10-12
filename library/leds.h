@@ -64,9 +64,9 @@ SOFTWARE.
  * @endcode
  *
  * LEDs can also be used through GPIO (see gpio.h and pinmap.h). Note that GPIO
- * numbering (SWB_LD0..SWB_LD3) is then used instead of 0..NUM_GREEN_LEDS-1
+ * numbering (IO_LD0..IO_LD3) is then used instead of 0..NUM_GREEN_LEDS-1
  * (LED0..LED3). In the PWM mode for color LED 0, SWB_PWM0..SWB_PWM3
- * are routed to color LED 0 (GPIO SWB_LD4R, SWB_LD4G, SWB_LD4B).
+ * are routed to color LED 0 (GPIO IO_LD4R, IO_LD4G, IO_LD4B).
  *
  * @{
  */

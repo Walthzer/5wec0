@@ -56,7 +56,7 @@ int gpio_interrupt_init(void) {
   return fd;
 }
 
-void gpio_enable_interrupt(const pin_t pin) {
+void gpio_enable_interrupt(const io_t pin) {
   check_initialization();
   int pin_bank = pin % 32;
   int bank = pin < 32 ? 0 : 1;
@@ -69,7 +69,7 @@ void gpio_enable_interrupt(const pin_t pin) {
   }
 }
 
-void gpio_disable_interrupt(const pin_t pin) {
+void gpio_disable_interrupt(const io_t pin) {
   check_initialization();
   intc0[0] &= ~(1 << pin);
 }
@@ -93,7 +93,7 @@ void gpio_ack_interrupt(void) {
   intc0[2] = 1;
 }
 
-void verify_interrupt_request(const pin_t pin) {
+void verify_interrupt_request(const io_t pin) {
   // TODO check if interrupts are initialized when using other interrupt
   // functions
   uint64_t retv = intc0[1];
@@ -135,7 +135,7 @@ void findSetBitPositions(uint64_t word, uint8_t *positions) {
   }
 }
 
-void gpio_wait_for_interrupt(const pin_t pin) {
+void gpio_wait_for_interrupt(const io_t pin) {
   check_initialization();
   verify_interrupt_request(pin);
   if (pin > 63) {

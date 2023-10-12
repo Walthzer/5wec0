@@ -38,20 +38,20 @@ SOFTWARE.
  *   gpio_reset(void);
  *   switchbox_init(void);
  *   switchbox_reset(void);
- *   gpio_set_direction(SWB_LD0, GPIO_DIR_OUTPUT);
+ *   gpio_set_direction(IO_LD0, GPIO_DIR_OUTPUT);
  *   // initialize the interrupt
  *   gpio_interrupt_init(void);
- *   gpio_enable_interrupt(SWB_BTN0);
- *   gpio_set_direction(SWB_LD0, GPIO_DIR_OUTPUT);
+ *   gpio_enable_interrupt(IO_BTN0);
+ *   gpio_set_direction(IO_LD0, GPIO_DIR_OUTPUT);
  *   while(1) {
  *     gpio_wait_for_interrupt(64); //Wait untill an interupt arrives
  *     uint8_t* interruptPin = gpio_get_interrupt_pins(void);
- *     if (interruptPin[0] == SWB_BTN0) {
- *       printf("interrupt on SWB_BTN0, turning on SWB_LD0\n");
- *       gpio_set_level(SWB_LD0, 1);
+ *     if (interruptPin[0] == IO_BTN0) {
+ *       printf("interrupt on IO_BTN0, turning on IO_LD0\n");
+ *       gpio_set_level(IO_LD0, 1);
  *     } else {
  *       printf("interrupt on pin %d\n",interruptPin[0]);
- *       gpio_set_level(SWB_LD0, 0);
+ *       gpio_set_level(IO_LD0, 0);
  *     }
  *     gpio_ack_interrupt(void);
  *   }
@@ -86,7 +86,7 @@ extern void gpio_ack_interrupt(void);
  * pin is enabled
  *
  */
-extern void verify_interrupt_request(const pin_t pin);
+extern void verify_interrupt_request(const io_t pin);
 
 /**
  * @brief prints the current interrupt word
@@ -98,7 +98,7 @@ extern void gpio_print_interrupt(void);
  *
  * @brief enables a specific pin to raise interrupts.
  */
-extern void gpio_enable_interrupt(const pin_t pin);
+extern void gpio_enable_interrupt(const io_t pin);
 
 /**
  * @param pin to be disabled from obtianing interrupts
@@ -106,7 +106,7 @@ extern void gpio_enable_interrupt(const pin_t pin);
  * @brief Disables interrupts from occuring on the specific pin.
  * Hereafter, the pin will not trigger an interrupt.
  */
-extern void gpio_disable_interrupt(const pin_t pin);
+extern void gpio_disable_interrupt(const io_t pin);
 
 /**
  * @brief Disables all interrupts from being raised.
@@ -134,7 +134,7 @@ extern uint8_t *gpio_get_interrupt_pins(uint8_t *positions);
  * @brief Waits untill an interrupt occurs on the specified pin or if the value
  * of pin is larger than 63, if any interrupt has occurred.
  */
-extern void gpio_wait_for_interrupt(const pin_t pin);
+extern void gpio_wait_for_interrupt(const io_t pin);
 
 /**
  * @}

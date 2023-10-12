@@ -8,4 +8,20 @@ digraph "color_led_off"
   Node1 [id="Node000001",label="color_led_off",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Set color LED 0 to black. Same as color_led_onoff(LED_OFF, LED_OFF, LED_OFF)."];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="color_led_onoff",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga17a899bd719b38cfad2b6c69dd75b7ef",tooltip="Switches on/off the red/green/blue components of color LED 0."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="color_led_blue_onoff",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga692d47d5ac4d6699faf94e76e9b7a4a3",tooltip="Switches on/off the blue component of color LED 0."];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga6d929f90f89a8bccbe40da10a323a508",tooltip="Set the level of the output IO pin. If the pin is configured as input, this function does nothing."];
+  Node3 -> Node5 [id="edge4_Node000003_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="pwm_set_duty_cycle",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__PWM.html#ga80cf5c97176cf7d9108edd18fdf58cd6",tooltip="Sets the duty cycle for the specified PWM channel."];
+  Node5 -> Node6 [id="edge5_Node000005_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="check_initialized_pwm",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$pwm_8c.html#abcae3c5f25f1aec206ba8f64f0bed39e",tooltip=" "];
+  Node2 -> Node7 [id="edge6_Node000002_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="color_led_green_onoff",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga82bb7a9d695a458db2b1f62c6af1e7b1",tooltip="Switches on/off the green component of color LED 0."];
+  Node7 -> Node4 [id="edge7_Node000007_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node7 -> Node5 [id="edge8_Node000007_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node2 -> Node8 [id="edge9_Node000002_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="color_led_red_onoff",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga34dee279f15866dcf3444ac236c06dcb",tooltip="Switches on/off the red component of color LED 0."];
+  Node8 -> Node4 [id="edge10_Node000008_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node8 -> Node5 [id="edge11_Node000008_Node000005",color="steelblue1",style="solid",tooltip=" "];
 }

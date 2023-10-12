@@ -87,6 +87,24 @@ extern bool iic_write_register(const iic_index_t iic, const uint8_t addr,
                                const uint8_t reg, uint8_t *data,
                                uint16_t length);
 
+extern bool iic_set_slave_mode(const iic_index_t iic, const uint8_t addr,
+                               uint32_t *register_map,
+                               const uint32_t rm_length);
+
+/**
+ * @param iic The IIC index of the hardware to use.
+ *
+ * This handles requests that came in to the IIC unit when it is in
+ * slave mode.
+ */
+extern void iic_slave_mode_handler(const iic_index_t iic);
+
+/**
+ * @param iic The IIC index of the hardware to use.
+ * Return the IIC module into its default mode.
+ * This way it can be used as master.
+ */
+extern void iic_reset(const iic_index_t iic);
 /**
  * @}
  */

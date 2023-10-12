@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -114,6 +114,12 @@ Functions</h2></td></tr>
 <tr class="separator:gaac75c2cde94a3f76c16baa5e5461e61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4edfe6a2e9a6a4ef5bdc58b8bb8a7834"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#ga4edfe6a2e9a6a4ef5bdc58b8bb8a7834">iic_write_register</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic, const uint8_t addr, const uint8_t reg, uint8_t *data, uint16_t length)</td></tr>
 <tr class="separator:ga4edfe6a2e9a6a4ef5bdc58b8bb8a7834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47cd74935636dfcfab24f4aa5b9b9b4e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#ga47cd74935636dfcfab24f4aa5b9b9b4e">iic_set_slave_mode</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic, const uint8_t addr, uint32_t *register_map, const uint32_t rm_length)</td></tr>
+<tr class="separator:ga47cd74935636dfcfab24f4aa5b9b9b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8599ce5208ff9cc78c4707ff77c0bdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#gac8599ce5208ff9cc78c4707ff77c0bdc">iic_slave_mode_handler</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic)</td></tr>
+<tr class="separator:gac8599ce5208ff9cc78c4707ff77c0bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae52575814cde9a23140851240e73d5a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#gaae52575814cde9a23140851240e73d5a">iic_reset</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic)</td></tr>
+<tr class="separator:gaae52575814cde9a23140851240e73d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Functions to use the Inter-Integrated Circuit (IIC). </p>
@@ -168,7 +174,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit if the IIC channel is outside valid range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2iic_8c_source.html#l00003">3</a> of file <a class="el" href="empty-library_2iic_8c_source.html">iic.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00124">124</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -202,7 +208,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit if the IIC channel is outside valid range or when the shared memory system has not been instantiated. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2iic_8c_source.html#l00002">2</a> of file <a class="el" href="empty-library_2iic_8c_source.html">iic.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00108">108</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -267,12 +273,107 @@ Here is the call graph for this function:</div>
 <p>Reads the content of the register into data.</p>
 <dl class="section return"><dt>Returns</dt><dd>0 if successful, 1 on error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2iic_8c_source.html#l00004">4</a> of file <a class="el" href="empty-library_2iic_8c_source.html">iic.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00327">327</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="group__IIC_gaac75c2cde94a3f76c16baa5e5461e61d_cgraph.png" border="0" usemap="#agroup__IIC_gaac75c2cde94a3f76c16baa5e5461e61d_cgraph" alt=""/></div>
 </div>
+
+</div>
+</div>
+<a id="gaae52575814cde9a23140851240e73d5a" name="gaae52575814cde9a23140851240e73d5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaae52575814cde9a23140851240e73d5a">&#9670;&#160;</a></span>iic_reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void iic_reset </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a>&#160;</td>
+          <td class="paramname"><em>iic</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">iic</td><td>The IIC index of the hardware to use. Return the IIC module into its default mode. This way it can be used as master. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00314">314</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="ga47cd74935636dfcfab24f4aa5b9b9b4e" name="ga47cd74935636dfcfab24f4aa5b9b9b4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47cd74935636dfcfab24f4aa5b9b9b4e">&#9670;&#160;</a></span>iic_set_slave_mode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool iic_set_slave_mode </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a>&#160;</td>
+          <td class="paramname"><em>iic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>register_map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>rm_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00135">135</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="gac8599ce5208ff9cc78c4707ff77c0bdc" name="gac8599ce5208ff9cc78c4707ff77c0bdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac8599ce5208ff9cc78c4707ff77c0bdc">&#9670;&#160;</a></span>iic_slave_mode_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void iic_slave_mode_handler </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a>&#160;</td>
+          <td class="paramname"><em>iic</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">iic</td><td>The IIC index of the hardware to use.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This handles requests that came in to the IIC unit when it is in slave mode. </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00302">302</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
 
 </div>
 </div>
@@ -332,7 +433,7 @@ Here is the call graph for this function:</div>
 <p>Writes data to register.</p>
 <dl class="section return"><dt>Returns</dt><dd>0 if successful, 1 on error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2iic_8c_source.html#l00007">7</a> of file <a class="el" href="empty-library_2iic_8c_source.html">iic.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00344">344</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -346,7 +447,7 @@ Here is the call graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:02 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

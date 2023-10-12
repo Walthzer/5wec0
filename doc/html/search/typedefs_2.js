@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['led_5fmode_0',['led_mode',['../leds_8c.html#ab91864d03c4f54366f6156b28dad35ca',1,'leds.c']]],
-  ['loglevel_1',['LogLevel',['../group__LOG.html#ga5014459d5368b638041dc2a6ee565356',1,'log.h']]]
+  ['iichandle_0',['IICHandle',['../iic_8c.html#a4bdcb7645329291d53f6686078a75e8d',1,'iic.c']]],
+  ['io_5fconfiguration_5ft_1',['io_configuration_t',['../group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3',1,'switchbox.h']]]
 ];

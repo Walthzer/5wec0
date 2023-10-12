@@ -8,5 +8,8 @@ var group__IIC =
     [ "iic_destroy", "group__IIC.html#ga0b2debeb3b4864b3bebdb4f5994415bc", null ],
     [ "iic_init", "group__IIC.html#gaccb5fdae6aa7da6a1df39199df890bba", null ],
     [ "iic_read_register", "group__IIC.html#gaac75c2cde94a3f76c16baa5e5461e61d", null ],
+    [ "iic_reset", "group__IIC.html#gaae52575814cde9a23140851240e73d5a", null ],
+    [ "iic_set_slave_mode", "group__IIC.html#ga47cd74935636dfcfab24f4aa5b9b9b4e", null ],
+    [ "iic_slave_mode_handler", "group__IIC.html#gac8599ce5208ff9cc78c4707ff77c0bdc", null ],
     [ "iic_write_register", "group__IIC.html#ga4edfe6a2e9a6a4ef5bdc58b8bb8a7834", null ]
 ];

@@ -7,9 +7,9 @@ digraph "mapping_info"
   rankdir="LR";
   Node1 [id="Node000001",label="mapping_info",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Displays a table to see where all pins have been mapped, what channels have been linked where and the..."];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
-  Node2 [id="Node000002",label="gpio_get_direction",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#a783b475bfefd5d4cf8296fa864d544a0",tooltip=" "];
+  Node2 [id="Node000002",label="gpio_get_direction",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga438e7f5cf810811e63ca7d7495b6e274",tooltip="Returns the direction the set pin is initialized in."];
   Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
-  Node3 [id="Node000003",label="gpio_get_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#a939422be5ec42d4d24d952839206ec0f",tooltip=" "];
+  Node3 [id="Node000003",label="gpio_get_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#gada071d5764fd998b331c31b867bfc88e",tooltip="Return the level of the IO pin."];
   Node1 -> Node4 [id="edge3_Node000001_Node000004",color="steelblue1",style="solid",tooltip=" "];
-  Node4 [id="Node000004",label="switchbox_get_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#gac02f8b23d20f08e225d1362017510608",tooltip="Sets the mode of a specified pin."];
+  Node4 [id="Node000004",label="switchbox_get_pin",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__SWITCHBOX.html#ga33109c8bc1a5cbc80ed63ff9fe284c28",tooltip="Sets the mode of a specified pin."];
 }

@@ -7,7 +7,9 @@ digraph "color_led_red_onoff"
   rankdir="LR";
   Node1 [id="Node000001",label="color_led_red_onoff",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Switches on/off the red component of color LED 0."];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
-  Node2 [id="Node000002",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2gpio_8c.html#ad5a42b84617ecc1b6af7d36ac2d0bea4",tooltip=" "];
+  Node2 [id="Node000002",label="gpio_set_level",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__GPIO.html#ga6d929f90f89a8bccbe40da10a323a508",tooltip="Set the level of the output IO pin. If the pin is configured as input, this function does nothing."];
   Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
   Node3 [id="Node000003",label="pwm_set_duty_cycle",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__PWM.html#ga80cf5c97176cf7d9108edd18fdf58cd6",tooltip="Sets the duty cycle for the specified PWM channel."];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="check_initialized_pwm",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$pwm_8c.html#abcae3c5f25f1aec206ba8f64f0bed39e",tooltip=" "];
 }

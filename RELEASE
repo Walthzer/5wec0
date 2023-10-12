@@ -1,4 +1,4 @@
-release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26
-commit 75a41d8a687dc1fcc5abd917ee3819ea12de56cf
+release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:50
+commit 409b346b525ceeb0c3cf1d5b52d86ac970b51d4b
 git@gitlab.tue.nl:rock-your-pynq-baby/pynq-io-library.git
 git@gitlab.tue.nl:rock-your-pynq-baby/scpi-parser.git

@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('switchbox_8h.html',''); initResizable(
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
@@ -117,6 +118,11 @@ This graph shows which files directly or indirectly include this file:</div>
 Macros</h2></td></tr>
 <tr class="memitem:ga68427604f8617d5fb9ce6c22c455528d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#ga68427604f8617d5fb9ce6c22c455528d">NUM_SWITCHBOX_NAMES</a>&#160;&#160;&#160;40</td></tr>
 <tr class="separator:ga68427604f8617d5fb9ce6c22c455528d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaff5256ebf82f8c6a10cfd668b91e0fe3"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="group__SWITCHBOX.html#ga0eb2b30968ee6d2206889ba667fc47b9">io_configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3">io_configuration_t</a></td></tr>
+<tr class="separator:gaff5256ebf82f8c6a10cfd668b91e0fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -180,14 +186,14 @@ Enumerations</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:gaa08d84687c6b7fcfae8d1ea0e067306f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gaa08d84687c6b7fcfae8d1ea0e067306f">switchbox_init</a> (void)</td></tr>
 <tr class="separator:gaa08d84687c6b7fcfae8d1ea0e067306f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf00e8e471d78f9a6a238bd0b4c3437f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gaf00e8e471d78f9a6a238bd0b4c3437f5">switchbox_set_pin</a> (const <a class="el" href="group__PINMAP.html#gad20da07c14dade682a840354fb797c35">pin_t</a> pin_number, const uint8_t pin_type)</td></tr>
-<tr class="separator:gaf00e8e471d78f9a6a238bd0b4c3437f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb0f900c7b5b5c0404844915b649e9b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gadb0f900c7b5b5c0404844915b649e9b6">switchbox_set_pin</a> (const <a class="el" href="group__PINMAP.html#ga423620ef7d69894833f70cfc395caaa9">io_t</a> pin_number, const <a class="el" href="group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3">io_configuration_t</a> pin_type)</td></tr>
+<tr class="separator:gadb0f900c7b5b5c0404844915b649e9b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga74a66c9d9da08623ed4698e4ba7978a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#ga74a66c9d9da08623ed4698e4ba7978a6">switchbox_reset</a> (void)</td></tr>
 <tr class="separator:ga74a66c9d9da08623ed4698e4ba7978a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3287b962efdc35dce05a4c0a6d899e61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#ga3287b962efdc35dce05a4c0a6d899e61">switchbox_destroy</a> (void)</td></tr>
 <tr class="separator:ga3287b962efdc35dce05a4c0a6d899e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac02f8b23d20f08e225d1362017510608"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#gac02f8b23d20f08e225d1362017510608">switchbox_get_pin</a> (const <a class="el" href="group__PINMAP.html#gad20da07c14dade682a840354fb797c35">pin_t</a> pin_number)</td></tr>
-<tr class="separator:gac02f8b23d20f08e225d1362017510608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33109c8bc1a5cbc80ed63ff9fe284c28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SWITCHBOX.html#gaff5256ebf82f8c6a10cfd668b91e0fe3">io_configuration_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SWITCHBOX.html#ga33109c8bc1a5cbc80ed63ff9fe284c28">switchbox_get_pin</a> (const <a class="el" href="group__PINMAP.html#ga423620ef7d69894833f70cfc395caaa9">io_t</a> pin_number)</td></tr>
+<tr class="separator:ga33109c8bc1a5cbc80ed63ff9fe284c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -200,7 +206,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3d620c6b6fdb93ed3bc6186215bde2e.html">library</a></li><li class="navelem"><a class="el" href="switchbox_8h.html">switchbox.h</a></li>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:01 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

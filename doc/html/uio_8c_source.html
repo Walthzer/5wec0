@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -156,7 +156,7 @@ $(document).ready(function(){initNavTree('uio_8c_source.html',''); initResizable
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="comment"> * @param   length is the length of the MMAP in bytes.</span></div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="comment"> * @return  A pointer pointing to the MMAP of the UIO.</span></div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment"> *****************************************************************************/</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="uio_8c.html#a3dc49c1ca82ae1553a4f77f6ceac0254">   65</a></span><span class="keywordtype">void</span> *<a class="code hl_function" href="empty-library_2uio_8c.html#a3dc49c1ca82ae1553a4f77f6ceac0254">setUIO</a>(<span class="keywordtype">int</span> uio_index, <span class="keywordtype">int</span> length) {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="uio_8c.html#a3dc49c1ca82ae1553a4f77f6ceac0254">   65</a></span><span class="keywordtype">void</span> *<a class="code hl_function" href="uio_8c.html#a3dc49c1ca82ae1553a4f77f6ceac0254">setUIO</a>(<span class="keywordtype">int</span> uio_index, <span class="keywordtype">int</span> length) {</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="keywordtype">char</span> uio_buf[32];</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  <span class="keywordtype">int</span> uio_fd;</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <span class="keywordtype">void</span> *uio_ptr;</div>
@@ -177,9 +177,9 @@ $(document).ready(function(){initNavTree('uio_8c_source.html',''); initResizable
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment"> * @param   length is the length of the MMAP.</span></div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="comment"> * @return  0 on success; -1 otherwise.</span></div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="comment"> *****************************************************************************/</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="uio_8c.html#a59a8a2b5a485df4f125d7c4f71f48b6f">   86</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="empty-library_2uio_8c.html#a59a8a2b5a485df4f125d7c4f71f48b6f">unsetUIO</a>(<span class="keywordtype">void</span> *uio_ptr, <span class="keywordtype">int</span> length) { <span class="keywordflow">return</span> munmap(uio_ptr, length); }</div>
-<div class="ttc" id="aempty-library_2uio_8c_html_a3dc49c1ca82ae1553a4f77f6ceac0254"><div class="ttname"><a href="empty-library_2uio_8c.html#a3dc49c1ca82ae1553a4f77f6ceac0254">setUIO</a></div><div class="ttdeci">void * setUIO(int uio_index, int length)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2uio_8c_source.html#l00002">uio.c:2</a></div></div>
-<div class="ttc" id="aempty-library_2uio_8c_html_a59a8a2b5a485df4f125d7c4f71f48b6f"><div class="ttname"><a href="empty-library_2uio_8c.html#a59a8a2b5a485df4f125d7c4f71f48b6f">unsetUIO</a></div><div class="ttdeci">int unsetUIO(void *uio_ptr, int length)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2uio_8c_source.html#l00003">uio.c:3</a></div></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="uio_8c.html#a59a8a2b5a485df4f125d7c4f71f48b6f">   86</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="uio_8c.html#a59a8a2b5a485df4f125d7c4f71f48b6f">unsetUIO</a>(<span class="keywordtype">void</span> *uio_ptr, <span class="keywordtype">int</span> length) { <span class="keywordflow">return</span> munmap(uio_ptr, length); }</div>
+<div class="ttc" id="auio_8c_html_a3dc49c1ca82ae1553a4f77f6ceac0254"><div class="ttname"><a href="uio_8c.html#a3dc49c1ca82ae1553a4f77f6ceac0254">setUIO</a></div><div class="ttdeci">void * setUIO(int uio_index, int length)</div><div class="ttdef"><b>Definition</b> <a href="uio_8c_source.html#l00065">uio.c:65</a></div></div>
+<div class="ttc" id="auio_8c_html_a59a8a2b5a485df4f125d7c4f71f48b6f"><div class="ttname"><a href="uio_8c.html#a59a8a2b5a485df4f125d7c4f71f48b6f">unsetUIO</a></div><div class="ttdeci">int unsetUIO(void *uio_ptr, int length)</div><div class="ttdef"><b>Definition</b> <a href="uio_8c_source.html#l00086">uio.c:86</a></div></div>
 <div class="ttc" id="auio_8h_html"><div class="ttname"><a href="uio_8h.html">uio.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -187,7 +187,7 @@ $(document).ready(function(){initNavTree('uio_8c_source.html',''); initResizable
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3d620c6b6fdb93ed3bc6186215bde2e.html">library</a></li><li class="navelem"><a class="el" href="uio_8c.html">uio.c</a></li>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:01 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

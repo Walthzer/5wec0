@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -183,19 +183,19 @@ Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// clean up after use</span></div>
 <div class="line">  <a class="code hl_function" href="group__LEDS.html#ga76a9b8042477e7fc4cb0d4dd9ffd3ae5">leds_destroy</a>(); <span class="comment">// switches all leds off</span></div>
-<div class="line">  <a class="code hl_function" href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
+<div class="line">  <a class="code hl_function" href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a>();</div>
 <div class="line">  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
 <div class="line">}</div>
-<div class="ttc" id="aempty-library_2libpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="empty-library_2libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2libpynq_8c_source.html#l00003">libpynq.c:3</a></div></div>
-<div class="ttc" id="agroup__GPIO_html_ga50c7fd3ea0ff2a823de87a74c19ffb1e"><div class="ttname"><a href="group__GPIO.html#ga50c7fd3ea0ff2a823de87a74c19ffb1e">gpio_reset</a></div><div class="ttdeci">void gpio_reset(void)</div><div class="ttdoc">Reset all GPIO pins.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2gpio_8c_source.html#l00018">gpio.c:18</a></div></div>
-<div class="ttc" id="agroup__LEDS_html_ga19e2c4b27d8ec4c14c5186baf24f251f"><div class="ttname"><a href="group__LEDS.html#ga19e2c4b27d8ec4c14c5186baf24f251f">leds_init_onoff</a></div><div class="ttdeci">void leds_init_onoff(void)</div><div class="ttdoc">Initialize the green LEDs for on/off use.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2leds_8c_source.html#l00002">leds.c:2</a></div></div>
-<div class="ttc" id="agroup__LEDS_html_ga2f369349851e22f870bd49d595aa507a"><div class="ttname"><a href="group__LEDS.html#ga2f369349851e22f870bd49d595aa507a">green_led_off</a></div><div class="ttdeci">void green_led_off(const int led)</div><div class="ttdoc">Same as green_led_onoff(led, LED_OFF). Works in all modes.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2leds_8c_source.html#l00008">leds.c:8</a></div></div>
-<div class="ttc" id="agroup__LEDS_html_ga69206476c2ae37f7c29525a318ef79cd"><div class="ttname"><a href="group__LEDS.html#ga69206476c2ae37f7c29525a318ef79cd">green_led_on</a></div><div class="ttdeci">void green_led_on(const int led)</div><div class="ttdoc">Same as green_led_onoff(led, LED_ON). Works in all modes.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2leds_8c_source.html#l00007">leds.c:7</a></div></div>
-<div class="ttc" id="agroup__LEDS_html_ga76a9b8042477e7fc4cb0d4dd9ffd3ae5"><div class="ttname"><a href="group__LEDS.html#ga76a9b8042477e7fc4cb0d4dd9ffd3ae5">leds_destroy</a></div><div class="ttdeci">void leds_destroy(void)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2leds_8c_source.html#l00005">leds.c:5</a></div></div>
+<div class="ttc" id="agroup__GPIO_html_ga50c7fd3ea0ff2a823de87a74c19ffb1e"><div class="ttname"><a href="group__GPIO.html#ga50c7fd3ea0ff2a823de87a74c19ffb1e">gpio_reset</a></div><div class="ttdeci">void gpio_reset(void)</div><div class="ttdoc">Reset all IO pins.</div><div class="ttdef"><b>Definition</b> <a href="gpio_8c_source.html#l00062">gpio.c:62</a></div></div>
+<div class="ttc" id="agroup__LEDS_html_ga19e2c4b27d8ec4c14c5186baf24f251f"><div class="ttname"><a href="group__LEDS.html#ga19e2c4b27d8ec4c14c5186baf24f251f">leds_init_onoff</a></div><div class="ttdeci">void leds_init_onoff(void)</div><div class="ttdoc">Initialize the green LEDs for on/off use.</div><div class="ttdef"><b>Definition</b> <a href="leds_8c_source.html#l00037">leds.c:37</a></div></div>
+<div class="ttc" id="agroup__LEDS_html_ga2f369349851e22f870bd49d595aa507a"><div class="ttname"><a href="group__LEDS.html#ga2f369349851e22f870bd49d595aa507a">green_led_off</a></div><div class="ttdeci">void green_led_off(const int led)</div><div class="ttdoc">Same as green_led_onoff(led, LED_OFF). Works in all modes.</div><div class="ttdef"><b>Definition</b> <a href="leds_8c_source.html#l00147">leds.c:147</a></div></div>
+<div class="ttc" id="agroup__LEDS_html_ga69206476c2ae37f7c29525a318ef79cd"><div class="ttname"><a href="group__LEDS.html#ga69206476c2ae37f7c29525a318ef79cd">green_led_on</a></div><div class="ttdeci">void green_led_on(const int led)</div><div class="ttdoc">Same as green_led_onoff(led, LED_ON). Works in all modes.</div><div class="ttdef"><b>Definition</b> <a href="leds_8c_source.html#l00146">leds.c:146</a></div></div>
+<div class="ttc" id="agroup__LEDS_html_ga76a9b8042477e7fc4cb0d4dd9ffd3ae5"><div class="ttname"><a href="group__LEDS.html#ga76a9b8042477e7fc4cb0d4dd9ffd3ae5">leds_destroy</a></div><div class="ttdeci">void leds_destroy(void)</div><div class="ttdef"><b>Definition</b> <a href="leds_8c_source.html#l00096">leds.c:96</a></div></div>
 <div class="ttc" id="agroup__LEDS_html_ggada10100f8d1cafd5374fd6bef470b719a9d90fb1b1a63db309f0b7021da5b4b56"><div class="ttname"><a href="group__LEDS.html#ggada10100f8d1cafd5374fd6bef470b719a9d90fb1b1a63db309f0b7021da5b4b56">NUM_GREEN_LEDS</a></div><div class="ttdeci">@ NUM_GREEN_LEDS</div><div class="ttdef"><b>Definition</b> <a href="leds_8h_source.html#l00085">leds.h:85</a></div></div>
-<div class="ttc" id="agroup__UTIL_html_gaa8a2a52c0967dcf48e8ff578ead12813"><div class="ttname"><a href="group__UTIL.html#gaa8a2a52c0967dcf48e8ff578ead12813">sleep_msec</a></div><div class="ttdeci">void sleep_msec(int msec)</div><div class="ttdoc">Wait for msec milliseconds.</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2util_8c_source.html#l00002">util.c:2</a></div></div>
+<div class="ttc" id="agroup__UTIL_html_gaa8a2a52c0967dcf48e8ff578ead12813"><div class="ttname"><a href="group__UTIL.html#gaa8a2a52c0967dcf48e8ff578ead12813">sleep_msec</a></div><div class="ttdeci">void sleep_msec(int msec)</div><div class="ttdoc">Wait for msec milliseconds.</div><div class="ttdef"><b>Definition</b> <a href="util_8c_source.html#l00032">util.c:32</a></div></div>
+<div class="ttc" id="alibpynq_8c_html_ac2fc79c63b22d4ce66226ca5d36d8577"><div class="ttname"><a href="libpynq_8c.html#ac2fc79c63b22d4ce66226ca5d36d8577">pynq_destroy</a></div><div class="ttdeci">void pynq_destroy(void)</div><div class="ttdoc">Reset and destroy the switchbox and GPIO of the PYNQ.</div><div class="ttdef"><b>Definition</b> <a href="libpynq_8c_source.html#l00035">libpynq.c:35</a></div></div>
 <div class="ttc" id="alibpynq_8h_html"><div class="ttname"><a href="libpynq_8h.html">libpynq.h</a></div></div>
-</div><!-- fragment --><p>LEDs can also be used through GPIO (see <a class="el" href="gpio_8h.html">gpio.h</a> and <a class="el" href="pinmap_8h.html">pinmap.h</a>). Note that GPIO numbering (SWB_LD0..SWB_LD3) is then used instead of 0..NUM_GREEN_LEDS-1 (LED0..LED3). In the PWM mode for color LED 0, SWB_PWM0..SWB_PWM3 are routed to color LED 0 (GPIO SWB_LD4R, SWB_LD4G, SWB_LD4B). </p>
+</div><!-- fragment --><p>LEDs can also be used through GPIO (see <a class="el" href="gpio_8h.html">gpio.h</a> and <a class="el" href="pinmap_8h.html">pinmap.h</a>). Note that GPIO numbering (IO_LD0..IO_LD3) is then used instead of 0..NUM_GREEN_LEDS-1 (LED0..LED3). In the PWM mode for color LED 0, SWB_PWM0..SWB_PWM3 are routed to color LED 0 (GPIO IO_LD4R, IO_LD4G, IO_LD4B). </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ga80700bb63bd56ebabbb4728aa433fd29" name="ga80700bb63bd56ebabbb4728aa433fd29"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga80700bb63bd56ebabbb4728aa433fd29">&#9670;&#160;</a></span>LED_OFF</h2>
@@ -336,7 +336,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when LEDs were not initialized with the correct mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00011">11</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00195">195</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -375,7 +375,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when LEDs were not initialized with the correct mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00010">10</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00172">172</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -409,7 +409,7 @@ Here is the caller graph for this function:</div>
 LED_OFF). </p>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when LEDs were not initialized with the correct mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00015">15</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00226">226</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -438,7 +438,7 @@ Here is the call graph for this function:</div>
 LED_ON). </p>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when LEDs were not initialized with the correct mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00014">14</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00225">225</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -488,7 +488,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when LEDs were not initialized with the correct mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00012">12</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00218">218</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -527,7 +527,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when LEDs were not initialized with the correct mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00009">9</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00148">148</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -560,7 +560,7 @@ Here is the caller graph for this function:</div>
 <p>Initialize the color LEDs for use with variable intensity. The LED intensity can range from 0.255. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when LEDs have already been to another mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00004">4</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00079">79</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -596,7 +596,7 @@ Here is the call graph for this function:</div>
 <dd>
 Fails with program exit when LEDs were not initialized with the correct mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00008">8</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00147">147</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -637,7 +637,7 @@ Here is the caller graph for this function:</div>
 <dd>
 Fails with program exit when LEDs were not initialized with the correct mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00007">7</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00146">146</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -682,7 +682,7 @@ Here is the call graph for this function:</div>
 <dd>
 Fails with program exit when LEDs were not initialized with the correct mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00006">6</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00117">117</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -715,7 +715,7 @@ Here is the caller graph for this function:</div>
 <p>Initialize the green LEDs for use with variable intensity. The LED intensity can range from 0.255. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when LEDs have already been to another mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00003">3</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00058">58</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -741,7 +741,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 <p>Unitialize the LEDs, such that the mode of the LEDs can be changed. Switch all lEDs off. </p>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00005">5</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00096">96</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -769,7 +769,7 @@ Here is the call graph for this function:</div>
 <p>Initialize the green LEDs for on/off use. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Fails with program exit when LEDs have already been to another mode. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="empty-library_2leds_8c_source.html#l00002">2</a> of file <a class="el" href="empty-library_2leds_8c_source.html">leds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="leds_8c_source.html#l00037">37</a> of file <a class="el" href="leds_8c_source.html">leds.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -783,7 +783,7 @@ Here is the call graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:02 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

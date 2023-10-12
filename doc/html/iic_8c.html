@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -90,7 +90,10 @@ $(document).ready(function(){initNavTree('iic_8c.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">iic.c File Reference</div></div>
 </div><!--header-->
@@ -98,10 +101,12 @@ $(document).ready(function(){initNavTree('iic_8c.html',''); initResizable(); });
 <div class="textblock"><code>#include &quot;<a class="el" href="iic_8h_source.html">iic.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="arm__shared__memory__system_8h_source.html">arm_shared_memory_system.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="log_8h_source.html">log.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="xiic__l_8h_source.html">xiic_l.h</a>&quot;</code><br />
 <code>#include &lt;platform.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="xiic__l_8h_source.html">xiic_l.h</a>&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for iic.c:</div>
 <div class="dyncontent">
@@ -110,10 +115,99 @@ Include dependency graph for iic.c:</div>
 </div>
 <p><a href="iic_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIICHandle.html">IICHandle</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:af268570e2241309e79926b1bfb22a43c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#af268570e2241309e79926b1bfb22a43c">IIC_REG_SOFT_RESET</a>&#160;&#160;&#160;(0x40 / 4)</td></tr>
+<tr class="memitem:ae9bf256de7a341ea03a8659c3be169a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#ae9bf256de7a341ea03a8659c3be169a6">IIC_TIMEOUT</a>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:ae9bf256de7a341ea03a8659c3be169a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc58adc8aa8cd45c09c4410387f3247"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#addc58adc8aa8cd45c09c4410387f3247">IIC_STOP</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:addc58adc8aa8cd45c09c4410387f3247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a4b8e4b2313af491c919eaeff0848a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a5a4b8e4b2313af491c919eaeff0848a9">IIC_REPEATED_START</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:a5a4b8e4b2313af491c919eaeff0848a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7311c1c60871312d2441dce78c321ede"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a7311c1c60871312d2441dce78c321ede">IIC_DGIER_OFFSET</a>&#160;&#160;&#160;0x1C</td></tr>
+<tr class="separator:a7311c1c60871312d2441dce78c321ede"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26a8262cace5460f60a49c7c0d6ffcd7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a26a8262cace5460f60a49c7c0d6ffcd7">IIC_IISR_OFFSET</a>&#160;&#160;&#160;0x20</td></tr>
+<tr class="separator:a26a8262cace5460f60a49c7c0d6ffcd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63a3014e4004f733cc2667139757474e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a63a3014e4004f733cc2667139757474e">IIC_IIER_OFFSET</a>&#160;&#160;&#160;0x28</td></tr>
+<tr class="separator:a63a3014e4004f733cc2667139757474e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7228efc7c6a210416abe95b13d16d23"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#ac7228efc7c6a210416abe95b13d16d23">IIC_RESETR_OFFSET</a>&#160;&#160;&#160;0x40</td></tr>
+<tr class="separator:ac7228efc7c6a210416abe95b13d16d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad252a22e9762e50bbb58aeb768e649c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#ad252a22e9762e50bbb58aeb768e649c6">IIC_CR_REG_OFFSET</a>&#160;&#160;&#160;0x100</td></tr>
+<tr class="separator:ad252a22e9762e50bbb58aeb768e649c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54641c6a99e9bae5d3a6739b1229f852"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a54641c6a99e9bae5d3a6739b1229f852">IIC_SR_REG_OFFSET</a>&#160;&#160;&#160;0x104</td></tr>
+<tr class="separator:a54641c6a99e9bae5d3a6739b1229f852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d0b3da440a36116d9b40e3cb5fcd12"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a39d0b3da440a36116d9b40e3cb5fcd12">IIC_DTR_REG_OFFSET</a>&#160;&#160;&#160;0x108</td></tr>
+<tr class="separator:a39d0b3da440a36116d9b40e3cb5fcd12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d975c72e9bb2f948d08173c5a613b0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a6d975c72e9bb2f948d08173c5a613b0b">IIC_DRR_REG_OFFSET</a>&#160;&#160;&#160;0x10C</td></tr>
+<tr class="separator:a6d975c72e9bb2f948d08173c5a613b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d8831f4d644acb22b8dccc27b0cf088"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a4d8831f4d644acb22b8dccc27b0cf088">IIC_ADR_REG_OFFSET</a>&#160;&#160;&#160;0x110</td></tr>
+<tr class="separator:a4d8831f4d644acb22b8dccc27b0cf088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8007db92f695c72f0e871363d6bb8b1d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a8007db92f695c72f0e871363d6bb8b1d">IIC_TFO_REG_OFFSET</a>&#160;&#160;&#160;0x114</td></tr>
+<tr class="separator:a8007db92f695c72f0e871363d6bb8b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf5a9de2723ae94241a300e39b8e99e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#abf5a9de2723ae94241a300e39b8e99e2">IIC_RFO_REG_OFFSET</a>&#160;&#160;&#160;0x118</td></tr>
+<tr class="separator:abf5a9de2723ae94241a300e39b8e99e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb923c887ffb7357db1e1744d661aeb3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#abb923c887ffb7357db1e1744d661aeb3">IIC_TBA_REG_OFFSET</a>&#160;&#160;&#160;0x11C</td></tr>
+<tr class="separator:abb923c887ffb7357db1e1744d661aeb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add72288af9a86263542c9c71dd248f04"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#add72288af9a86263542c9c71dd248f04">IIC_RFD_REG_OFFSET</a>&#160;&#160;&#160;0x120</td></tr>
+<tr class="separator:add72288af9a86263542c9c71dd248f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf04498774f6146677db7a594579989e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#abf04498774f6146677db7a594579989e">IIC_GPO_REG_OFFSET</a>&#160;&#160;&#160;0x124</td></tr>
+<tr class="separator:abf04498774f6146677db7a594579989e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb8a64533f6156ac99e80cd86cef2c18"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#aeb8a64533f6156ac99e80cd86cef2c18">IIC_CR_ENABLE_DEVICE_MASK</a>&#160;&#160;&#160;0x00000001</td></tr>
+<tr class="separator:aeb8a64533f6156ac99e80cd86cef2c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31ca1f22a3d514d1ca02b0513f9af2e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a31ca1f22a3d514d1ca02b0513f9af2e6">IIC_CR_TX_FIFO_RESET_MASK</a>&#160;&#160;&#160;0x00000002</td></tr>
+<tr class="separator:a31ca1f22a3d514d1ca02b0513f9af2e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35c9ba2c17b495e74e8d3dca8bc4a2a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a35c9ba2c17b495e74e8d3dca8bc4a2a7">IIC_CR_MSMS_MASK</a>&#160;&#160;&#160;0x00000004</td></tr>
+<tr class="separator:a35c9ba2c17b495e74e8d3dca8bc4a2a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0656376c1401fe7a5860c9896295fe0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a0656376c1401fe7a5860c9896295fe0c">IIC_CR_DIR_IS_TX_MASK</a>&#160;&#160;&#160;0x00000008</td></tr>
+<tr class="separator:a0656376c1401fe7a5860c9896295fe0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10f1716c939ad89134cb3c448a6d6149"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a10f1716c939ad89134cb3c448a6d6149">IIC_CR_NO_ACK_MASK</a>&#160;&#160;&#160;0x00000010</td></tr>
+<tr class="separator:a10f1716c939ad89134cb3c448a6d6149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8ab0796b343f06d5fb018684edd6af8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#af8ab0796b343f06d5fb018684edd6af8">IIC_CR_REPEATED_START_MASK</a>&#160;&#160;&#160;0x00000020</td></tr>
+<tr class="separator:af8ab0796b343f06d5fb018684edd6af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad467062df2660ab53015dcc396ee931a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#ad467062df2660ab53015dcc396ee931a">IIC_CR_GENERAL_CALL_MASK</a>&#160;&#160;&#160;0x00000040</td></tr>
+<tr class="separator:ad467062df2660ab53015dcc396ee931a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d14bba3bf35d671b952aac040bc776f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a2d14bba3bf35d671b952aac040bc776f">IIC_INTR_ARB_LOST_MASK</a>&#160;&#160;&#160;0x00000001</td></tr>
+<tr class="separator:a2d14bba3bf35d671b952aac040bc776f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54afcb1457e99b8de10cd4efb5505dab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a54afcb1457e99b8de10cd4efb5505dab">IIC_INTR_TX_ERROR_MASK</a>&#160;&#160;&#160;0x00000002</td></tr>
+<tr class="separator:a54afcb1457e99b8de10cd4efb5505dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaaffc3b22a250c5f8d60f93432ab689"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#aeaaffc3b22a250c5f8d60f93432ab689">IIC_INTR_TX_EMPTY_MASK</a>&#160;&#160;&#160;0x00000004</td></tr>
+<tr class="separator:aeaaffc3b22a250c5f8d60f93432ab689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af56c595767456e68f5c2bdab34e0cacb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#af56c595767456e68f5c2bdab34e0cacb">IIC_INTR_RX_FULL_MASK</a>&#160;&#160;&#160;0x00000008</td></tr>
+<tr class="separator:af56c595767456e68f5c2bdab34e0cacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a946e20102512ab9b5ad3b899d5ba4f76"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a946e20102512ab9b5ad3b899d5ba4f76">IIC_INTR_BNB_MASK</a>&#160;&#160;&#160;0x00000010</td></tr>
+<tr class="separator:a946e20102512ab9b5ad3b899d5ba4f76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4065a8f5d15bf7cfd94a810414fb0bb0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a4065a8f5d15bf7cfd94a810414fb0bb0">IIC_INTR_AAS_MASK</a>&#160;&#160;&#160;0x00000020</td></tr>
+<tr class="separator:a4065a8f5d15bf7cfd94a810414fb0bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7908862627b75f8c3ae95adc96a7c39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#ad7908862627b75f8c3ae95adc96a7c39">IIC_INTR_NAAS_MASK</a>&#160;&#160;&#160;0x00000040</td></tr>
+<tr class="separator:ad7908862627b75f8c3ae95adc96a7c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05bbe4f531d01b2a2082c987965f6fab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a05bbe4f531d01b2a2082c987965f6fab">IIC_INTR_TX_HALF_MASK</a>&#160;&#160;&#160;0x00000080</td></tr>
+<tr class="separator:a05bbe4f531d01b2a2082c987965f6fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa4a3b41c841093e13a3d7daae134fdb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#aaa4a3b41c841093e13a3d7daae134fdb">IIC_SR_BUS_BUSY_MASK</a>&#160;&#160;&#160;0x00000004</td></tr>
+<tr class="separator:aaa4a3b41c841093e13a3d7daae134fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae36f4ae46f7f97cee33019b97c25b51f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#ae36f4ae46f7f97cee33019b97c25b51f">IIC_SR_RX_FIFO_EMPTY</a>&#160;&#160;&#160;0x00000040</td></tr>
+<tr class="separator:ae36f4ae46f7f97cee33019b97c25b51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af268570e2241309e79926b1bfb22a43c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#af268570e2241309e79926b1bfb22a43c">IIC_REG_SOFT_RESET</a>&#160;&#160;&#160;(0x40)</td></tr>
 <tr class="separator:af268570e2241309e79926b1bfb22a43c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55efb18d62233b3db33160b16274fdad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a55efb18d62233b3db33160b16274fdad">IIC_SR_MSTR_RDING_SLAVE_MASK</a>&#160;&#160;&#160;0x00000008</td></tr>
+<tr class="separator:a55efb18d62233b3db33160b16274fdad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a4bdcb7645329291d53f6686078a75e8d"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structIICHandle.html">IICHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a4bdcb7645329291d53f6686078a75e8d">IICHandle</a></td></tr>
+<tr class="separator:a4bdcb7645329291d53f6686078a75e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a48b38372ab98721abe5e92ba397a76f5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iic_8c.html#a48b38372ab98721abe5e92ba397a76f5">IICState</a> { <a class="el" href="iic_8c.html#a48b38372ab98721abe5e92ba397a76f5af4756d9090b5c3e7672387586fbacc9c">IIC_IDLE</a> = 0
+, <a class="el" href="iic_8c.html#a48b38372ab98721abe5e92ba397a76f5a88dac05f5a7dcf1bf8ed0cb196006a08">IIC_ADDRESS</a> = 1
+, <a class="el" href="iic_8c.html#a48b38372ab98721abe5e92ba397a76f5ae4ead84d2c3bbc3f2403d9a5157a3f94">IIC_READ</a> = 2
+, <a class="el" href="iic_8c.html#a48b38372ab98721abe5e92ba397a76f5a75e8aea545131bf012338c473437708c">IIC_WRITE</a> = 3
+ }</td></tr>
+<tr class="separator:a48b38372ab98721abe5e92ba397a76f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -121,12 +215,409 @@ Functions</h2></td></tr>
 <tr class="separator:gaccb5fdae6aa7da6a1df39199df890bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0b2debeb3b4864b3bebdb4f5994415bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#ga0b2debeb3b4864b3bebdb4f5994415bc">iic_destroy</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic)</td></tr>
 <tr class="separator:ga0b2debeb3b4864b3bebdb4f5994415bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47cd74935636dfcfab24f4aa5b9b9b4e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#ga47cd74935636dfcfab24f4aa5b9b9b4e">iic_set_slave_mode</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic, const uint8_t addr, uint32_t *register_map, const uint32_t rm_length)</td></tr>
+<tr class="separator:ga47cd74935636dfcfab24f4aa5b9b9b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8599ce5208ff9cc78c4707ff77c0bdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#gac8599ce5208ff9cc78c4707ff77c0bdc">iic_slave_mode_handler</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic)</td></tr>
+<tr class="separator:gac8599ce5208ff9cc78c4707ff77c0bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae52575814cde9a23140851240e73d5a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#gaae52575814cde9a23140851240e73d5a">iic_reset</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic)</td></tr>
+<tr class="separator:gaae52575814cde9a23140851240e73d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaac75c2cde94a3f76c16baa5e5461e61d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#gaac75c2cde94a3f76c16baa5e5461e61d">iic_read_register</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic, const uint8_t addr, const uint8_t reg, uint8_t *data, uint16_t data_length)</td></tr>
 <tr class="separator:gaac75c2cde94a3f76c16baa5e5461e61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4edfe6a2e9a6a4ef5bdc58b8bb8a7834"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIC.html#ga4edfe6a2e9a6a4ef5bdc58b8bb8a7834">iic_write_register</a> (const <a class="el" href="group__IIC.html#ga07f0557e9d560deb1df586ddbdfaf58a">iic_index_t</a> iic, const uint8_t addr, const uint8_t reg, uint8_t *data, uint16_t data_length)</td></tr>
 <tr class="separator:ga4edfe6a2e9a6a4ef5bdc58b8bb8a7834"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a4d8831f4d644acb22b8dccc27b0cf088" name="a4d8831f4d644acb22b8dccc27b0cf088"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d8831f4d644acb22b8dccc27b0cf088">&#9670;&#160;</a></span>IIC_ADR_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_ADR_REG_OFFSET&#160;&#160;&#160;0x110</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Address Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00080">80</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a0656376c1401fe7a5860c9896295fe0c" name="a0656376c1401fe7a5860c9896295fe0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0656376c1401fe7a5860c9896295fe0c">&#9670;&#160;</a></span>IIC_CR_DIR_IS_TX_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_CR_DIR_IS_TX_MASK&#160;&#160;&#160;0x00000008</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Dir of Tx. Txing=1 </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00090">90</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="aeb8a64533f6156ac99e80cd86cef2c18" name="aeb8a64533f6156ac99e80cd86cef2c18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb8a64533f6156ac99e80cd86cef2c18">&#9670;&#160;</a></span>IIC_CR_ENABLE_DEVICE_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_CR_ENABLE_DEVICE_MASK&#160;&#160;&#160;0x00000001</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Device enable = 1 </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00087">87</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="ad467062df2660ab53015dcc396ee931a" name="ad467062df2660ab53015dcc396ee931a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad467062df2660ab53015dcc396ee931a">&#9670;&#160;</a></span>IIC_CR_GENERAL_CALL_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_CR_GENERAL_CALL_MASK&#160;&#160;&#160;0x00000040</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gen Call enabled = 1 </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00093">93</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a35c9ba2c17b495e74e8d3dca8bc4a2a7" name="a35c9ba2c17b495e74e8d3dca8bc4a2a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35c9ba2c17b495e74e8d3dca8bc4a2a7">&#9670;&#160;</a></span>IIC_CR_MSMS_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_CR_MSMS_MASK&#160;&#160;&#160;0x00000004</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Master starts Txing=1 </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00089">89</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a10f1716c939ad89134cb3c448a6d6149" name="a10f1716c939ad89134cb3c448a6d6149"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10f1716c939ad89134cb3c448a6d6149">&#9670;&#160;</a></span>IIC_CR_NO_ACK_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_CR_NO_ACK_MASK&#160;&#160;&#160;0x00000010</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Tx Ack. NO ack = 1 </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00091">91</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="ad252a22e9762e50bbb58aeb768e649c6" name="ad252a22e9762e50bbb58aeb768e649c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad252a22e9762e50bbb58aeb768e649c6">&#9670;&#160;</a></span>IIC_CR_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_CR_REG_OFFSET&#160;&#160;&#160;0x100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Control Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00076">76</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="af8ab0796b343f06d5fb018684edd6af8" name="af8ab0796b343f06d5fb018684edd6af8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8ab0796b343f06d5fb018684edd6af8">&#9670;&#160;</a></span>IIC_CR_REPEATED_START_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_CR_REPEATED_START_MASK&#160;&#160;&#160;0x00000020</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Repeated start = 1 </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00092">92</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a31ca1f22a3d514d1ca02b0513f9af2e6" name="a31ca1f22a3d514d1ca02b0513f9af2e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31ca1f22a3d514d1ca02b0513f9af2e6">&#9670;&#160;</a></span>IIC_CR_TX_FIFO_RESET_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_CR_TX_FIFO_RESET_MASK&#160;&#160;&#160;0x00000002</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transmit FIFO reset=1 </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00088">88</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a7311c1c60871312d2441dce78c321ede" name="a7311c1c60871312d2441dce78c321ede"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7311c1c60871312d2441dce78c321ede">&#9670;&#160;</a></span>IIC_DGIER_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_DGIER_OFFSET&#160;&#160;&#160;0x1C</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Global Interrupt Enable Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00072">72</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a6d975c72e9bb2f948d08173c5a613b0b" name="a6d975c72e9bb2f948d08173c5a613b0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d975c72e9bb2f948d08173c5a613b0b">&#9670;&#160;</a></span>IIC_DRR_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_DRR_REG_OFFSET&#160;&#160;&#160;0x10C</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Data Rx Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00079">79</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a39d0b3da440a36116d9b40e3cb5fcd12" name="a39d0b3da440a36116d9b40e3cb5fcd12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39d0b3da440a36116d9b40e3cb5fcd12">&#9670;&#160;</a></span>IIC_DTR_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_DTR_REG_OFFSET&#160;&#160;&#160;0x108</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Data Tx Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00078">78</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="abf04498774f6146677db7a594579989e" name="abf04498774f6146677db7a594579989e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf04498774f6146677db7a594579989e">&#9670;&#160;</a></span>IIC_GPO_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_GPO_REG_OFFSET&#160;&#160;&#160;0x124</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Output Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00085">85</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a63a3014e4004f733cc2667139757474e" name="a63a3014e4004f733cc2667139757474e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63a3014e4004f733cc2667139757474e">&#9670;&#160;</a></span>IIC_IIER_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_IIER_OFFSET&#160;&#160;&#160;0x28</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Interrupt Enable Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00074">74</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a26a8262cace5460f60a49c7c0d6ffcd7" name="a26a8262cace5460f60a49c7c0d6ffcd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26a8262cace5460f60a49c7c0d6ffcd7">&#9670;&#160;</a></span>IIC_IISR_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_IISR_OFFSET&#160;&#160;&#160;0x20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Interrupt Status Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00073">73</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a4065a8f5d15bf7cfd94a810414fb0bb0" name="a4065a8f5d15bf7cfd94a810414fb0bb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4065a8f5d15bf7cfd94a810414fb0bb0">&#9670;&#160;</a></span>IIC_INTR_AAS_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_INTR_AAS_MASK&#160;&#160;&#160;0x00000020</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1 = When addr as slave </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00100">100</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a2d14bba3bf35d671b952aac040bc776f" name="a2d14bba3bf35d671b952aac040bc776f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d14bba3bf35d671b952aac040bc776f">&#9670;&#160;</a></span>IIC_INTR_ARB_LOST_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_INTR_ARB_LOST_MASK&#160;&#160;&#160;0x00000001</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1 = Arbitration lost </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00095">95</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a946e20102512ab9b5ad3b899d5ba4f76" name="a946e20102512ab9b5ad3b899d5ba4f76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a946e20102512ab9b5ad3b899d5ba4f76">&#9670;&#160;</a></span>IIC_INTR_BNB_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_INTR_BNB_MASK&#160;&#160;&#160;0x00000010</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1 = Bus not busy </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00099">99</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="ad7908862627b75f8c3ae95adc96a7c39" name="ad7908862627b75f8c3ae95adc96a7c39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7908862627b75f8c3ae95adc96a7c39">&#9670;&#160;</a></span>IIC_INTR_NAAS_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_INTR_NAAS_MASK&#160;&#160;&#160;0x00000040</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1 = Not addr as slave </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00101">101</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="af56c595767456e68f5c2bdab34e0cacb" name="af56c595767456e68f5c2bdab34e0cacb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af56c595767456e68f5c2bdab34e0cacb">&#9670;&#160;</a></span>IIC_INTR_RX_FULL_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_INTR_RX_FULL_MASK&#160;&#160;&#160;0x00000008</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1 = Rx FIFO/reg=OCY level </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00098">98</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="aeaaffc3b22a250c5f8d60f93432ab689" name="aeaaffc3b22a250c5f8d60f93432ab689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaaffc3b22a250c5f8d60f93432ab689">&#9670;&#160;</a></span>IIC_INTR_TX_EMPTY_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_INTR_TX_EMPTY_MASK&#160;&#160;&#160;0x00000004</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1 = Tx FIFO/reg empty </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00097">97</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a54afcb1457e99b8de10cd4efb5505dab" name="a54afcb1457e99b8de10cd4efb5505dab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54afcb1457e99b8de10cd4efb5505dab">&#9670;&#160;</a></span>IIC_INTR_TX_ERROR_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_INTR_TX_ERROR_MASK&#160;&#160;&#160;0x00000002</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1 = Tx error/msg complete </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00096">96</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a05bbe4f531d01b2a2082c987965f6fab" name="a05bbe4f531d01b2a2082c987965f6fab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05bbe4f531d01b2a2082c987965f6fab">&#9670;&#160;</a></span>IIC_INTR_TX_HALF_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_INTR_TX_HALF_MASK&#160;&#160;&#160;0x00000080</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1 = Tx FIFO half empty </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00102">102</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
 <a id="af268570e2241309e79926b1bfb22a43c" name="af268570e2241309e79926b1bfb22a43c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af268570e2241309e79926b1bfb22a43c">&#9670;&#160;</a></span>IIC_REG_SOFT_RESET</h2>
 
@@ -134,12 +625,249 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define IIC_REG_SOFT_RESET&#160;&#160;&#160;(0x40 / 4)</td>
+          <td class="memname">#define IIC_REG_SOFT_RESET&#160;&#160;&#160;(0x40)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00035">35</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00105">105</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a5a4b8e4b2313af491c919eaeff0848a9" name="a5a4b8e4b2313af491c919eaeff0848a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a4b8e4b2313af491c919eaeff0848a9">&#9670;&#160;</a></span>IIC_REPEATED_START</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_REPEATED_START&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00070">70</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="ac7228efc7c6a210416abe95b13d16d23" name="ac7228efc7c6a210416abe95b13d16d23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7228efc7c6a210416abe95b13d16d23">&#9670;&#160;</a></span>IIC_RESETR_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_RESETR_OFFSET&#160;&#160;&#160;0x40</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reset Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00075">75</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="add72288af9a86263542c9c71dd248f04" name="add72288af9a86263542c9c71dd248f04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add72288af9a86263542c9c71dd248f04">&#9670;&#160;</a></span>IIC_RFD_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_RFD_REG_OFFSET&#160;&#160;&#160;0x120</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Rx FIFO Depth reg </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00084">84</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="abf5a9de2723ae94241a300e39b8e99e2" name="abf5a9de2723ae94241a300e39b8e99e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf5a9de2723ae94241a300e39b8e99e2">&#9670;&#160;</a></span>IIC_RFO_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_RFO_REG_OFFSET&#160;&#160;&#160;0x118</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Rx FIFO Occupancy </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00082">82</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="aaa4a3b41c841093e13a3d7daae134fdb" name="aaa4a3b41c841093e13a3d7daae134fdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa4a3b41c841093e13a3d7daae134fdb">&#9670;&#160;</a></span>IIC_SR_BUS_BUSY_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_SR_BUS_BUSY_MASK&#160;&#160;&#160;0x00000004</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1 = Bus is busy </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00103">103</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a55efb18d62233b3db33160b16274fdad" name="a55efb18d62233b3db33160b16274fdad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55efb18d62233b3db33160b16274fdad">&#9670;&#160;</a></span>IIC_SR_MSTR_RDING_SLAVE_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_SR_MSTR_RDING_SLAVE_MASK&#160;&#160;&#160;0x00000008</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00106">106</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a54641c6a99e9bae5d3a6739b1229f852" name="a54641c6a99e9bae5d3a6739b1229f852"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54641c6a99e9bae5d3a6739b1229f852">&#9670;&#160;</a></span>IIC_SR_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_SR_REG_OFFSET&#160;&#160;&#160;0x104</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Status Register </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00077">77</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="ae36f4ae46f7f97cee33019b97c25b51f" name="ae36f4ae46f7f97cee33019b97c25b51f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae36f4ae46f7f97cee33019b97c25b51f">&#9670;&#160;</a></span>IIC_SR_RX_FIFO_EMPTY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_SR_RX_FIFO_EMPTY&#160;&#160;&#160;0x00000040</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00104">104</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="addc58adc8aa8cd45c09c4410387f3247" name="addc58adc8aa8cd45c09c4410387f3247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addc58adc8aa8cd45c09c4410387f3247">&#9670;&#160;</a></span>IIC_STOP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_STOP&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00069">69</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="abb923c887ffb7357db1e1744d661aeb3" name="abb923c887ffb7357db1e1744d661aeb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb923c887ffb7357db1e1744d661aeb3">&#9670;&#160;</a></span>IIC_TBA_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_TBA_REG_OFFSET&#160;&#160;&#160;0x11C</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>10 Bit Address reg </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00083">83</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="a8007db92f695c72f0e871363d6bb8b1d" name="a8007db92f695c72f0e871363d6bb8b1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8007db92f695c72f0e871363d6bb8b1d">&#9670;&#160;</a></span>IIC_TFO_REG_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_TFO_REG_OFFSET&#160;&#160;&#160;0x114</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Tx FIFO Occupancy </p>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00081">81</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<a id="ae9bf256de7a341ea03a8659c3be169a6" name="ae9bf256de7a341ea03a8659c3be169a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9bf256de7a341ea03a8659c3be169a6">&#9670;&#160;</a></span>IIC_TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IIC_TIMEOUT&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00033">33</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a4bdcb7645329291d53f6686078a75e8d" name="a4bdcb7645329291d53f6686078a75e8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bdcb7645329291d53f6686078a75e8d">&#9670;&#160;</a></span>IICHandle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structIICHandle.html">IICHandle</a> <a class="el" href="structIICHandle.html">IICHandle</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a48b38372ab98721abe5e92ba397a76f5" name="a48b38372ab98721abe5e92ba397a76f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48b38372ab98721abe5e92ba397a76f5">&#9670;&#160;</a></span>IICState</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="iic_8c.html#a48b38372ab98721abe5e92ba397a76f5">IICState</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a48b38372ab98721abe5e92ba397a76f5af4756d9090b5c3e7672387586fbacc9c" name="a48b38372ab98721abe5e92ba397a76f5af4756d9090b5c3e7672387586fbacc9c"></a>IIC_IDLE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a48b38372ab98721abe5e92ba397a76f5a88dac05f5a7dcf1bf8ed0cb196006a08" name="a48b38372ab98721abe5e92ba397a76f5a88dac05f5a7dcf1bf8ed0cb196006a08"></a>IIC_ADDRESS&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a48b38372ab98721abe5e92ba397a76f5ae4ead84d2c3bbc3f2403d9a5157a3f94" name="a48b38372ab98721abe5e92ba397a76f5ae4ead84d2c3bbc3f2403d9a5157a3f94"></a>IIC_READ&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a48b38372ab98721abe5e92ba397a76f5a75e8aea545131bf012338c473437708c" name="a48b38372ab98721abe5e92ba397a76f5a75e8aea545131bf012338c473437708c"></a>IIC_WRITE&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="iic_8c_source.html#l00034">34</a> of file <a class="el" href="iic_8c_source.html">iic.c</a>.</p>
 
 </div>
 </div>
@@ -149,7 +877,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3d620c6b6fdb93ed3bc6186215bde2e.html">library</a></li><li class="navelem"><a class="el" href="iic_8c.html">iic.c</a></li>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:01 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

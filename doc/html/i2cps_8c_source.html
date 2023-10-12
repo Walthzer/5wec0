@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('i2cps_8c_source.html',''); initResizab
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#include &lt;sys/ioctl.h&gt;</span></div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="i2cps_8c.html#a423d97e7bbc2c26785d9a5de31d2f220">   60</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="empty-library_2i2cps_8c.html#a423d97e7bbc2c26785d9a5de31d2f220">setI2C</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> index, <span class="keywordtype">long</span> slave_addr) {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="i2cps_8c.html#a423d97e7bbc2c26785d9a5de31d2f220">   60</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="i2cps_8c.html#a423d97e7bbc2c26785d9a5de31d2f220">setI2C</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> index, <span class="keywordtype">long</span> slave_addr) {</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="keywordtype">int</span> i2c_fd;</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="keywordtype">char</span> buf[50];</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  sprintf(buf, <span class="stringliteral">&quot;/dev/i2c-%d&quot;</span>, index);</div>
@@ -165,12 +165,12 @@ $(document).ready(function(){initNavTree('i2cps_8c_source.html',''); initResizab
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="keywordflow">return</span> i2c_fd;</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="i2cps_8c.html#a8fbf09bd758928bc8f434d96957ec40f">   74</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="empty-library_2i2cps_8c.html#a8fbf09bd758928bc8f434d96957ec40f">unsetI2C</a>(<span class="keywordtype">int</span> i2c_fd) {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="i2cps_8c.html#a8fbf09bd758928bc8f434d96957ec40f">   74</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="i2cps_8c.html#a8fbf09bd758928bc8f434d96957ec40f">unsetI2C</a>(<span class="keywordtype">int</span> i2c_fd) {</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  close(i2c_fd);</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>}</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="i2cps_8c.html#a655bf0c0118a9dff569ee054c0a395f1">   79</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="empty-library_2i2cps_8c.html#a655bf0c0118a9dff569ee054c0a395f1">writeI2C_asFile</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> writebuffer[],</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="i2cps_8c.html#a655bf0c0118a9dff569ee054c0a395f1">   79</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="i2cps_8c.html#a655bf0c0118a9dff569ee054c0a395f1">writeI2C_asFile</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> writebuffer[],</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> bytes) {</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> bytesWritten = write(i2c_fd, writebuffer, bytes);</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="keywordflow">if</span> (bytes != bytesWritten) {</div>
@@ -179,17 +179,17 @@ $(document).ready(function(){initNavTree('i2cps_8c_source.html',''); initResizab
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>}</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="i2cps_8c.html#abf82e1e8e8f7974695f541af2526357a">   88</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="empty-library_2i2cps_8c.html#abf82e1e8e8f7974695f541af2526357a">readI2C_asFile</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> readbuffer[],</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="i2cps_8c.html#abf82e1e8e8f7974695f541af2526357a">   88</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="i2cps_8c.html#abf82e1e8e8f7974695f541af2526357a">readI2C_asFile</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> readbuffer[],</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                   <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> bytes) {</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> bytesRead = read(i2c_fd, readbuffer, bytes);</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  <span class="keywordflow">if</span> (bytes != bytesRead)</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
-<div class="ttc" id="aempty-library_2i2cps_8c_html_a423d97e7bbc2c26785d9a5de31d2f220"><div class="ttname"><a href="empty-library_2i2cps_8c.html#a423d97e7bbc2c26785d9a5de31d2f220">setI2C</a></div><div class="ttdeci">int setI2C(unsigned int index, long slave_addr)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2i2cps_8c_source.html#l00002">i2cps.c:2</a></div></div>
-<div class="ttc" id="aempty-library_2i2cps_8c_html_a655bf0c0118a9dff569ee054c0a395f1"><div class="ttname"><a href="empty-library_2i2cps_8c.html#a655bf0c0118a9dff569ee054c0a395f1">writeI2C_asFile</a></div><div class="ttdeci">int writeI2C_asFile(int i2c_fd, unsigned char writebuffer[], unsigned char bytes)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2i2cps_8c_source.html#l00004">i2cps.c:4</a></div></div>
-<div class="ttc" id="aempty-library_2i2cps_8c_html_a8fbf09bd758928bc8f434d96957ec40f"><div class="ttname"><a href="empty-library_2i2cps_8c.html#a8fbf09bd758928bc8f434d96957ec40f">unsetI2C</a></div><div class="ttdeci">int unsetI2C(int i2c_fd)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2i2cps_8c_source.html#l00003">i2cps.c:3</a></div></div>
-<div class="ttc" id="aempty-library_2i2cps_8c_html_abf82e1e8e8f7974695f541af2526357a"><div class="ttname"><a href="empty-library_2i2cps_8c.html#abf82e1e8e8f7974695f541af2526357a">readI2C_asFile</a></div><div class="ttdeci">int readI2C_asFile(int i2c_fd, unsigned char readbuffer[], unsigned char bytes)</div><div class="ttdef"><b>Definition</b> <a href="empty-library_2i2cps_8c_source.html#l00006">i2cps.c:6</a></div></div>
+<div class="ttc" id="ai2cps_8c_html_a423d97e7bbc2c26785d9a5de31d2f220"><div class="ttname"><a href="i2cps_8c.html#a423d97e7bbc2c26785d9a5de31d2f220">setI2C</a></div><div class="ttdeci">int setI2C(unsigned int index, long slave_addr)</div><div class="ttdef"><b>Definition</b> <a href="i2cps_8c_source.html#l00060">i2cps.c:60</a></div></div>
+<div class="ttc" id="ai2cps_8c_html_a655bf0c0118a9dff569ee054c0a395f1"><div class="ttname"><a href="i2cps_8c.html#a655bf0c0118a9dff569ee054c0a395f1">writeI2C_asFile</a></div><div class="ttdeci">int writeI2C_asFile(int i2c_fd, unsigned char writebuffer[], unsigned char bytes)</div><div class="ttdef"><b>Definition</b> <a href="i2cps_8c_source.html#l00079">i2cps.c:79</a></div></div>
+<div class="ttc" id="ai2cps_8c_html_a8fbf09bd758928bc8f434d96957ec40f"><div class="ttname"><a href="i2cps_8c.html#a8fbf09bd758928bc8f434d96957ec40f">unsetI2C</a></div><div class="ttdeci">int unsetI2C(int i2c_fd)</div><div class="ttdef"><b>Definition</b> <a href="i2cps_8c_source.html#l00074">i2cps.c:74</a></div></div>
+<div class="ttc" id="ai2cps_8c_html_abf82e1e8e8f7974695f541af2526357a"><div class="ttname"><a href="i2cps_8c.html#abf82e1e8e8f7974695f541af2526357a">readI2C_asFile</a></div><div class="ttdeci">int readI2C_asFile(int i2c_fd, unsigned char readbuffer[], unsigned char bytes)</div><div class="ttdef"><b>Definition</b> <a href="i2cps_8c_source.html#l00088">i2cps.c:88</a></div></div>
 <div class="ttc" id="ai2cps_8h_html"><div class="ttname"><a href="i2cps_8h.html">i2cps.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -197,7 +197,7 @@ $(document).ready(function(){initNavTree('i2cps_8c_source.html',''); initResizab
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e3d620c6b6fdb93ed3bc6186215bde2e.html">library</a></li><li class="navelem"><a class="el" href="i2cps_8c.html">i2cps.c</a></li>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:01 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

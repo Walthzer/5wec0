@@ -8,6 +8,8 @@ digraph "green_led_onoff"
   Node1 [id="Node000001",label="green_led_onoff",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
   Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="green_led_off",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga2f369349851e22f870bd49d595aa507a",tooltip="Same as green_led_onoff(led, LED_OFF). Works in all modes."];
-  Node1 -> Node3 [id="edge2_Node000001_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
-  Node3 [id="Node000003",label="green_led_on",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga69206476c2ae37f7c29525a318ef79cd",tooltip="Same as green_led_onoff(led, LED_ON). Works in all modes."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="leds_destroy",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga76a9b8042477e7fc4cb0d4dd9ffd3ae5",tooltip=" "];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="green_led_on",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__LEDS.html#ga69206476c2ae37f7c29525a318ef79cd",tooltip="Same as green_led_onoff(led, LED_ON). Works in all modes."];
 }

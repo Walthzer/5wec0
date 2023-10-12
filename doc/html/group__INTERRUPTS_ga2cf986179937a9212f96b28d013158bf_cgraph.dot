@@ -11,5 +11,5 @@ digraph "gpio_get_interrupt_pins"
   Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
   Node3 [id="Node000003",label="findSetBitPositions",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$interrupt_8c.html#acc11d21a596fbb1965d2bbbc9dbe5c1e",tooltip=" "];
   Node1 -> Node4 [id="edge3_Node000001_Node000004",color="steelblue1",style="solid",tooltip=" "];
-  Node4 [id="Node000004",label="verify_interrupt_request",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$empty-library_2interrupt_8c.html#a771964de926b150ca0b973e4109b7f7e",tooltip=" "];
+  Node4 [id="Node000004",label="verify_interrupt_request",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__INTERRUPTS.html#ga9e524c3f7cef13eef906cd52e7867d43",tooltip="Checks for error in enabled pin. Terminates the process if the pin is not enabled."];
 }

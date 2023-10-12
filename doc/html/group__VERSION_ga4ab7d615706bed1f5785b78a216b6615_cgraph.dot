@@ -12,4 +12,6 @@ digraph "check_version"
   Node3 [id="Node000003",label="arm_shared_init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__ARMSHARED.html#gaeb6db0acbe89d1bacc6d83e34d175c26",tooltip=" "];
   Node1 -> Node4 [id="edge3_Node000001_Node000004",color="steelblue1",style="solid",tooltip=" "];
   Node4 [id="Node000004",label="print_version",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$group__VERSION.html#gac6230d495fc909bb61195c45f703d492",tooltip=" "];
+  Node4 -> Node2 [id="edge4_Node000004_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node4 -> Node3 [id="edge5_Node000004_Node000003",color="steelblue1",style="solid",tooltip=" "];
 }

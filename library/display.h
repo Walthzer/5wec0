@@ -1,5 +1,7 @@
 /*
-Copyright (c) 2023 Eindhoven University of Technology
+MIT License
+
+Copyright (c) 2020
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -18,6 +20,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Modified by Eindhoven University of Technology 2023.
 */
 #ifndef SCREEN_H
 #define SCREEN_H

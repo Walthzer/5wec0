@@ -34,8 +34,8 @@ SOFTWARE.
  * Before sending and receiving bytes the UART must be connect to some I/O pins
  * through the switchbox, e.g.
  * @code
- * switchbox_set_pin(SWB_AR0, SWB_UART0_RX);
- * switchbox_set_pin(SWB_AR1, SWB_UART0_TX);
+ * switchbox_set_pin(IO_AR0, SWB_UART0_RX);
+ * switchbox_set_pin(IO_AR1, SWB_UART0_TX);
  * @endcode
  *
  * After that, an example of how to use this library for the MASTER.
@@ -91,9 +91,9 @@ SOFTWARE.
  * }
  * @endcode
  *
- * UARTs can also be used through GPIO (see gpio.h and pinmap.h). Note that GPIO
- * numbering (SWB_UART0..SWB_UART1) is then used instead of 0..NUM_UARTS-1
- * (UART0..UART1).
+ * UARTs can be routed through the switch box (see switchbox.h). Note that
+ * switchbox numbering (SWB_UART0..SWB_UART1) is then used instead of
+ * 0..NUM_UARTS-1 (UART0..UART1).
  *
  * @{
  */

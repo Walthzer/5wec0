@@ -1,6 +1,5 @@
 var dir_e3d620c6b6fdb93ed3bc6186215bde2e =
 [
-    [ "empty-library", "dir_69ec38171b2f8e2ed52c3146e8b4df40.html", "dir_69ec38171b2f8e2ed52c3146e8b4df40" ],
     [ "adc.c", "adc_8c.html", "adc_8c" ],
     [ "adc.h", "adc_8h.html", "adc_8h" ],
     [ "arm_shared_memory_system.c", "arm__shared__memory__system_8c.html", "arm__shared__memory__system_8c" ],

@@ -99,7 +99,7 @@ volatile uint32_t *ioswitch = NULL;
 typedef struct {
   char *name;
   char *state;
-  uint8_t channel;
+  io_configuration_t channel; // was uint8_t
 } pin;
 
 void switchbox_init(void) {
@@ -123,9 +123,8 @@ void switchbox_reset(void) {
   }
 }
 
-// pin_number: the number of the pin to set.
-// pin_type: the type to set the pin to (0 or 1).
-void switchbox_set_pin(const pin_t pin_number, const uint8_t pin_type) {
+void switchbox_set_pin(const io_t pin_number,
+                       const io_configuration_t io_type) {
   int numWordstoPass, byteNumber;
   uint32_t switchConfigValue;
 
@@ -133,7 +132,7 @@ void switchbox_set_pin(const pin_t pin_number, const uint8_t pin_type) {
 
   // If gpio is initialized, set the pin as input, if PIN_TYPE is
   // not gpio
-  if (pin_type != SWB_GPIO && gpio_is_initialized()) {
+  if (io_type != SWB_GPIO && gpio_is_initialized()) {
     // set pin as input.
     if (gpio_get_direction(pin_number) != GPIO_DIR_INPUT) {
       pynq_warning("pin: %s is set as GPIO ouput, but not mapped as GPIO. "
@@ -152,7 +151,7 @@ void switchbox_set_pin(const pin_t pin_number, const uint8_t pin_type) {
 
   // clear the byte containing the pin type and set it to the new value
   switchConfigValue = (switchConfigValue & (~(0xFF << (byteNumber * 8)))) |
-                      (pin_type << (byteNumber * 8));
+                      (io_type << (byteNumber * 8));
 
   // update the word in the switchbox with the new value
   ioswitch[numWordstoPass] = switchConfigValue;
@@ -160,7 +159,7 @@ void switchbox_set_pin(const pin_t pin_number, const uint8_t pin_type) {
 
 // pin_number: the number of the pin to get
 // returns: the type of the given pin
-uint8_t switchbox_get_pin(const pin_t pin_number) {
+io_configuration_t switchbox_get_pin(const io_t pin_number) {
   int numWordstoPass, byteNumber;
   uint32_t switchConfigValue;
 

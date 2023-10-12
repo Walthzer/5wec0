@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.2 of 2023-09-24 11:26)</span>
+   <div id="projectname">libpynq<span id="projectnumber">&#160;(release 5EWC0-2023 version 0.2.5 of 2023-10-08 10:51)</span>
    </div>
   </td>
  </tr>
@@ -124,8 +124,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga6445090781b49f628c788ba3d9745853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Functions to use the Analog to Digital Conversion (ADC) of analog pins (A0..A5). </p>
-<p>Note that GPIO numbering (SWB_A0..SWB_A5) used in <a class="el" href="gpio_8h.html">gpio.h</a> and <a class="el" href="pinmap_8h.html">pinmap.h</a> is different from A0..A5. </p>
+<p>Functions to use the Analog to Digital Conversion (ADC) of analog pins (A0..A5 on the PYNQ board). </p>
+<p>Note that GPIO numbering (IO_A0..IO_A5) used in <a class="el" href="gpio_8h.html">gpio.h</a> and <a class="el" href="pinmap_8h.html">pinmap.h</a> is different from A0..A5. </p>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="gaafc4060027875f8fe46242b0656d7814" name="gaafc4060027875f8fe46242b0656d7814"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaafc4060027875f8fe46242b0656d7814">&#9670;&#160;</a></span>adc_channel_t</h2>
@@ -141,17 +141,17 @@ Functions</h2></td></tr>
 
 <p>Enumerate the different available ADC channels. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814add0cc42ad708e87cf4dd8a5c43c94097" name="ggaafc4060027875f8fe46242b0656d7814add0cc42ad708e87cf4dd8a5c43c94097"></a>ADC0&#160;</td><td class="fielddoc"><p>ADC channel for pin SWB_A0 </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814add0cc42ad708e87cf4dd8a5c43c94097" name="ggaafc4060027875f8fe46242b0656d7814add0cc42ad708e87cf4dd8a5c43c94097"></a>ADC0&#160;</td><td class="fielddoc"><p>ADC channel for pin IO_A0 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a55d17f14e4a04efc3f0c5144fdb16a9d" name="ggaafc4060027875f8fe46242b0656d7814a55d17f14e4a04efc3f0c5144fdb16a9d"></a>ADC1&#160;</td><td class="fielddoc"><p>ADC channel for pin SWB_A1 </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a55d17f14e4a04efc3f0c5144fdb16a9d" name="ggaafc4060027875f8fe46242b0656d7814a55d17f14e4a04efc3f0c5144fdb16a9d"></a>ADC1&#160;</td><td class="fielddoc"><p>ADC channel for pin IO_A1 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a246a534bca85a0d87ddcb59e28c55d32" name="ggaafc4060027875f8fe46242b0656d7814a246a534bca85a0d87ddcb59e28c55d32"></a>ADC2&#160;</td><td class="fielddoc"><p>ADC channel for pin SWB_A2 </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a246a534bca85a0d87ddcb59e28c55d32" name="ggaafc4060027875f8fe46242b0656d7814a246a534bca85a0d87ddcb59e28c55d32"></a>ADC2&#160;</td><td class="fielddoc"><p>ADC channel for pin IO_A2 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aae0370f8f308778a8f8aa5c26053bf63" name="ggaafc4060027875f8fe46242b0656d7814aae0370f8f308778a8f8aa5c26053bf63"></a>ADC3&#160;</td><td class="fielddoc"><p>ADC channel for pin SWB_A3 </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aae0370f8f308778a8f8aa5c26053bf63" name="ggaafc4060027875f8fe46242b0656d7814aae0370f8f308778a8f8aa5c26053bf63"></a>ADC3&#160;</td><td class="fielddoc"><p>ADC channel for pin IO_A3 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a2e9f047076bc235c6c38fecdc29cc2e9" name="ggaafc4060027875f8fe46242b0656d7814a2e9f047076bc235c6c38fecdc29cc2e9"></a>ADC4&#160;</td><td class="fielddoc"><p>ADC channel for pin SWB_A4 </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a2e9f047076bc235c6c38fecdc29cc2e9" name="ggaafc4060027875f8fe46242b0656d7814a2e9f047076bc235c6c38fecdc29cc2e9"></a>ADC4&#160;</td><td class="fielddoc"><p>ADC channel for pin IO_A4 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a019d472284d9531fbcfc28b7d5961e32" name="ggaafc4060027875f8fe46242b0656d7814a019d472284d9531fbcfc28b7d5961e32"></a>ADC5&#160;</td><td class="fielddoc"><p>ADC channel for pin SWB_A5 </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a019d472284d9531fbcfc28b7d5961e32" name="ggaafc4060027875f8fe46242b0656d7814a019d472284d9531fbcfc28b7d5961e32"></a>ADC5&#160;</td><td class="fielddoc"><p>ADC channel for pin IO_A5 </p>
 </td></tr>
 </table>
 
@@ -313,7 +313,7 @@ Here is the caller graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Sep 24 2023 11:26:26 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Oct 8 2023 10:51:02 for libpynq by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

@@ -146,13 +146,9 @@ void draw_section(display_t* display, coordinate_t upper_l, coordinate_t lower_r
   #endif
 }
 //Display the maze onto the PYNQ display
-//Display the maze onto the PYNQ display
 void display_maze(display_t* display, maze_t* ptr_maze)
-void display_maze(display_t *display, maze_t *maze)
-{
 {
   //Do nothing if maze is empty
-    if (maze->size.x == -1 || maze->size.y == -1)
   if (SIZE_X(ptr_maze) == -1)
     return;
 
@@ -172,28 +168,18 @@ void display_maze(display_t *display, maze_t *maze)
   {
     FOR_COLUMNS(ptr_maze,1)
     {
-    {
       colour = resolve_colour(SEC(ptr_maze,idx_x,idx_y));
-        return;
 
-    }    
       //Create the drawing coordinates 
-
       coordinate_t upper_l = (coordinate_t){idx_x*scale_x, 
-    //blacking out the screen.
                                             idx_y*scale_y};
-    //displayFillScreen(display, RGB_BLACK);
-
 
       coordinate_t lower_r = (coordinate_t){(idx_x + 1)*scale_x - (1),
-    //proportioning each cell, so that the maze fills up the display.
                                             (idx_y + 1)*scale_y - (1)};
-    int rectangleWidth = DISPLAY_WIDTH/ maze->size.x;
       draw_section(display, upper_l, lower_r, colour);
-    int rectangleHeight = DISPLAY_HEIGHT/ maze->size.y;
     } 
-
-  }
+  } 
+}
 //Mirror the maze grid around the diagonal -> (x,y) to (y,x)
 void mirror_maze(maze_t* ptr_o_maze)
 {

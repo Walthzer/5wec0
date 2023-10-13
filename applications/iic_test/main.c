@@ -1,9 +1,17 @@
 #include <libpynq.h>
+#include <signal.h>
+
+int do_loop = false;
 
 void pn(char* data)
 {
   printf("%s", data);
   fflush(NULL);
+}
+
+void exit_loop(int signal)
+{
+  do_loop = false;
 }
 
 void do_iic_test(void)
@@ -19,25 +27,34 @@ void do_iic_test(void)
   switchbox_init();
   pn("Done\n");
   pn("  Pinset: ");
-  switchbox_set_pin((pin_t)SWB_IIC0_SCL, SWB_RBPI38);
-  switchbox_set_pin((pin_t)SWB_IIC0_SDA, SWB_RBPI40);
+  switchbox_set_pin(IO_AR_SCL, SWB_IIC0_SCL);
+  switchbox_set_pin(IO_AR_SDA, SWB_IIC0_SDA);
   pn("Done\n");
   pn("  IIC: ");
   iic_init(0);
   pn("Done\n");
   pn("Started!\n\n");
 
+  leds_init_onoff();
 
-  char* byteBuffer = "Hello World";
-  uint16_t data_length = 11;
+  uint8_t byteBuffer[1024] = {0};
+  uint16_t data_length = 5;
   pn("IIC commands:\n");
-  pn("  writing reg: ");
-  iic_write_register(0, slave_addr, 0, (uint8_t*)byteBuffer, data_length);
-  pn("Done\n");
-  byteBuffer = "OVERWRITE THIS PLEASE";
   pn("  reading reg: ");
-  iic_read_register(0, slave_addr, 0, (uint8_t*)byteBuffer, data_length);
+
+  do_loop = true;
+  signal(SIGINT, &exit_loop);
+  while (do_loop)
+  {
+    iic_read_register(0, 0x56, 0, &byteBuffer[0], 1);
+    green_led_onoff(0, byteBuffer[0]);
+  }
+  
+  leds_destroy();
+
   pn("Done\n");
+
+  printf("%s\n", byteBuffer);
 
   pn("Exiting: ");
   pn("  IIC destroy: ");
@@ -49,23 +66,14 @@ void do_iic_test(void)
 }
 
 int main(void) {
-  display_t display;
-  #ifdef PYNQLIB_H
-    pynq_init();
-    display_init(&display);
-    display_set_flip(&display, true, true); //Display is mounted flipped on y-axis
-    displayFillScreen(&display, RGB_BLACK);
-  #endif
+  pynq_init();
 
   //Initialize
   do_iic_test();
 
-  pn("Bye!\n");
+  pn("Bye!A\n");
 
-  #ifdef PYNQLIB_H
-    display_destroy(&display);
-    pynq_destroy();
-  #endif
+  pynq_destroy();
 
   return 0;
 };

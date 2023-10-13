@@ -26,7 +26,7 @@ CFLAGS+= -ggdb -g3
 # C version
 CFLAGS+= -std=c99
 CFLAGS+=-D_POSIX_C_SOURCE=200809L
-CFLAGS+=-MANJAROO=1
+CFLAGS+=-DMANJAROO=1
 
 # Warnings
 CFLAGS+= -Wall -Wextra

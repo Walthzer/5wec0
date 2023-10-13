@@ -2,6 +2,7 @@
 #include <signal.h>
 
 int do_loop = false;
+const int iic_index = 0;
 
 void pn(char* data)
 {
@@ -21,7 +22,6 @@ void do_iic_test(void)
   #endif
 
   pn("Starting:\n");
-  const uint8_t slave_addr = 100;
 
   pn("  Switchbox: ");
   switchbox_init();
@@ -31,7 +31,7 @@ void do_iic_test(void)
   switchbox_set_pin(IO_AR_SDA, SWB_IIC0_SDA);
   pn("Done\n");
   pn("  IIC: ");
-  iic_init(0);
+  iic_init(iic_index);
   pn("Done\n");
   pn("Started!\n\n");
 
@@ -40,20 +40,16 @@ void do_iic_test(void)
   uint32_t buffer[1024] = {'W', 'O', 'R', 'K', 'S', '\0'};
   pn("IIC commands:\n");
   pn("  Setting to SLAVE: ");
-  iic_set_slave_mode(0, 0x56, buffer, 1024);
+  iic_set_slave_mode(iic_index, 0x56, buffer, 1024);
   pn("Done\n");
   pn("  Setting Handler: ");
   
   
-
-  uint32_t i = 0;
-  uint32_t display[1024] = {'\0'};
   do_loop = true;
-  signal(SIGINT, &exit_loop);
   while (do_loop)
   {
     buffer[0] = get_switch_state(SWITCH0);
-    iic_slave_mode_handler(0);
+    iic_slave_mode_handler(iic_index);
     //i++;
   }
 
@@ -63,7 +59,7 @@ void do_iic_test(void)
 
   pn("Exiting: ");
   pn("  IIC destroy: ");
-  iic_destroy(0);
+  iic_destroy(iic_index);
   pn("Done\n");
   pn("  Switchbox destroy: ");
   switchbox_destroy();

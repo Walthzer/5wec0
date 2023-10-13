@@ -2,6 +2,7 @@
     "files.associations": {
         "string_view": "c",
         "cstddef": "c",
-        "signal.h": "c"
+        "signal.h": "c",
+        "libpynq.h": "c"
     }
 }

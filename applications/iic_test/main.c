@@ -2,6 +2,7 @@
 #include <signal.h>
 
 int do_loop = false;
+const int iic_index = 0;
 
 void pn(char* data)
 {
@@ -29,9 +30,15 @@ void do_iic_test(void)
   pn("  Pinset: ");
   switchbox_set_pin(IO_AR_SCL, SWB_IIC0_SCL);
   switchbox_set_pin(IO_AR_SDA, SWB_IIC0_SDA);
+  switchbox_set_pin(IO_PMODA1, SWB_GPIO);
+
+  gpio_init();
+  gpio_set_direction(IO_PMODA1, GPIO_DIR_INPUT);
+  gpio_set_level(IO_PMODA1, GPIO_LEVEL_LOW);
+
   pn("Done\n");
   pn("  IIC: ");
-  iic_init(0);
+  iic_init(iic_index);
   pn("Done\n");
   pn("Started!\n\n");
 
@@ -43,13 +50,13 @@ void do_iic_test(void)
   pn("  reading reg: ");
 
   do_loop = true;
-  signal(SIGINT, &exit_loop);
   while (do_loop)
   {
-    iic_read_register(0, 0x56, 0, &byteBuffer[0], 1);
+    iic_read_register(iic_index, 0x56, 0, &byteBuffer[0], 1);
     green_led_onoff(0, byteBuffer[0]);
   }
   
+  gpio_destroy();
   leds_destroy();
 
   pn("Done\n");
@@ -58,7 +65,7 @@ void do_iic_test(void)
 
   pn("Exiting: ");
   pn("  IIC destroy: ");
-  iic_destroy(0);
+  iic_destroy(iic_index);
   pn("Done\n");
   pn("  Switchbox destroy: ");
   switchbox_destroy();

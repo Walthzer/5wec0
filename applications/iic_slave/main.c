@@ -1,5 +1,6 @@
 #include <libpynq.h>
-#include <signal.h>
+#include <time.h>
+#include <stdlib.h>
 
 int do_loop = false;
 const int iic_index = 0;
@@ -8,11 +9,6 @@ void pn(char* data)
 {
   printf("%s", data);
   fflush(NULL);
-}
-
-void exit_loop(int signal)
-{
-  do_loop = false;
 }
 
 void do_iic_test(void)
@@ -36,25 +32,37 @@ void do_iic_test(void)
   pn("Started!\n\n");
 
   switches_init();
+  leds_init_onoff();
 
-  uint32_t buffer[1024] = {'W', 'O', 'R', 'K', 'S', '\0'};
+  uint32_t buffer[8] = {'W', 'O', 'R', 'K', 'S', '\0'};
   pn("IIC commands:\n");
   pn("  Setting to SLAVE: ");
-  iic_set_slave_mode(iic_index, 0x56, buffer, 1024);
+  iic_set_slave_mode(iic_index, 0x56, buffer, 8);
   pn("Done\n");
   pn("  Setting Handler: ");
   
-  
+  unsigned int start, end;
+  start = end = clock();
+  int i = 0;
   do_loop = true;
   while (do_loop)
   {
-    buffer[0] = get_switch_state(SWITCH0);
+    buffer[0] = i;
     iic_slave_mode_handler(iic_index);
-    //i++;
+
+    end = clock();
+    if(get_switch_state(0) &&  ((end - start) / CLOCKS_PER_SEC) > 0)
+    {
+      green_led_off(i);
+      i = rand() % 4;
+      start = clock();
+      green_led_on(i);
+    }
   }
 
   switches_destroy();
-  
+  leds_destroy();
+
   pn("Done\n");
 
   pn("Exiting: ");

@@ -3,6 +3,18 @@
         "string_view": "c",
         "cstddef": "c",
         "signal.h": "c",
-        "libpynq.h": "c"
+        "libpynq.h": "c",
+        "array": "c",
+        "hash_map": "c",
+        "chrono": "c",
+        "deque": "c",
+        "list": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "format": "c",
+        "initializer_list": "c",
+        "span": "c",
+        "valarray": "c"
     }
 }

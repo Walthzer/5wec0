@@ -1,3 +1,9 @@
+ /*
+ *  TU/e 5WEC0::PYNQ IIC Test Master
+ *
+ *  Written by: Walthzer
+ * 
+ */
 #include <libpynq.h>
 #include <time.h>
 #include <stdlib.h>

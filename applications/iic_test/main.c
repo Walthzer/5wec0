@@ -1,3 +1,9 @@
+ /*
+ *  TU/e 5WEC0::PYNQ IIC Test Slave
+ *
+ *  Written by: Walthzer
+ * 
+ */
 #include <libpynq.h>
 #include <signal.h>
 

@@ -16,8 +16,6 @@ int rows, columns;
 float *elements[MAXROWS];
 } matrix_t;
 
-#define MAX(a,b) a > b ? a : b;
-
 void free_matrix_elements (matrix_t *ptr_m)
 {
   for (int i = 0; i < MAXROWS; i++)

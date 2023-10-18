@@ -57,7 +57,7 @@ void do_iic_test(void)
     iic_slave_mode_handler(iic_index);
 
     end = clock();
-    if(get_switch_state(0) &&  ((end - start) / CLOCKS_PER_SEC) > 0)
+    if(get_switch_state(0) &&  ((end - start) / CLOCKS_PER_SEC * 6) > 0)
     {
       green_led_off(i);
       i = rand() % 4;

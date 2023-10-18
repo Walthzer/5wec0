@@ -17,6 +17,8 @@
         "span": "c",
         "valarray": "c",
         "algorithm": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "libui.h": "c",
+        "random": "c"
     }
 }

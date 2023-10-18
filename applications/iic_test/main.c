@@ -36,11 +36,6 @@ void do_iic_test(void)
   pn("  Pinset: ");
   switchbox_set_pin(IO_AR_SCL, SWB_IIC0_SCL);
   switchbox_set_pin(IO_AR_SDA, SWB_IIC0_SDA);
-  switchbox_set_pin(IO_PMODA1, SWB_GPIO);
-
-  gpio_init();
-  gpio_set_direction(IO_PMODA1, GPIO_DIR_INPUT);
-  gpio_set_level(IO_PMODA1, GPIO_LEVEL_LOW);
 
   pn("Done\n");
   pn("  IIC: ");
@@ -62,7 +57,6 @@ void do_iic_test(void)
     green_led_onoff(0, byteBuffer[0]);
   }
   
-  gpio_destroy();
   leds_destroy();
 
   pn("Done\n");

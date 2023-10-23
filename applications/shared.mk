@@ -21,17 +21,18 @@ OPT_LEVEL?=0
 CFLAGS:= -I. -I${PROJECT_ROOT}/platform/ -I${PROJECT_ROOT}/library/ -I${PROJECT_ROOT}/external/
 
 # for debugging 
-CFLAGS+= -ggdb -g3
+CFLAGS+= -g3 -fsanitize=address -fno-omit-frame-pointer
 
 # C version
 CFLAGS+= -std=c99
 CFLAGS+=-D_POSIX_C_SOURCE=200809L
 CFLAGS+=-DMANJAROO=1
 
+
 # Warnings
 CFLAGS+= -Wall -Wextra
 CFLAGS+= -O$(OPT_LEVEL)
 
 # Linker flags
-LDFLAGS:= -lm -ggdb -g3
+LDFLAGS:= -lm -g3 -fsanitize=address -fno-omit-frame-pointer
 

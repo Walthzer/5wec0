@@ -38,15 +38,6 @@
 #define UI_ROW_HEIGHT 19
 #define UI_CHAR_WIDTH 12
 #define UI_ROW_LENGTH 19
-#define NR_WORDS 4
-
-//Some shorthand for words
-#define SWORD WORD("\2")
-#define EWORD WORD({'\0'})
-#define WORD(text) FG_WORD(text,RGB_BLUE)
-#define FG_WORD(text,fg) BG_WORD(text,fg,RGB_ORANGE)
-#define BG_WORD(text,fg,bg) FULL_WORD(text,fg,bg,NORMAL) 
-#define FULL_WORD(text,fg,bg,font) (ui_word_t){text,fg,bg,font}
 
 /**
  * @brief Fonts that can be used in the UI
@@ -57,24 +48,26 @@ enum ui_fonts {
 };
 
 /**
- * @brief Holds 1 word of text. A word is a string of text with 
- * the same fg and bg colours.
- */
-typedef struct {
-  char text[19];
-  uint16_t fg;
-  uint16_t bg;
-  int font;
-} ui_word_t;
-
-/**
- * @brief Holds a row of the ui
+ * @brief Internal type, do not use.
+ * Holds formatted text
  */
 typedef struct
 {
-  uint8_t update_mask;
-  uint8_t nr_words;
-  ui_word_t words[NR_WORDS];
+  int fg;
+  int bg;
+  int font;
+  char *str;
+} ui_text_t;
+
+/**
+ * @brief Internal type, do not use.
+ * Holds a row of the ui
+ */
+typedef struct
+{
+  uint32_t updateMask;
+  //uint8_t sizeText;
+  ui_text_t *texts[UI_ROW_LENGTH];
   int center;
 } ui_row_t;
 
@@ -107,11 +100,37 @@ extern void ui_destroy(ui_t* ui);
 extern void ui_draw(ui_t* ui);
 
 /**
- * @brief Print a maximum of NR_WORDS words to a row.
- * Use a '\2' char to mark a word to be skipped.
+ * @brief Write formatted output to given row.
  * @param ui Handle to ui.
- * @param argc amount of words.
- * @param words up to NR_WORDS ui_word_t types
+ * @param row index of the desired row.
+ * @param fmt Format string
+ * 
+ * Supported formats, printf like:
+ * %d -> integer
+ * %f -> float
+ * %c -> char
+ * %s -> string
+ * 
+ * Special formats:
+ * %q -> fg / text colour
+ * %w -> bg / highlight colour
+ * %t -> typeface/font
+ * 
  */
-extern void ui_printr(ui_t* ui, int idx_row, int argc, ...);
+extern void ui_rprintf(ui_t* ui, int row, char const *fmt, ...);
+
+/**
+ * @brief clear the row.
+ * @param ui Handle to ui.
+ * @param row Index of row
+ */
+extern void ui_rclear(ui_t *ui, int row);
+
+/**
+ * @brief Sets the row centering atribute
+ * @param ui Handle to ui.
+ * @param row Index of row
+ * @param center set centering to true or false
+ */
+extern void ui_rcenter(ui_t *ui, int row, int center);
 #endif

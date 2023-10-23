@@ -30,7 +30,7 @@ SOFTWARE.
 
 #include <unistd.h>
 
-#define IIC_TIMEOUT 5
+#define IIC_TIMEOUT 1
 typedef enum {
   IIC_IDLE = 0,
   IIC_ADDRESS = 1,

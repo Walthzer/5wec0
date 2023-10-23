@@ -5,90 +5,48 @@
  * 
  */
 #include <libpynq.h>
-#include <time.h>
 #include <stdlib.h>
-
-int do_loop = false;
-const int iic_index = 0;
-
-void pn(char* data)
-{
-  printf("%s", data);
-  fflush(NULL);
-}
-
-void do_iic_test(void)
-{
-  #ifndef IIC_H
-    pn("No IIC lib present")
-  #endif
-
-  pn("Starting:\n");
-
-  pn("  Switchbox: ");
-  switchbox_init();
-  pn("Done\n");
-  pn("  Pinset: ");
-  switchbox_set_pin(IO_AR_SCL, SWB_IIC0_SCL);
-  switchbox_set_pin(IO_AR_SDA, SWB_IIC0_SDA);
-  pn("Done\n");
-  pn("  IIC: ");
-  iic_init(iic_index);
-  pn("Done\n");
-  pn("Started!\n\n");
-
-  switches_init();
-  leds_init_onoff();
-
-  uint32_t buffer[8] = {'W', 'O', 'R', 'K', 'S', '\0'};
-  pn("IIC commands:\n");
-  pn("  Setting to SLAVE: ");
-  iic_set_slave_mode(iic_index, 0x56, buffer, 8);
-  pn("Done\n");
-  pn("  Setting Handler: ");
-  
-  unsigned int start, end;
-  start = end = clock();
-  int i = 0;
-  do_loop = true;
-  while (do_loop)
-  {
-    buffer[0] = i;
-    iic_slave_mode_handler(iic_index);
-
-    end = clock();
-    if(get_switch_state(0) &&  ((end - start) / CLOCKS_PER_SEC * 6) > 0)
-    {
-      green_led_off(i);
-      i = rand() % 4;
-      start = clock();
-      green_led_on(i);
-    }
-  }
-
-  switches_destroy();
-  leds_destroy();
-
-  pn("Done\n");
-
-  pn("Exiting: ");
-  pn("  IIC destroy: ");
-  iic_destroy(iic_index);
-  pn("Done\n");
-  pn("  Switchbox destroy: ");
-  switchbox_destroy();
-  pn("Done\n");
-}
 
 int main(void) {
   display_t display;
   pynq_init();
 
-  //Initialize
-  do_iic_test();
+  //Initialize switchbox
+  switchbox_init();
+  switchbox_set_pin(IO_AR_SCL, SWB_IIC0_SCL);
+  switchbox_set_pin(IO_AR_SDA, SWB_IIC0_SDA);
 
-  pn("Bye!\n");
 
+  //ID setup
+  int id = 0;
+  printf("Slave ID? ");
+  scanf(" %d", &id);
+  if(id > 1) id = 1;
+  if(id < 0) id = 0;
+  printf("Using ID: %d  Address: %x\n", id, 0x54 + id);
+  fflush(NULL);
+
+  //Init IIC
+  iic_init(0);
+  uint32_t buffer[8] = {0};
+  iic_set_slave_mode(0, 0x54 + id, buffer, 8);
+
+  //Init UI
+  switches_init();
+  leds_init_onoff();
+
+  while (get_switch_state(1))
+  {
+    buffer[0] = get_switch_state(0);
+    green_led_onoff(id, buffer[0]);
+    iic_slave_mode_handler(0);
+  }
+
+  iic_destroy(0);
+
+  switches_destroy();
+  leds_destroy();
+  //switchbox_destroy();
   pynq_destroy();
 
   return 0;

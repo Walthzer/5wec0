@@ -4,13 +4,12 @@
  *  Written by: Walthzer
  * 
  */
-
 #include <libui.h>
 #include <stdarg.h>
 #include <stdlib.h>
 
 //PYNQ LIBS
-//#include <libpynq.h>
+#include <libpynq.h>
 #include <log.h>
 
 #undef LOG_DOMAIN
@@ -58,7 +57,7 @@ uint32_t set_bit(uint32_t mask,int bit, int state)
 int get_bit(uint32_t mask,int bit)
 {
   //Gets the bit of the mask with and
-  return mask & ((int)1 << bit);
+  return !!((mask) & (1 << (bit)));
 }
 
 
@@ -77,10 +76,16 @@ void ui_draw(ui_t* ui)
     //If we need centered text
     if (row->center)
     {
+      //No updates 
+      if(row->updateMask == 0)
+        continue;
+
+      row->updateMask = 0;
+
       //Draw the first bg
       displayDrawFillRect(&ui->display, 
-            0, MIN(idx_row*UI_ROW_HEIGHT, 239), //upper_l
-            DISPLAY_WIDTH - 1, MIN((idx_row+1)*UI_ROW_HEIGHT, 239), //lower_r
+            0, MIN(MAX(idx_row*(UI_ROW_HEIGHT+UI_CHARH_OFFSET)-1, 0), DISPLAY_HEIGHT-1), //upper_l
+            DISPLAY_WIDTH - 1, MIN((idx_row+1)*(UI_ROW_HEIGHT+UI_CHARH_OFFSET)-2, DISPLAY_HEIGHT-1), //lower_r
             row->texts[0]->bg);
 
       //Compute row text length
@@ -91,19 +96,17 @@ void ui_draw(ui_t* ui)
           start_pos+=strlen(row->texts[i]->str);
       }
 
-      printf("Length %d", start_pos);
       //Get centered start pos
-      start_pos = DISPLAY_WIDTH/2 - (start_pos*UI_CHAR_WIDTH)/2;
+      start_pos = (DISPLAY_WIDTH - start_pos*UI_CHAR_WIDTH)/2;
       for (int i = 0; i < UI_ROW_LENGTH; i++)
       {
         if(row->texts[i] == NULL)
           break;
-
-        int offset = 2;
+      //printf("%s", row->texts[t]->str);
         displayDrawString(&ui->display,
                           &ui->fonts[row->texts[i]->font],
-                          start_pos,
-                          (idx_row+1)*UI_ROW_HEIGHT+offset,
+                          start_pos+1,
+                          (idx_row+1)*(UI_ROW_HEIGHT+UI_CHARH_OFFSET),
                           (uint8_t*)row->texts[i]->str,
                           row->texts[i]->fg);
         
@@ -112,7 +115,6 @@ void ui_draw(ui_t* ui)
       
       continue;
     }
-
 
     //Loop over texts
     int row_pos = 0;
@@ -123,38 +125,42 @@ void ui_draw(ui_t* ui)
       if(get_bit(row->updateMask, t) == 0)
       {
         //Move along the row
-        row_pos += strlen(row->texts[t]->str);
+        int length = strlen(row->texts[t]->str);
+        bg_pos += length;
+        row_pos += length;
         continue;
       }
+      row->updateMask = set_bit(row->updateMask, t, 0);
 
       //Account for text background having been looked
       //ahead and prevent redraw
       //Centered text gets only 1 bg colour
-      if(bg_pos <= row_pos && row->texts[t]->str[0] != '0')
+      if(bg_pos <= row_pos && row->texts[t]->str[0] != '\0')
       {
+        //printf("Update bg of: %s", row->texts[t]->str)
         //Execute drawcalls -> accumulate calls
         //with a look ahead
         uint16_t bg_colour = row->texts[0]->bg;
         bg_pos+=strlen(row->texts[t]->str);
         for (int i = t+1; i < UI_ROW_LENGTH && row->texts[i] != NULL; i++)
         {
-          if(get_bit(row->updateMask, i) == 1 && row->texts[i]->str[0] != '0' && row->texts[i]->bg == bg_colour)
+          if(get_bit(row->updateMask, i) == 1 && row->texts[i]->str[0] != '\0' && row->texts[i]->bg == bg_colour)
             bg_pos+=strlen(row->texts[i]->str);
         }
         //Dubble BG draw BUG
         displayDrawFillRect(&ui->display, 
-                    row_pos*UI_CHAR_WIDTH, MIN(idx_row*UI_ROW_HEIGHT, 239), //upper_l
-                    row_pos*UI_CHAR_WIDTH + bg_pos*UI_CHAR_WIDTH, MIN((idx_row+1)*UI_ROW_HEIGHT, 239), //lower_r
+                    row_pos*UI_CHAR_WIDTH, MIN(MAX(idx_row*(UI_ROW_HEIGHT+UI_CHARH_OFFSET)-1, 0), DISPLAY_HEIGHT-1), //upper_l
+                    MIN((row_pos+bg_pos)*UI_CHAR_WIDTH, DISPLAY_WIDTH-1), MIN((idx_row+1)*(UI_ROW_HEIGHT+UI_CHARH_OFFSET)-2, DISPLAY_HEIGHT-1), //lower_r
                     bg_colour);
       }
-      int x = row_pos*UI_CHAR_WIDTH+1;
-      int offset = 2;
+      int x = (row_pos*UI_CHAR_WIDTH)+1;
       //printf("%s", row->texts[t]->str);
-      displayDrawString(&ui->display, &ui->fonts[row->texts[t]->font], x, (idx_row+1)*UI_ROW_HEIGHT+offset, (uint8_t*)row->texts[t]->str, row->texts[t]->fg);
+      displayDrawString(&ui->display, &ui->fonts[row->texts[t]->font], x, (idx_row+1)*(UI_ROW_HEIGHT+UI_CHARH_OFFSET), (uint8_t*)row->texts[t]->str, row->texts[t]->fg);
 
       //Move along the row
       row_pos += strlen(row->texts[t]->str);
     }
+    row->updateMask = 0;
     
   }
   
@@ -222,7 +228,14 @@ void ui_rcenter(ui_t *ui, int row, int center)
 //Sets the update mask bit for this text if changed
 void ui_row_update_text(ui_row_t *row_p, int index, ui_text_t text)
 {
-    //printf("Update text: %d  str: %s len:%d\n", index, text.str, strlen(text.str));    
+    //printf("Update text: %d  str: %s len:%d\n", index, text.str, strlen(text.str));
+
+    //Going insane rn so check for default values
+    if(text.bg == -1)
+      text.bg = RGB_BLACK;
+    if(text.fg == -1)
+      text.fg = RGB_WHITE;
+
     //text is non-existant
     if (row_p->texts[index] == NULL)
     {
@@ -284,8 +297,7 @@ void ui_rprintf(ui_t* ui, int row, char const *fmt, ...)
   va_start(args, fmt);
 
   char str[UI_ROW_LENGTH] = {'\0'};
-  ui_text_t tmp_text = {-1, -1, -1, (char *)&str};
-  tmp_text.font = NORMAL;
+  ui_text_t tmp_text = {-1, -1, NORMAL, (char *)&str};
   int len_row = 0;
   int len_str = 0;
   int tmp = 0;
@@ -335,7 +347,7 @@ void ui_rprintf(ui_t* ui, int row, char const *fmt, ...)
       //Font
       case 't':
         int font = va_arg(args, int);
-        if(tmp_text.font != -1 && font != tmp_text.font)
+        if(tmp_text.str[0] != '\0' && font != tmp_text.font)
         {
           ui_row_update_text(&ui->rows[row], idx_text, tmp_text);
           len_str=0;

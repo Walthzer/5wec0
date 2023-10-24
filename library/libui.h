@@ -30,13 +30,15 @@
 
 #define RGB_ORANGE 64800
 #define MIN(a,b) a > b ? b : a
+#define MAX(a,b) a > b ? a : b
 
 //row is 20 pixel tall and 239 wide
 // 24FONTS are 12 pixel wide
 // 1 row => 19 Chars
-#define UI_ROWS 12
+#define UI_ROWS 10
 #define UI_ROW_HEIGHT 19
 #define UI_CHAR_WIDTH 12
+#define UI_CHARH_OFFSET 1
 #define UI_ROW_LENGTH 19
 
 /**
@@ -106,16 +108,17 @@ extern void ui_draw(ui_t* ui);
  * @param fmt Format string
  * 
  * Supported formats, printf like:
- * %d -> integer
- * %f -> float
- * %c -> char
- * %s -> string
+ * @param %d -> integer
+ * @param %f -> float
+ * @param %c -> char
+ * @param %s -> string
  * 
  * Special formats:
- * %q -> fg / text colour
- * %w -> bg / highlight colour
- * %t -> typeface/font
+ * @param %q -> fg / text colour
+ * @param %w -> bg / highlight colour
+ * @param %t -> typeface/font
  * 
+ * @warning Background is having BUGS fix pls
  */
 extern void ui_rprintf(ui_t* ui, int row, char const *fmt, ...);
 

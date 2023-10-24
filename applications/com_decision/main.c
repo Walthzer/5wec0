@@ -7,11 +7,19 @@
 #include <libpynq.h>
 #include <stdlib.h>
 #include <libui.h>
+#include <libcom.h>
 
 #define MAXSLAVES 3
 
 int main(void) {
   pynq_init();
+  ui_t ui;
+  ui_init(&ui);
+
+  //Set header
+  ui_rcenter(&ui, 0, true);
+  ui_rprintf(&ui, 0, "%t%q%wRYB 24", COMIC, RGB_WHITE, RGB_ORANGE);
+  ui_rprintf(&ui, 0, "%q%wIIC Slave ???", RGB_WHITE, RGB_ORANGE);
 
   //Initialize switchbox
   switchbox_init();
@@ -27,6 +35,8 @@ int main(void) {
   if(id < 0) id = 0;
   printf("Using ID: %d  Address: %x\n", id, 0x54 + id);
   fflush(NULL);
+
+  ui_rprintf(&ui, 0, "%q%wIIC Slave %d", RGB_WHITE, RGB_ORANGE, id);
 
   //Init IIC
   iic_init(0);
@@ -49,6 +59,7 @@ int main(void) {
   switches_destroy();
   leds_destroy();
   //switchbox_destroy();
+  ui_destroy(&ui);
   pynq_destroy();
 
   return 0;

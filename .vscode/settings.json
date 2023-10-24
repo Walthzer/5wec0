@@ -19,6 +19,8 @@
         "algorithm": "c",
         "sstream": "c",
         "libui.h": "c",
-        "random": "c"
+        "random": "c",
+        "thread": "c",
+        "cstdint": "c"
     }
 }

@@ -6,7 +6,7 @@
  */
 #include <libpynq.h>
 
-#define MAXSLAVES 2
+#define MAXSLAVES 3
 
 int main(void) {
   pynq_init();

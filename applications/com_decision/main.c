@@ -1,5 +1,5 @@
  /*
- *  TU/e 5WEC0::PYNQ RYB Communication Demonstration. Motors Drivers module.
+ *  TU/e 5WEC0::PYNQ RYB Communication Demonstration. Decision module
  *
  *  Interface:
  *  Switch 1 -> Exits the main loop

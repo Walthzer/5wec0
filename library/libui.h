@@ -39,7 +39,7 @@
 #define UI_ROW_HEIGHT 19
 #define UI_CHAR_WIDTH 12
 #define UI_CHARH_OFFSET 1
-#define UI_ROW_LENGTH 19
+#define UI_ROW_LENGTH 20
 
 /**
  * @brief Fonts that can be used in the UI

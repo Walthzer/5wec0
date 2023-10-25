@@ -180,14 +180,17 @@ static void iic_tx_error_handler(const iic_index_t iic) {
   handle->ptr[IIC_CR_REG_OFFSET / 4] = reg & ~IIC_CR_MSMS_MASK;
 }
 static void iic_slave_master_write(const iic_index_t iic, const uint32_t c) {
+  //printf("Master write...\n");
   IICHandle *handle = &(iic_handles[iic]);
   uint32_t v = (c << (handle->recv_cnt) * 8);
   handle->new_val |= v;
   handle->recv_cnt++;
   // If we have one full word, write it back to register.
   if (handle->recv_cnt == 4) {
-    handle->register_map[handle->selected_register %
-                         handle->register_map_length] = handle->new_val;
+    uint8_t index = handle->selected_register %
+                         handle->register_map_length;
+    handle->register_map[index] = handle->new_val;
+    //printf("mmap update at: %d  Val: %d\n", index, handle->new_val);
     // go to idle mode.
     handle->state = IIC_IDLE;
   }

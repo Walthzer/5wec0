@@ -39,43 +39,19 @@ int main(void) {
 
   //Init inputs
   switches_init();
-  buttons_init();
-
-  int state = 0;
-  int counters[] = {0,0};
-  int button0 = get_button_state(0);
-  int button1 = get_button_state(1);
+  
   while (get_switch_state(1))
   {
-    int *counter = &counters[get_switch_state(0)];
-    //Dynamic Values
-    state = get_button_state(0);
-    if(state != button0)
-    {
-      *counter-= state + 10*get_button_state(2);
-      button0 = state;
-    }
-    state = get_button_state(1);
-    if(state != button1)
-    {
-      *counter+= state + 10*get_button_state(2);
-      button1 = state;
-    }
-    //Reset counter
-    if(get_button_state(3))
-      *counter = 0;
+    uint16_t freq;
+    uint16_t ampl;
+    com_getm(&com, MOTOR, &freq, &ampl);
 
-    uint32_t data = 0;
-    bool is_new = com_get(&com, MOTOR, &data);
-
-    ui_rprintf(&ui, 4, "%qFrequency: %q%d", RGB_BLUE, RGB_RED, counters[0]);
-    ui_rprintf(&ui, 5, "%qAmplitude: %q%d", RGB_BLUE, RGB_YELLOW, counters[1]);
+    ui_rprintf(&ui, 4, "%qFrequency: %q%d", RGB_BLUE, RGB_GREEN, freq);
+    ui_rprintf(&ui, 5, "%qAmplitude: %q%d", RGB_BLUE, RGB_GREEN, ampl);
 
     ui_draw(&ui);
     com_run(&com);
   }
-
-  buttons_destroy();
   switches_destroy();
   com_destroy(&com);
   ui_destroy(&ui);

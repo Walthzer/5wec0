@@ -1,2 +1,2 @@
 scp *.mk pynq10:/home/student/libpynq/applications/
-scp *.mk pynq7:/home/student/5wec0/applications/
+scp *.mk pynq9:/home/student/libpynq/applications/

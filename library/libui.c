@@ -362,7 +362,7 @@ void ui_rprintf(ui_t* ui, int row, char const *fmt, ...)
         //in the row from the passed int and append it 
         //after the last char in text
         //printf("Case d\n");
-        snprintf(tmp_text.str + len_str, UI_ROW_LENGTH - len_row - 1, "%d", va_arg(args, int));
+        snprintf(tmp_text.str + len_str, UI_ROW_LENGTH - len_row, "%d", va_arg(args, int));
         tmp = strlen(tmp_text.str);
         len_row+= tmp - len_str;
         len_str = tmp;
@@ -374,7 +374,7 @@ void ui_rprintf(ui_t* ui, int row, char const *fmt, ...)
         //in the row from the passed int and append it 
         //after the last char in text
         //printf("Case d\n");
-        snprintf(tmp_text.str + len_str, UI_ROW_LENGTH - len_row - 1, "%f", (float)va_arg(args, double));
+        snprintf(tmp_text.str + len_str, UI_ROW_LENGTH - len_row, "%f", (float)va_arg(args, double));
         tmp = strlen(tmp_text.str);
         len_row+= tmp - len_str;
         len_str = tmp;
@@ -391,7 +391,7 @@ void ui_rprintf(ui_t* ui, int row, char const *fmt, ...)
         //Will append chars from input str onto
         //text str until we run out of line space
         //printf("Case s\n");
-        strncpy(tmp_text.str + len_str, va_arg(args, char*), UI_ROW_LENGTH - len_row - 1);
+        strncpy(tmp_text.str + len_str, va_arg(args, char*), UI_ROW_LENGTH - len_row);
         //printf("Text: %s\n", tmp_text.str);
         tmp = strlen(tmp_text.str);
         //printf("text.str: %s  len: %d\n", tmp_text.str, tmp);

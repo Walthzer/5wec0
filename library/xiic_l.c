@@ -73,7 +73,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define IIC_TIMEOUT 5
+#define IIC_TIMEOUT 1
 
 #include "xiic_l.h"
 #include "xil_types.h"

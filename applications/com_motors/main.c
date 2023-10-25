@@ -27,11 +27,9 @@ int main(void) {
   ui_rprintf(&ui, 0, "%q%w%tRYB 24", RGB_WHITE, RGB_ORANGE, COMIC);
   ui_rcenter(&ui, 1, true);
   ui_rprintf(&ui, 1, "%q%w%tMotors Drivers", RGB_WHITE, RGB_ORANGE, COMIC);
-  //interface layout
-  ui_rprintf(&ui, 2, "%qRanges: [1-5]", RGB_GREEN);
-  ui_rprintf(&ui, 4, "%qFrequency: %q??", RGB_BLUE, RGB_RED);
-  ui_rprintf(&ui, 5, "%qAmplitude: %q??", RGB_BLUE, RGB_RED);
-
+  ui_rprintf(&ui, 2, "%q--Inputs--", RGB_CYAN);
+  ui_rprintf(&ui, 3, "%qRanges: [1-5]", RGB_GREEN);
+  
   ui_draw(&ui);
 
   com_t com;

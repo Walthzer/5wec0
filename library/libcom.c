@@ -36,8 +36,7 @@ void com_init(com_t *com, int label)
   com_t init_com = {label, {0}, {0}, {0}};
   *com = init_com;
   
-  //Init the switchbox
-  switchbox_init();
+  //Init the IIC pins
   switchbox_set_pin(IO_AR_SCL, SWB_IIC0_SCL);
   switchbox_set_pin(IO_AR_SDA, SWB_IIC0_SDA);
 
@@ -55,9 +54,6 @@ void com_destroy(com_t *com)
   com->label = com->label;
   //Destroy IIC
   iic_destroy(COM_IIC_INDEX);
-
-  //Destroy switchbox -> crashes.
-  //switchbox_destroy();
 }
 void com_run(com_t *com)
 {

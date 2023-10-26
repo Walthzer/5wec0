@@ -21,6 +21,15 @@
         "libui.h": "c",
         "random": "c",
         "thread": "c",
-        "cstdint": "c"
+        "cstdint": "c",
+        "libcom.h": "c",
+        "charconv": "c",
+        "optional": "c",
+        "ratio": "c",
+        "system_error": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c"
     }
 }

@@ -17,9 +17,6 @@
 #include <libui.h>
 #include <libcom.h>
 
-#define COM_MOTOR_LOW_B 2
-#define COM_MOTOR_HIGH_B 10
-
 int main(void) {
   pynq_init();
   ui_t ui;
@@ -34,8 +31,6 @@ int main(void) {
   //Inputs: Heartbeat+Crying
   ui_rprintf(&ui, 2, "%q--Inputs--", RGB_CYAN);
   ui_rcenter(&ui, 2, true);
-  ui_rprintf(&ui, 3, "%qBPM:[0-300]:", RGB_BLUE);
-  ui_rprintf(&ui, 4, "%qCrying:[0-100]:", RGB_BLUE);
   //Outputs: Heartbeat+Crying
   ui_rprintf(&ui, 5, "%q--Outputs--", RGB_CYAN);
   ui_rcenter(&ui, 5, true);

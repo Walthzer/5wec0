@@ -7,7 +7,7 @@ expect {
         password: {send "$pass\r" ; exp_continue}
 }
 
-spawn bash -c "scp -r ../library/* pynq10:/home/student/libpynq/library/";
+spawn bash -c "scp -r ../library/libcom*  pynq10:/home/student/libpynq/library/";
 set pass "student"
 expect {
         password: {send "$pass\r" ; exp_continue}
@@ -19,7 +19,7 @@ expect {
         password: {send "$pass\r" ; exp_continue}
 }
 
-spawn bash -c "scp -r ../library/* pynq9:/home/student/libpynq/library/";
+spawn bash -c "scp -r ../library/libcom* pynq9:/home/student/libpynq/library/";
 set pass "student"
 expect {
         password: {send "$pass\r" ; exp_continue}

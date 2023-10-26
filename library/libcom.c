@@ -45,7 +45,7 @@ void com_init(com_t *com, int label)
 
   if(com->label != 0)
   {
-    if(iic_set_slave_mode(COM_IIC_INDEX, COM_BASE_ADRESS + MOTOR, com->slave_buffer, COM_BUFFERSIZE) != 1)
+    if(iic_set_slave_mode(COM_IIC_INDEX, COM_BASE_ADRESS + label, com->slave_buffer, COM_BUFFERSIZE) != 1)
       pynq_error("com_init::Couldn't set IIC into slave mode!");
   }
 }
@@ -64,7 +64,6 @@ void com_run(com_t *com)
     iic_read_register(COM_IIC_INDEX, COM_BASE_ADRESS + HEARTBEAT, HEARTBEAT, (com->mmap + HEARTBEAT*4), 4);
     
     //Read from crying
-    //Set to motor for testing 
     iic_read_register(COM_IIC_INDEX, COM_BASE_ADRESS + CRYING, CRYING, (com->mmap + CRYING*4), 4);
 
     //Send to motor
@@ -138,7 +137,6 @@ bool com_getm(com_t *com, int label, uint16_t *freq_p, uint16_t *ampl_p)
   {
     //Use 4 bytes to set the uint32
     uint8_t *v4 = &com->mmap[label*4];
-    //NONCONFIDENCE
     data = v4[2] | (v4[3] << 8) | (v4[0] << 16) | (v4[1] << 24);
     
     *freq_p = (data >> 16);

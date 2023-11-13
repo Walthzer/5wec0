@@ -28,7 +28,7 @@ int main(void) {
   ui_rcenter(&ui, 1, true);
   ui_rprintf(&ui, 1, "%q%w%tMotors Drivers", RGB_WHITE, RGB_ORANGE, COMIC);
   ui_rprintf(&ui, 2, "%q--Inputs--", RGB_CYAN);
-  ui_rprintf(&ui, 3, "%qRanges: [1-5]", RGB_GREEN);
+  ui_rcenter(&ui, 2, true);
 
   ui_draw(&ui);
 
@@ -44,8 +44,8 @@ int main(void) {
     uint16_t ampl;
     com_getm(&com, MOTOR, &freq, &ampl);
 
-    ui_rprintf(&ui, 4, "%qFrequency: %q%d", RGB_PURPLE, RGB_GREEN, freq);
-    ui_rprintf(&ui, 5, "%qAmplitude: %q%d", RGB_BLUE, RGB_GREEN, ampl);
+    ui_rprintf(&ui, 4, "%qFrequency:[1-5]: %q%d", RGB_PURPLE, RGB_GREEN, freq);
+    ui_rprintf(&ui, 5, "%qAmplitude:[1-5]: %q%d", RGB_BLUE, RGB_GREEN, ampl);
 
     ui_draw(&ui);
     com_run(&com);

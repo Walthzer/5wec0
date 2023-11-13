@@ -32,8 +32,8 @@
 #define COM_MAXSLAVES 3
 
 //Bounderies for signals
-#define COM_HEARTBEAT_LOW_B 0
-#define COM_HEARTBEAT_HIGH_B 300
+#define COM_HEARTBEAT_LOW_B 60
+#define COM_HEARTBEAT_HIGH_B 240
 
 #define COM_CRYING_LOW_B 0
 #define COM_CRYING_HIGH_B 100

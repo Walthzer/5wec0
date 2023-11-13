@@ -91,7 +91,7 @@ int main(void) {
     com_get(&com, HEARTBEAT, &heartbeat);
     
     ui_rprintf(&ui, 4, "%qValue: %q%d", RGB_PURPLE, RGB_GREEN, value);
-    ui_rprintf(&ui, 5, "%qHearbeat[0-300]: %q%d", RGB_PURPLE, RGB_GREEN, heartbeat);
+    ui_rprintf(&ui, 5, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, heartbeat);
 
     ui_draw(&ui);
     com_run(&com);

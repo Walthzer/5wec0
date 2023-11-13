@@ -53,7 +53,7 @@ int main(void) {
     uint32_t data = 0;
     //inputs
     com_get(&com, HEARTBEAT, &data);
-    ui_rprintf(&ui, 3, "%qBPM:[0-300]: %q%d", RGB_BLUE, RGB_RED, data);
+    ui_rprintf(&ui, 3, "%qBPM:[60-240]: %q%d", RGB_BLUE, RGB_RED, data);
     com_get(&com, CRYING, &data);
     ui_rprintf(&ui, 4, "%qCrying:[0-100]: %q%d", RGB_BLUE, RGB_RED, data);
 

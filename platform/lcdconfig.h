@@ -40,7 +40,7 @@ SOFTWARE.
 #define LCD_BL      IO_RBPI40 /* AR10 */
 
 /**
- * @}
+ * 
  */
 
 #endif

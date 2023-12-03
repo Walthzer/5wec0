@@ -147,7 +147,7 @@ void process_input(Signal *signal)
       }
 
       //Event is good
-      //Close of signal
+      //Close off signal
       pulse->valid = 1;
 
       signal->next_pulse++;

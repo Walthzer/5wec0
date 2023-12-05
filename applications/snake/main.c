@@ -8,6 +8,41 @@
 #include <stdio.h>
 #include <libpynq.h>
 
+#define BS 10 /* block size */
+#define WIDTH (DISPLAY_WIDTH/BS)
+#define HEIGHT (DISPLAY_HEIGHT/BS)
+
+void set_block(display_t *display, int x, int y, int c) {
+    displayDrawFillRect(display, x*BS, y*BS, (x+1)*BS-1,(y+1)*BS-1, c);
+}
+
+void play(display_t *display)
+{
+    displayFillScreen(display, RGB_BLACK);
+    
+    int delay = 300;
+    int dirx, diry;
+    int x, y;
+    x = 0;
+    y = 0;
+
+    do {
+    // get input
+    int button_states[NUM_BUTTONS] = { 0 };
+    sleep_msec_buttons_pushed (button_states, delay);
+    if (button_states[0]) { dirx = +1; diry = 0; }
+    else if (button_states[1]) { dirx = 0; diry = -1; }
+    else if (button_states[2]) { dirx = 0; diry = +1; }
+    else if (button_states[3]) { dirx = -1; diry = 0; }
+    // erase at old position
+    set_block(display, x, y, RGB_BLACK);
+    x = (WIDTH + x + dirx) % WIDTH;
+    y = (HEIGHT + x + diry) % HEIGHT;
+    // draw at new position
+    set_block(display,x,y,RGB_BLUE);
+    } while (true);
+}
+
 typedef struct pos_t
 {
     int x, y;
@@ -252,6 +287,13 @@ void remove_middle_ttl(ttl_t **list, int x, int y)
 
 int main(void)
 {
+
+    pynq_init();
+    display_t display;
+    display_init(&display);
+    buttons_init();
+
+
     pos_t *snake = NULL;
     ttl_t *bonus = NULL;
     pos_t *aux_p;
@@ -268,6 +310,10 @@ int main(void)
             case 'q':
             break;
             
+            case 'p':
+                play(&display);
+            break;
+
             case 'u':
                 update_ttl(bonus);
             break;
@@ -333,4 +379,8 @@ int main(void)
     while(bonus != NULL) {update_ttl(bonus); remove_ttl(&bonus);};
     
     printf("Bye!\n");
+
+    buttons_destroy();
+    display_destroy(&display);
+    pynq_destroy();
 }

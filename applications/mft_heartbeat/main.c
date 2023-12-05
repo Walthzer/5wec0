@@ -18,6 +18,9 @@
 #include <libui.h>
 #include <libcom.h>
 
+#include <pthread.h>
+#include <stdatomic.h>
+
 #define MIN(a,b) a > b ? b : a
 #define MAX(a,b) a > b ? a : b
 
@@ -27,11 +30,11 @@
 #define PULSE_COUNT 2
 #define MIN_PERIOD_MS 5
 
-typedef struct _heartbeat_data_
+struct thread_arg
 {
-  float frequency;
-  uint32_t bpm;
-} Data;
+  ui_t* ui;
+  com_t* com;
+};
 
 typedef struct _pulse_
 {
@@ -52,6 +55,11 @@ enum SIGNAL_EVENT {NONE, RISE, FALL};
 enum CRADLE_MODES {SQUARE, ECG};
 static int Cradle_Mode = -1; 
 
+//PERIOD
+atomic_int_fast16_t period_atom;
+atomic_bool output_kalive;
+int16_t period;
+
 //Get the truth value of the sensor
 bool get_sensor_state()
 {
@@ -62,9 +70,9 @@ bool get_sensor_state()
 
 //Calculate ms period from rise and fall stamps
 //Results is always positive
-float period_ms(clock_t a, clock_t b)
+long double period_ms(clock_t a, clock_t b)
 {
-  return ((a > b ? a - b : b - a) / ((float)CLOCKS_PER_SEC)) * 1000;
+  return ((long double)((a > b ? a - b : b - a)*1000 / (clock_t)(CLOCKS_PER_SEC)));
 }
 
 void process_input(Signal *signal)
@@ -79,7 +87,7 @@ void process_input(Signal *signal)
     //Is Falling edge?
     if(signal->state)
     {
-      printf("Fall\n");
+      //printf("Fall\n");
       event = FALL;
       signal->state = 0;
     }
@@ -90,12 +98,12 @@ void process_input(Signal *signal)
     //Is Rising edge?
     if(!signal->state)
     {
-      printf("Rise\n");
+      //printf("Rise\n");
       event = RISE;
       signal->state = 1;
     }
   }
-  fflush(stdout);
+  //fflush(stdout);
 
   if(Cradle_Mode == ECG)
   {
@@ -110,66 +118,16 @@ void process_input(Signal *signal)
     //No event -> Check for glitch timeout
     if(event == NONE)
     {
-      
-      //Pulse incomplete or valid?
-      if(pulse->valid || pulse->fall == 0 || pulse->rise == 0)
-        return;
-
-      //Delta between previous pulse event below MIN_PERIOD_MS?
-      if(period_ms(t_curr, MAX(pulse->fall, pulse->rise)) < MIN_PERIOD_MS)
-        return;
-
-      //Unmark All pulses
-      for (int i = 0; i < PULSE_COUNT; i++)
-      {
-        signal->pulses[i].valid = 0;
-      }
-
-      //Mark this pulse valid
-      pulse->valid = 1;
-
-      printf("Event_Timeout->valid\n");
-      printf("Rise: %f Fall: %f Valid %d\n", (float)pulse->rise, (float)pulse->fall, pulse->valid);
-      fflush(stdout);
-
-      signal->next_pulse++;
-      if(signal->next_pulse >= PULSE_COUNT) {signal->next_pulse = 0;}
       return;
     } 
 
     //Complete and invalid signal?
-    if(!pulse->valid && pulse->fall != 0 && pulse->rise != 0)
+    if((!pulse->valid) && pulse->fall != 0 && pulse->rise != 0)
     {
-      //Pointer to last event time
-      clock_t *ptr_t_event;
-      if(pulse->fall > pulse->rise)
-        ptr_t_event = &pulse->fall;
-      else
-        ptr_t_event = &pulse->rise;
 
-      //if delta of events below MIN_PERIOD_MS then discard event;
-      if(period_ms(t_curr, *ptr_t_event) < MIN_PERIOD_MS)
-      {
-        printf("Glitch->discard\n");
-        *ptr_t_event = 0; //Previous event was also part of glitch
-        return;
-      }
-
-      for (int i = 0; i < PULSE_COUNT; i++)
-      {
-        signal->pulses[i].valid = 0;
-      }
-
-      //Event is good
-      //Close off signal
-      printf("Setting Valid\n");
-      pulse->valid = 1;
-
-      signal->next_pulse++;
-      if(signal->next_pulse >= PULSE_COUNT) {signal->next_pulse = 0;}
     }
 
-    printf("Event: %d\n", event);
+    //printf("Event: %d\n", event);
     //Event is good
     //Store time in pulse
     if(event == RISE)
@@ -184,6 +142,34 @@ void process_input(Signal *signal)
       gpio_set_level(TEST_PIN, GPIO_LEVEL_LOW);
     }
   }
+}
+
+void* fnc_output_thread(void* arg)
+{
+    struct thread_arg* thrd_args = arg;
+    ui_t* ui = thrd_args->ui;
+    com_t* com = thrd_args->com;
+
+    //outputs
+    //com_put(&com, HEARTBEAT, data.bpm);
+    //com_get(&com, HEARTBEAT, &data.bpm);
+    
+    while(atomic_load(&output_kalive))
+    {
+      double period_local = atomic_load(&period_atom);
+      double frequency = 1000.0 / period_local;
+      int bpm = 60 * (500.0 / period_local); //150ms -> 200  // 1000ms -> 30  //500ms -> 60
+
+      printf("---------PERIOD: %f ---------\n", period_local);
+      ui_rprintf(ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, Cradle_Mode ? "ECG" : "Square");
+      ui_rprintf(ui, 6, "%qFrequency: %q%f", RGB_PURPLE, RGB_GREEN, frequency);
+      ui_rprintf(ui, 7, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, bpm);
+
+      ui_draw(ui);
+      com_run(com);
+    }
+
+    return NULL;
 }
 
 int main(void) {
@@ -224,8 +210,6 @@ int main(void) {
   //ADC init
   adc_init();
 
-  //----Init Vars---
-  Data data = {0, 0};
   //---Signal struct---
   Signal signal;
   signal.state = get_sensor_state();
@@ -236,26 +220,27 @@ int main(void) {
   }
   //---END Signal---
   //---END Vars---
+
+  //Threading
+  atomic_init(&period_atom, 50);
+  atomic_init(&output_kalive, true);
+  period = atomic_load(&period_atom);
+  struct thread_arg thrd_args = {&ui, &com};
+  pthread_t output_thread;
+  pthread_create(&output_thread, NULL, &fnc_output_thread, &thrd_args);
+
   
-  int do_other = 0;
   while (get_switch_state(1))
   { 
     Cradle_Mode = get_switch_state(0);
-    ui_rprintf(&ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, Cradle_Mode ? "ECG" : "Square");
 
     process_input(&signal);
-
-    do_other++;
-    if(do_other < 50)
-      continue;
-
-    do_other = 0;
 
     //Find valid pulse
     Pulse *valid_pulse = NULL;
     for (int i = 0; i < PULSE_COUNT; i++)
     {
-      if(signal.pulses[i].valid)
+      if(signal.pulses[i].rise > 0.0f && signal.pulses[i].fall > 0.0f)
       {
         valid_pulse = &signal.pulses[i];
         valid_pulse->valid = 0;
@@ -265,23 +250,20 @@ int main(void) {
 
     if(valid_pulse != NULL)
     {
-      float delta_ms = period_ms(valid_pulse->rise, valid_pulse->fall);
-      data.frequency = 1000.0f / delta_ms;
-      data.bpm = 60 * data.frequency;
-      //printf("---------PERIOD: %f ---------\n", data.frequency);
-      fflush(stdout);
+      int delta_ms = (int)period_ms(valid_pulse->rise, valid_pulse->fall);
+      if(delta_ms != period)
+      {
+        period = delta_ms;
+        atomic_store(&period_atom, period);
+      };
+      
     }
-  
-    //outputs
-    //com_put(&com, HEARTBEAT, data.bpm);
-    //com_get(&com, HEARTBEAT, &data.bpm);
-    
-    ui_rprintf(&ui, 6, "%qFrequency: %q%f", RGB_PURPLE, RGB_GREEN, data.frequency);
-    ui_rprintf(&ui, 7, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, data.bpm);
-
-    ui_draw(&ui);
-    com_run(&com);
   }
+
+  //threading 
+  //gracefull exit from thread;
+  atomic_store(&output_kalive, false);
+  pthread_join(output_thread, NULL);
 
   //ADC
   adc_destroy();

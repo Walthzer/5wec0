@@ -433,18 +433,13 @@ int main(void) {
     process_input(&signal);
 
     //Mode depended pulse handeling
-    if(Cradle_Mode == SQUARE || Cradle_Mode == ECG)
+    if(Cradle_Mode == SQUARE)
     {
       if(signal.idx_reading >= MIN_READINGS)
       {
-        printf("Process Readings\n");
         signal.idx_reading = 0;
         sort_readings(signal.readings, MIN_READINGS);
         signal.period = signal.readings[MIN_READINGS / 2] / 1000.0;
-
-        printf("---------PERIOD: %d  C: %d---------\n", signal.period, counter);
-        counter++;
-        fflush(NULL);
         atomic_store(&period_atom, signal.period);
       }
       continue;

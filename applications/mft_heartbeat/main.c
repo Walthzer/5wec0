@@ -29,13 +29,18 @@
 
 #define SENSOR_PIN IO_A0
 #define TEST_PIN IO_AR7
+#define GLITCH_PIN IO_AR8
+#define JOIN_PIN IO_AR9
 
 #define PULSE_COUNT 2
-#define MIN_PERIOD_SQUARE 100
-#define MAX_PERIOD_SQUARE 1200
-#define MIN_PERIOD_ECG 50
-#define GLITCH_PERIOD 50
-#define MIN_READINGS 5
+#define MIN_READINGS 3
+
+//Times are in microseconds
+#define MAX_PERIOD_SQUARE (1050 * 1000) //Maximum width of a SQUARE period
+#define MIN_PERIOD_SQUARE (100 * 1000) //Minium width of a SQUARE period
+#define MIN_PERIOD_ECG (50 * 1000)
+#define GLITCH_PERIOD_30 (12.5 * 1000)
+#define GLITCH_RANGE 500 //Bounds of the glitch period range. 
 
 #define FREE_PTR(ptr) free(ptr); ptr = NULL
 #undef LOG_DOMAIN
@@ -72,19 +77,21 @@ typedef struct _signal_
 
 //Globals
 //FLAGS
-enum CRADLE_MODES {SQUARE_VARIATION, SQUARE, ECG, ECG_VARIATION};
+enum CRADLE_MODES {SQUARE, ECG, SQUARE_VARIATION, ECG_VARIATION};
 static int Cradle_Mode = -1; 
 
+
 //PERIOD
+int Glitch_Period = GLITCH_PERIOD_30;
 atomic_int period_atom;
 atomic_bool output_kalive;
 
 //Get the truth value of the sensor
 bool get_sensor_state()
 {
-  float state = adc_read_channel_raw(ADC0);
+  int state = adc_read_channel_raw(ADC0);
   //printf("State: %f\n", state);
-  return state > 2000;
+  return state > 10000;
 }
 
 //lil sorter
@@ -101,7 +108,7 @@ void sort_readings(int data[], int length)
     for (int i = 0; i < length - 1; i++)
     {
 
-      if(data[i] > data[i + 1])
+      if(data[i] >= data[i + 1])
         continue;
 
       //Copy element A into storage
@@ -116,73 +123,67 @@ void sort_readings(int data[], int length)
   }
 }
 
-//Calculate ms period from rise and fall stamps
+//Calculate microseconds period from rise and fall stamps
 //Results is always positive
-int signed_time_diff_ms(struct timeval *a, struct timeval *b)
+int signed_time_diff_micro(struct timeval *a, struct timeval *b)
 {
-  return ((a->tv_sec - b->tv_sec) + 1e-6 * (a->tv_usec - b->tv_usec)) * 1000.0f;
+  return (((a->tv_sec - b->tv_sec) * 1e+6) + (a->tv_usec - b->tv_usec));
 }
+int time_diff_micro(struct timeval *a, struct timeval *b) {
 
-
-int time_diff_ms(struct timeval *a, struct timeval *b) {
-
-  int delta = signed_time_diff_ms(a, b);
+  int delta = signed_time_diff_micro(a, b);
   if (delta < 0)
     return -delta;
   return delta;
 }
-
+bool within_range(int a, int b, int range)
+{
+  //printf("In range?:\n -> a: %d\n -> b: %d +- %d\n -> y/n: %d", a, b, range, (a < b+range) && (a > b-range));
+  return ((a < b+range) && (a > b-range));
+}
 int pulse_full(Pulse *pulse)
 {
   return (pulse->events[0].type != NONE && pulse->events[1].type != NONE);
 }
-
 void clear_pulse_event(Event* event)
 {
   event->type = NONE;
   event->time = (struct timeval){0, 0};
 }
-
 void clear_pulse(Pulse* pulse)
 {
   pulse->valid = 0;
   clear_pulse_event(&pulse->events[0]);
   clear_pulse_event(&pulse->events[1]);
 }
-
-void consume_ecg_pair(Signal *signal, Pulse *a, Pulse *b)
+void validate_pulse(Signal *signal, Pulse *pulse)
 {
-  int delta_ms = time_diff_ms(&a->events[0].time, &b->events[0].time);
-  if(Cradle_Mode == ECG_VARIATION)
+  if(!pulse_full(pulse))
   {
-    signal->readings[signal->idx_reading] = delta_ms;
-    signal->idx_reading++;
-  } else {
-    signal->readings[0] = delta_ms;
+    pynq_error("Trying to validate a non-full pulse??");
+    return;
   }
-  clear_pulse(a);
-  clear_pulse(b);
-}
 
-void consume_square_pulse(Signal *signal, Pulse *pulse)
-{
-  int delta_ms = time_diff_ms(&pulse->events[0].time, &pulse->events[1].time);
-  if(Cradle_Mode == SQUARE_VARIATION)
-  {
-    signal->readings[signal->idx_reading] = delta_ms;
-    signal->idx_reading++;
-  } else {
-    signal->readings[0] = delta_ms;
-  }
+  int delta_micro = time_diff_micro(&pulse->events[0].time, &pulse->events[1].time);
   clear_pulse(pulse);
+  //Prevent Strage periods from leaking through
+  if(delta_micro < MAX_PERIOD_SQUARE && delta_micro > MIN_PERIOD_SQUARE)
+  {
+    if(signal->idx_reading >= MIN_READINGS)
+    {
+      return;//Prevent out-of-bounds
+    }
+    signal->readings[signal->idx_reading] = delta_micro;
+    signal->idx_reading++;
+  }
 }
 
-void process_input(Signal *signal)
+void process_square(struct timeval t_curr, Signal *signal)
 {
   int event = NONE;
-  struct timeval t_curr = {0, 0};
-  gettimeofday(&t_curr, NULL);
-  
+  int delta_micro;
+  Pulse *pulse = &signal->pulses[signal->curr_pulse];
+
   if(!get_sensor_state())
   { 
     //Input LOW
@@ -192,6 +193,7 @@ void process_input(Signal *signal)
       //printf("Fall\n");
       event = FALL;
       signal->state = 0;
+      //Look ahead to filter glitch
     }
 
   } else
@@ -206,165 +208,104 @@ void process_input(Signal *signal)
     }
   }
 
-  #ifdef DEBUG
+  //Wait for another event, then check its delta:
+  // delta less then GLITCH_PERIOD?
+  //    -> Part of a pulse (split by a glitch)
+  // delta EQUAL to GLITCH_PERIOD?
+  //    -> It is a glitch
+  // delta GREATER to GLITCH_PERIOD?
+  //    -> Part of a pulse (split by a glitch) OR a full pulse
+
   if(event == RISE)
   {
     printf("RISE");
+    pulse->events[0].type = event;
+    pulse->events[0].time = t_curr;
+
     gpio_set_level(TEST_PIN, GPIO_LEVEL_HIGH);
+    gpio_set_level(GLITCH_PIN, GPIO_LEVEL_HIGH);
+    gpio_set_level(JOIN_PIN, GPIO_LEVEL_HIGH);
   }
-  
+
   if(event == FALL)
   {
     printf("FALL");
+    pulse->events[1].type = event;
+    pulse->events[1].time = t_curr;
+
     gpio_set_level(TEST_PIN, GPIO_LEVEL_LOW);
   }
-  #endif
-
-  Pulse *pulse = &signal->pulses[signal->curr_pulse];
-  int delta_ms;
-
-  if(Cradle_Mode == ECG || Cradle_Mode == ECG_VARIATION)
+  //Process a full pulse
+  //Glitches are removed and leading pulses declared valid.
+  //Valid pulses are when possible joined with leading pulses (gap less then MIN_PERIOD_SQUARE)
+  //    -> IF JOINING IS NOT POSSIBLE => Declare leading pulse valid and shift left
+  if(pulse_full(pulse))
   {
-    /*Signal
-      -> Period exists between two pulses.
-      -> glitches exists between pulses
-      
-      fix:
-        track two pulses at a time -> period between them
-        only track pulses > GLITCH_PERIOD
-    */
-    if(event == NONE)
+    delta_micro = time_diff_micro(&pulse->events[0].time, &pulse->events[1].time);
+    //Dynamically adjust the glitch period
+    if(delta_micro < Glitch_Period)
     {
-      //Incomplete pulses are not of intrest
-      if(pulse_full(pulse))
-        return;
+      Glitch_Period = delta_micro;
+    }
+    //Reset glitch period if we are at 30 BPM -> period of 1 SEC
+    if(delta_micro > (800 * 1000))
+    {
+      Glitch_Period = GLITCH_PERIOD_30;
+    }
 
-      //Is period less then MIN_PERIOD_ECG
-      //-> pulse is glitch
-      delta_ms = time_diff_ms(&pulse->events[0].time, &pulse->events[1].time);
-      if(delta_ms < MIN_PERIOD_ECG)
-      {
-        //Discard pulse
-        printf("---Clear GLITCH---\n");
-        clear_pulse(pulse);
-        return;
-      }
-
-      //Try to calculate pulse
-      //is there a leading pulse?
-      if(signal->curr_pulse == 0)
-        return; //No 
-      
-      //We have 2 valid pulses -> calculate pulse
-      //delta between first events of pulse 0 and 1
-      consume_ecg_pair(signal, &signal->pulses[0], &signal->pulses[1]);
-      signal->curr_pulse = 0;
+    if(within_range(delta_micro, Glitch_Period, GLITCH_RANGE))
+    {
+      gpio_set_level(GLITCH_PIN, GPIO_LEVEL_LOW);
+      clear_pulse(pulse);
       return;
     }
+
+    //Try to join -> Get DELTA
+    if(signal->curr_pulse > 0)
+    {
+      delta_micro = time_diff_micro(&signal->pulses[0].events[1].time, &signal->pulses[1].events[0].time);
+      if (delta_micro >= MIN_PERIOD_SQUARE)
+      {
+        //To far apart -> validate leading then shift
+        validate_pulse(signal, &signal->pulses[0]); 
+        signal->pulses[0] = signal->pulses[1];
+        clear_pulse(&signal->pulses[1]);
+        signal->curr_pulse = 0;
+        return;
+      }
+      //Join pulses
+      //Set latest event into last event of pulse 0.
+      printf("JOIN");
+      gpio_set_level(JOIN_PIN, GPIO_LEVEL_LOW);
+      signal->pulses[0].events[1] = signal->pulses[1].events[1];
+      clear_pulse(&signal->pulses[1]);
+      return;
+    }
+    //No leading pulse: Continue along
+    signal->curr_pulse++;
+    if(signal->curr_pulse >= PULSE_COUNT) {signal->curr_pulse = PULSE_COUNT - 1;}
+  }
+  return;
+}
+
+void process_input(Signal *signal)
+{
+  struct timeval t_curr = {0, 0};
+  gettimeofday(&t_curr, NULL);
+  
+
+  //ECG MODE
+  if(Cradle_Mode == ECG || Cradle_Mode == ECG_VARIATION)
+  {
   }
 
   //SQUARE MODE
   if(Cradle_Mode == SQUARE || Cradle_Mode == SQUARE_VARIATION)
   {
-    /*Signal
-      -> can be split by glitches
-      -> have a very close leading or tailing glitch (Broke the last code)
-      
-      fix:
-        track two pulses at a time -> combine if both MIN_PERIOD_SQUARE
-        if either is glitch -> glitch gets discarded.
-        -> combination is rolling so more then 1 split is taken care of.
-    */
-
-    //No event
-    //Combine split pulses
-    if(event == NONE && (pulse_full(&signal->pulses[0]) || pulse_full(&signal->pulses[1])))
-    {
-      printf("\nNo Event: Handle data: Pulse 0: %d  Pulse 1: %d\n", pulse_full(&signal->pulses[0]), pulse_full(&signal->pulses[1]));
-      //Check timeout on possible leading pulse
-      if(signal->curr_pulse > 0 && pulse_full(&signal->pulses[0]))
-      {
-        delta_ms = time_diff_ms(&t_curr, &pulse->events[1].time);
-        if(delta_ms > GLITCH_PERIOD)
-        {
-          printf("--LEADING VALID\n");
-          //Signal is stable after pulse
-          //pulse period is valid
-          //WARNING: Clearing everything now. No idea if that is good
-          consume_square_pulse(signal, &signal->pulses[0]);
-          clear_pulse(&signal->pulses[0]);
-          clear_pulse(&signal->pulses[1]);
-          signal->curr_pulse = 0;
-          return;
-        }
-      }
-
-      //Incomplete pulses are not of intrest
-      if(!pulse_full(pulse))
-        return;
-
-      //Try to join
-      //is there a leading pulse?
-      if(signal->curr_pulse == 0 || !(pulse_full(&signal->pulses[0])))
-        return; //No 
-      
-      //We have 2 valid pulses -> is delta < GLITCH_PERIOD?
-      //delta between last event of pulse 0 and first event of pulse 1
-      delta_ms = time_diff_ms(&signal->pulses[0].events[1].time, &signal->pulses[1].events[0].time);
-      if(delta_ms < GLITCH_PERIOD)
-      {
-        //Join pulses
-        signal->pulses[0].events[1] = pulse->events[1];
-        clear_pulse(pulse);
-        //Next steps:
-        //-> more valid pulses to join
-        // OR pulse period becomes valid due to:
-        //-> pulse gets timed out
-        //-> next pulses is a GLITCH 
-        return;
-      }
-
-      //Two valid pulses seperated by delta > GLITCH_PERIOD?
-      //PANIC
-      pynq_warning("Event: NONE; PANIC. Adjust glitch period??");
-      clear_pulse(&signal->pulses[0]);
-      clear_pulse(&signal->pulses[1]);
-      signal->curr_pulse = 0;
-      return;
-    }
-
-    //Event is good
-    //Store event -> 0 or 1 depending on what is filled
-    int idx_event = pulse->events[signal->curr_pulse].type != NONE;
-    pulse->events[idx_event].type = event;
-    pulse->events[idx_event].time = t_curr;
-
-    //Verify pulse if its complete 
-    if(pulse_full(pulse))
-    {
-      printf("\nFILLED PULSE\n");
-      //Is period less then MIN_PERIOD_SQUARE
-      //-> pulse is glitch
-      //any previous pulse has valid period.
-      delta_ms = time_diff_ms(&pulse->events[0].time, &pulse->events[1].time);
-      if(delta_ms < MIN_PERIOD_SQUARE || delta_ms > MAX_PERIOD_SQUARE)
-      {
-        //Discard pulse
-        printf("---Clear GLITCH---\n");
-        clear_pulse(pulse);
-        //Try to calculate period
-        //Is there a leading pulse?
-        if(signal->curr_pulse == 0)
-          return; //No 
-
-        printf("Leading pulse valid\n");
-        consume_square_pulse(signal, &signal->pulses[0]);
-        signal->curr_pulse = 0;
-        return;
-      }
-      signal->curr_pulse++;
-    }
+    process_square(t_curr, signal);
   }
+
+  fflush(NULL);
 }
 
 void* fnc_output_thread(void* arg)
@@ -380,6 +321,8 @@ void* fnc_output_thread(void* arg)
     double period;
     struct timespec t_sleep = {0, 10000};
     int mode = Cradle_Mode;
+    double frequency;
+    int bpm;
 
     while(atomic_load(&output_kalive))
     {
@@ -391,18 +334,27 @@ void* fnc_output_thread(void* arg)
       }
       mode = Cradle_Mode;
       period = new_period;
-      double frequency = 500.0 / period;
-      int bpm = 60 * (500.0 / period); //150ms -> 200  // 1000ms -> 30  //500ms -> 60
+      if(period == 0)
+      {
+        frequency = 0;
+        bpm = 0;
+      } else 
+      {
+        frequency = (500.0) / period;
+        bpm = 60 * frequency; //150ms -> 200  // 1000ms -> 30  //500ms -> 60
+      }
 
       printf("---------PERIOD: %f ---------\n", period);
       ui_rprintf(ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, Cradle_Mode ? "ECG" : "Square");
       ui_rprintf(ui, 6, "%qFrequency: %q%f", RGB_PURPLE, RGB_GREEN, frequency);
       ui_rprintf(ui, 7, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, bpm);
 
+      ui_rprintf(ui, 9, "%qGlitch Period: %q%d", RGB_YELLOW, RGB_RED, Glitch_Period);
+
+
       ui_draw(ui);
       com_run(com);
     }
-
     return NULL;
 }
 
@@ -439,14 +391,15 @@ int main(void) {
   //Interrupt init
   gpio_set_direction(SENSOR_PIN, GPIO_DIR_INPUT);
   gpio_set_direction(TEST_PIN, GPIO_DIR_OUTPUT);
-
+  gpio_set_direction(GLITCH_PIN, GPIO_DIR_OUTPUT);
+  gpio_set_direction(JOIN_PIN, GPIO_DIR_OUTPUT);
 
   //ADC init
   adc_init();
 
   //---Signal struct---
   Signal signal;
-  signal.state = get_sensor_state();
+  signal.state = 0;
   signal.curr_pulse = 0;
   signal.period = 0;
   signal.idx_reading = 0;
@@ -472,7 +425,7 @@ int main(void) {
   pthread_t output_thread;
   pthread_create(&output_thread, NULL, &fnc_output_thread, &thrd_args);
 
-  
+  int counter = 0;
   while (get_switch_state(1))
   { 
     Cradle_Mode = get_switch_state(0);
@@ -482,10 +435,15 @@ int main(void) {
     //Mode depended pulse handeling
     if(Cradle_Mode == SQUARE || Cradle_Mode == ECG)
     {
-      if(true && signal.readings[0] != signal.period)
+      if(signal.idx_reading >= MIN_READINGS)
       {
-        signal.period = signal.readings[0];
-        printf("---------PERIOD: %d ---------\n", signal.period);
+        printf("Process Readings\n");
+        signal.idx_reading = 0;
+        sort_readings(signal.readings, MIN_READINGS);
+        signal.period = signal.readings[MIN_READINGS / 2] / 1000.0;
+
+        printf("---------PERIOD: %d  C: %d---------\n", signal.period, counter);
+        counter++;
         fflush(NULL);
         atomic_store(&period_atom, signal.period);
       }
@@ -503,14 +461,14 @@ int main(void) {
     if(Cradle_Mode == SQUARE_VARIATION || Cradle_Mode == ECG_VARIATION)
     {
       //Wait for a full dataset
-      if(!(signal.idx_reading >= MIN_READINGS))
+      if(!(signal.idx_reading >= 1))
         continue;
       
       //Sort
-      sort_readings(signal.readings, MIN_READINGS);
+      //sort_readings(signal.readings, MIN_READINGS);
 
       //Take the mean -> center index of uneven array
-      signal.period = signal.readings[MIN_READINGS / 2];
+      signal.period = signal.readings[0];
       printf("---------PERIOD: %d ---------\n", signal.period);
       fflush(NULL);
       atomic_store(&period_atom, signal.period);

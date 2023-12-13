@@ -3,11 +3,11 @@
  *
  *  Interface:
  *  Switch 1 -> Exits the main loop
- *  Switch 0: -> SQUARE/ECG MODE
+ *  Switch 0:
  *  Button 3: NC
  *  Button 2: NC
- *  Button 1: NC
- *  Button 0: NC
+ *  Button 1: Change mode down
+ *  Button 0: Change mode up
  * 
  *  Written by: Walthzer
  * 
@@ -34,6 +34,7 @@
 
 #define PULSE_COUNT 2
 #define MIN_READINGS 3
+#define MIN_READINGS_VAR 10
 
 //Times are in microseconds
 #define MAX_PERIOD_SQUARE (1050 * 1000) //Maximum width of a SQUARE period
@@ -71,18 +72,19 @@ typedef struct _signal_
   Pulse pulses[PULSE_COUNT]; //Falling Edge timestamps
   int state, curr_pulse;
   int period;
-  int readings[MIN_READINGS];
+  int readings[MIN_READINGS_VAR];
   int idx_reading;
 } Signal;
 
 //Globals
 //FLAGS
+char *Cradle_Modes_Str[] = {"Square     ", "ECG        ", "Square Vari", "ECG Vari   "};
 enum CRADLE_MODES {SQUARE, ECG, SQUARE_VARIATION, ECG_VARIATION};
-static int Cradle_Mode = -1; 
-
+static int Cradle_Mode = 0;
 
 //PERIOD
 int Glitch_Period = GLITCH_PERIOD_30;
+atomic_int cradle_atom;
 atomic_int period_atom;
 atomic_bool output_kalive;
 
@@ -156,7 +158,7 @@ void clear_pulse(Pulse* pulse)
   clear_pulse_event(&pulse->events[0]);
   clear_pulse_event(&pulse->events[1]);
 }
-void validate_pulse(Signal *signal, Pulse *pulse)
+void validate_pulse_square(Signal *signal, Pulse *pulse)
 {
   if(!pulse_full(pulse))
   {
@@ -169,12 +171,87 @@ void validate_pulse(Signal *signal, Pulse *pulse)
   //Prevent Strage periods from leaking through
   if(delta_micro < MAX_PERIOD_SQUARE && delta_micro > MIN_PERIOD_SQUARE)
   {
-    if(signal->idx_reading >= MIN_READINGS)
+    if(Cradle_Mode == SQUARE)
     {
-      return;//Prevent out-of-bounds
+      if(signal->idx_reading >= MIN_READINGS)
+      {
+        return;//Prevent out-of-bounds
+      }
+      signal->readings[signal->idx_reading] = delta_micro;
+      signal->idx_reading++;
+      return;
     }
-    signal->readings[signal->idx_reading] = delta_micro;
-    signal->idx_reading++;
+
+    if(Cradle_Mode == SQUARE_VARIATION)
+    {
+      if(signal->idx_reading >= MIN_READINGS)
+      {
+        signal->idx_reading = 0;
+      }
+      signal->readings[signal->idx_reading] = delta_micro;
+      signal->idx_reading++;
+      return;
+    }
+
+  }
+}
+
+void process_ecg(struct timeval t_curr, Signal *signal)
+{
+  int event = NONE;
+  int delta_micro;
+  Pulse *pulse = &signal->pulses[signal->curr_pulse];
+
+  if(!get_sensor_state())
+  { 
+    //Input LOW
+    //Is Falling edge?
+    if(signal->state)
+    {
+      //printf("Fall\n");
+      event = FALL;
+      signal->state = 0;
+      //Look ahead to filter glitch
+    }
+
+  } else
+  {
+    //Input HIGH
+    //Is Rising edge?
+    if(!signal->state)
+    {
+      //printf("Rise\n");
+      event = RISE;
+      signal->state = 1;
+    }
+  }
+
+  //Wait for another event, then check its delta:
+  // delta less then GLITCH_PERIOD?
+  //    -> Part of a pulse (split by a glitch)
+  // delta EQUAL to GLITCH_PERIOD?
+  //    -> It is a glitch
+  // delta GREATER to GLITCH_PERIOD?
+  //    -> Part of a pulse (split by a glitch) OR a full pulse
+
+  if(event == RISE)
+  {
+    printf("RISE");
+    pulse->events[0].type = event;
+    pulse->events[0].time = t_curr;
+
+    gpio_set_level(TEST_PIN, GPIO_LEVEL_HIGH);
+    gpio_set_level(GLITCH_PIN, GPIO_LEVEL_HIGH);
+    gpio_set_level(JOIN_PIN, GPIO_LEVEL_HIGH);
+  }
+
+  if(event == FALL)
+  {
+    printf("FALL");
+    pulse->events[1].type = event;
+    pulse->events[1].time = t_curr;
+
+    gpio_set_level(TEST_PIN, GPIO_LEVEL_LOW);
   }
 }
 
@@ -267,7 +344,7 @@ void process_square(struct timeval t_curr, Signal *signal)
       if (delta_micro >= MIN_PERIOD_SQUARE)
       {
         //To far apart -> validate leading then shift
-        validate_pulse(signal, &signal->pulses[0]); 
+        validate_pulse_square(signal, &signal->pulses[0]); 
         signal->pulses[0] = signal->pulses[1];
         clear_pulse(&signal->pulses[1]);
         signal->curr_pulse = 0;
@@ -297,6 +374,7 @@ void process_input(Signal *signal)
   //ECG MODE
   if(Cradle_Mode == ECG || Cradle_Mode == ECG_VARIATION)
   {
+    process_ecg(t_curr, signal);
   }
 
   //SQUARE MODE
@@ -320,19 +398,19 @@ void* fnc_output_thread(void* arg)
     
     double period;
     struct timespec t_sleep = {0, 10000};
-    int mode = Cradle_Mode;
+    int mode = atomic_load(&cradle_atom);
     double frequency;
     int bpm;
 
     while(atomic_load(&output_kalive))
     {
       double new_period = atomic_load(&period_atom);
-      if(new_period == period && Cradle_Mode == mode)
+      if(new_period == period && atomic_load(&cradle_atom) == mode)
       {
         nanosleep(&t_sleep, NULL); //sleep in microseconds
         continue;
       }
-      mode = Cradle_Mode;
+      mode = atomic_load(&cradle_atom);
       period = new_period;
       if(period == 0)
       {
@@ -345,7 +423,7 @@ void* fnc_output_thread(void* arg)
       }
 
       printf("---------PERIOD: %f ---------\n", period);
-      ui_rprintf(ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, Cradle_Mode ? "ECG" : "Square");
+      ui_rprintf(ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, Cradle_Modes_Str[Cradle_Mode]);
       ui_rprintf(ui, 6, "%qFrequency: %q%f", RGB_PURPLE, RGB_GREEN, frequency);
       ui_rprintf(ui, 7, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, bpm);
 
@@ -418,22 +496,39 @@ int main(void) {
   //---END Vars---
 
   //Threading
-  atomic_init(&period_atom, 0);
+  atomic_init(&period_atom, Cradle_Mode);
   atomic_init(&output_kalive, true);
+  atomic_init(&cradle_atom, 0);
   signal.period = atomic_load(&period_atom);
   struct thread_arg thrd_args = {&ui, &com};
   pthread_t output_thread;
   pthread_create(&output_thread, NULL, &fnc_output_thread, &thrd_args);
 
-  int counter = 0;
+  int button_states[] = {0, 0};
+  int bstate;
   while (get_switch_state(1))
   { 
-    Cradle_Mode = get_switch_state(0);
+    bstate = get_button_state(0);
+    if(bstate != button_states[0])
+    {
+      Cradle_Mode-= bstate;
+      button_states[0] = bstate;
+    }
+    bstate = get_button_state(1);
+    if(bstate != button_states[1])
+    {
+      Cradle_Mode+= bstate;
+      button_states[1] = bstate;
+    }
+
+    if(Cradle_Mode < 0) { Cradle_Mode = 0;}
+    if(Cradle_Mode > 3) {Cradle_Mode = 3;}
+    atomic_store(&cradle_atom, Cradle_Mode);
 
     process_input(&signal);
 
     //Mode depended pulse handeling
-    if(Cradle_Mode == SQUARE)
+    if(Cradle_Mode == SQUARE || Cradle_Mode == ECG)
     {
       if(signal.idx_reading >= MIN_READINGS)
       {
@@ -456,18 +551,18 @@ int main(void) {
     if(Cradle_Mode == SQUARE_VARIATION || Cradle_Mode == ECG_VARIATION)
     {
       //Wait for a full dataset
-      if(!(signal.idx_reading >= 1))
-        continue;
+      if(signal.idx_reading >= MIN_READINGS_VAR)
+      {
       
-      //Sort
-      //sort_readings(signal.readings, MIN_READINGS);
+        //Sort
+        sort_readings(signal.readings, MIN_READINGS_VAR);
 
-      //Take the mean -> center index of uneven array
-      signal.period = signal.readings[0];
-      printf("---------PERIOD: %d ---------\n", signal.period);
-      fflush(NULL);
-      atomic_store(&period_atom, signal.period);
-
+        //Take the mean -> center index of uneven array
+        signal.period = signal.readings[0];
+        printf("---------PERIOD: %d ---------\n", signal.period);
+        fflush(NULL);
+        atomic_store(&period_atom, signal.period);
+      }
       continue;
     }
   }

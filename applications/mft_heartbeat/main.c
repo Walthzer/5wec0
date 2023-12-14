@@ -13,6 +13,16 @@
  * 
  */
 
+
+
+  /*
+    ECG:
+      5 BPM   => 2 seconds
+      30 BPM  => 2 seconds      Glitch => 20ms?
+      60 BPM  => 1 seconds      Glitch => 10ms
+      125 BPM => 0.480 seconds  Glitch => 5ms
+      200 BPm => 0.300 seconds  Glitch => 3ms
+  */
 #include <unistd.h>
 #include <libpynq.h>
 #include <stdlib.h>
@@ -196,63 +206,13 @@ void validate_pulse_square(Signal *signal, Pulse *pulse)
   }
 }
 
+
+struct timeval start = {0, 0};
 void process_ecg(struct timeval t_curr, Signal *signal)
 {
-  int event = NONE;
-  int delta_micro;
-  Pulse *pulse = &signal->pulses[signal->curr_pulse];
-
-  if(!get_sensor_state())
-  { 
-    //Input LOW
-    //Is Falling edge?
-    if(signal->state)
-    {
-      //printf("Fall\n");
-      event = FALL;
-      signal->state = 0;
-      //Look ahead to filter glitch
-    }
-
-  } else
-  {
-    //Input HIGH
-    //Is Rising edge?
-    if(!signal->state)
-    {
-      //printf("Rise\n");
-      event = RISE;
-      signal->state = 1;
-    }
-  }
-
-  //Wait for another event, then check its delta:
-  // delta less then GLITCH_PERIOD?
-  //    -> Part of a pulse (split by a glitch)
-  // delta EQUAL to GLITCH_PERIOD?
-  //    -> It is a glitch
-  // delta GREATER to GLITCH_PERIOD?
-  //    -> Part of a pulse (split by a glitch) OR a full pulse
-
-  if(event == RISE)
-  {
-    printf("RISE");
-    pulse->events[0].type = event;
-    pulse->events[0].time = t_curr;
-
-    gpio_set_level(TEST_PIN, GPIO_LEVEL_HIGH);
-    gpio_set_level(GLITCH_PIN, GPIO_LEVEL_HIGH);
-    gpio_set_level(JOIN_PIN, GPIO_LEVEL_HIGH);
-  }
-
-  if(event == FALL)
-  {
-    printf("FALL");
-    pulse->events[1].type = event;
-    pulse->events[1].time = t_curr;
-
-    gpio_set_level(TEST_PIN, GPIO_LEVEL_LOW);
-  }
+  int x = time_diff_micro(&t_curr, &start);
+  int sample = adc_read_channel_raw(ADC0);
+  printf("%d,%d\n", x, sample); //Output CSV
 }
 
 void process_square(struct timeval t_curr, Signal *signal)
@@ -506,6 +466,11 @@ int main(void) {
 
   int button_states[] = {0, 0};
   int bstate;
+
+  //PLOTTING DEBUG
+  gettimeofday(&start, NULL);
+  Cradle_Mode = ECG;
+
   while (get_switch_state(1))
   { 
     bstate = get_button_state(0);

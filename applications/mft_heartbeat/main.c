@@ -456,7 +456,7 @@ int main(void) {
   //---END Vars---
 
   //Threading
-  atomic_init(&period_atom, Cradle_Mode);
+  atomic_init(&period_atom, 0);
   atomic_init(&output_kalive, true);
   atomic_init(&cradle_atom, 0);
   signal.period = atomic_load(&period_atom);

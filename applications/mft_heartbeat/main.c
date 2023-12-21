@@ -13,8 +13,6 @@
  * 
  */
 
-
-
   /*
     ECG:
       5 BPM   => 2 seconds
@@ -45,6 +43,11 @@
 #define PULSE_COUNT 2
 #define MIN_READINGS 3
 #define MIN_READINGS_VAR 10
+
+//Sampeling 
+#define CD_PERIOD_MICRO 2000
+#define ECG_BUFFER_SIZE 128
+#define ECG_MEASUREMENT_BUFF 32
 
 //Times are in microseconds
 #define MAX_PERIOD_SQUARE (1050 * 1000) //Maximum width of a SQUARE period
@@ -86,6 +89,17 @@ typedef struct _signal_
   int idx_reading;
 } Signal;
 
+typedef struct _ecg_data
+{
+  struct timeval last;
+  int s_buff[ECG_BUFFER_SIZE]; //Samples
+  int readings[ECG_MEASUREMENT_BUFF]; //measurements
+  int threshold, state, idx_reading, idx_sample, c_event;
+  int c_sample;
+  long int sum_samples;
+  Pulse pulse;
+} Ecg_signal;
+
 //Globals
 //FLAGS
 char *Cradle_Modes_Str[] = {"Square     ", "ECG        ", "Square Vari", "ECG Vari   "};
@@ -93,6 +107,7 @@ enum CRADLE_MODES {SQUARE, ECG, SQUARE_VARIATION, ECG_VARIATION};
 static int Cradle_Mode = 0;
 
 //PERIOD
+struct timeval start;
 int Glitch_Period = GLITCH_PERIOD_30;
 atomic_int cradle_atom;
 atomic_int period_atom;
@@ -207,12 +222,54 @@ void validate_pulse_square(Signal *signal, Pulse *pulse)
 }
 
 
-struct timeval start = {0, 0};
-void process_ecg(struct timeval t_curr, Signal *signal)
+void process_ecg(struct timeval t_curr, Ecg_signal *signal)
 {
-  int x = time_diff_micro(&t_curr, &start);
-  int sample = adc_read_channel_raw(ADC0);
-  printf("%d,%d\n", x, sample); //Output CSV
+  static int x, sample, bpm;
+
+  if(time_diff_micro(&t_curr, &signal->last) >= CD_PERIOD_MICRO)
+  {
+    signal->last = t_curr;
+    //x = time_diff_micro(&t_curr, &start);
+    sample = adc_read_channel_raw(ADC0);
+    signal->sum_samples += sample;
+    signal->sum_samples++;
+    signal->c_sample++;
+    //printf("%d,%d\n", x, signal->s_buff[signal->idx_sample]); //Output CSV
+  }
+
+  //Insufficient samples
+  if(signal->c_sample < ECG_MEASUREMENT_BUFF) {return;}
+
+  //calculate the threshold
+  signal->threshold = (signal->sum_samples / signal->c_sample) + 3e4;
+
+  if (sample > signal->threshold && signal->state == 0)
+  {
+    signal->state = 1;
+    if (signal->c_event >= 1)
+    {
+        //calculate period
+        signal->c_event = 1;
+        bpm = 60 * (500 / time_diff_micro(&t_curr, &signal->pulse.events[0].time));
+
+        x = time_diff_micro(&t_curr, &start);
+        printf("%d,%d,%d\n", x, signal->s_buff[signal->idx_sample], signal->threshold); //Output CSV
+
+        //swap
+        signal->pulse.events[0].time = signal->pulse.events[1].time;
+        bpm_index = bpm_index + 1;
+    }
+    else
+    {
+      signal->pulse.events[signal->c_event].time = t_curr; 
+      signal->c_event = 1;
+    }
+
+    if (sample < signal->threshold && signal->state == 1)
+    {
+      signal->state = 0;
+    }
+  }
 }
 
 void process_square(struct timeval t_curr, Signal *signal)
@@ -325,27 +382,6 @@ void process_square(struct timeval t_curr, Signal *signal)
   return;
 }
 
-void process_input(Signal *signal)
-{
-  struct timeval t_curr = {0, 0};
-  gettimeofday(&t_curr, NULL);
-  
-
-  //ECG MODE
-  if(Cradle_Mode == ECG || Cradle_Mode == ECG_VARIATION)
-  {
-    process_ecg(t_curr, signal);
-  }
-
-  //SQUARE MODE
-  if(Cradle_Mode == SQUARE || Cradle_Mode == SQUARE_VARIATION)
-  {
-    process_square(t_curr, signal);
-  }
-
-  fflush(NULL);
-}
-
 void* fnc_output_thread(void* arg)
 {
     struct thread_arg* thrd_args = arg;
@@ -441,10 +477,7 @@ int main(void) {
   signal.curr_pulse = 0;
   signal.period = 0;
   signal.idx_reading = 0;
-  for (int i = 0; i < MIN_READINGS; i++)
-  {
-      signal.readings[i] = 0;
-  }
+  memset(signal.readings, 0, sizeof(signal.readings));
 
   for (int i = 0; i < PULSE_COUNT; i++)
   {
@@ -453,6 +486,25 @@ int main(void) {
     signal.pulses[0].events[1] = (Event){NONE, {0,0}};
   }
   //---END Signal---
+  //---ECG struct---
+
+  Ecg_signal ecg_signal;
+  ecg_signal.state = 0;
+  ecg_signal.threshold = 0;
+  ecg_signal.c_sample = 0;
+  ecg_signal.sum_samples = 0;
+  ecg_signal.idx_sample = 0;
+  ecg_signal.idx_reading = 0;
+  ecg_signal.c_event = 0;
+  
+  memset(ecg_signal.s_buff, 0, sizeof(ecg_signal.s_buff));
+  memset(ecg_signal.readings, 0, sizeof(ecg_signal.readings));
+
+  ecg_signal.pulse.valid = 0;
+  ecg_signal.pulse.events[0] = (Event){NONE, {0,0}};
+  ecg_signal.pulse.events[1] = (Event){NONE, {0,0}};
+
+  //---END ECG----
   //---END Vars---
 
   //Threading
@@ -470,6 +522,9 @@ int main(void) {
   //PLOTTING DEBUG
   gettimeofday(&start, NULL);
   Cradle_Mode = ECG;
+
+  //TIME KEEPING
+  struct timeval t_curr = {0, 0};
 
   while (get_switch_state(1))
   { 
@@ -490,7 +545,20 @@ int main(void) {
     if(Cradle_Mode > 3) {Cradle_Mode = 3;}
     atomic_store(&cradle_atom, Cradle_Mode);
 
-    process_input(&signal);
+    gettimeofday(&t_curr, NULL);
+    
+    //ECG MODE
+    if(Cradle_Mode == ECG || Cradle_Mode == ECG_VARIATION)
+    {
+      process_ecg(t_curr, &ecg_signal);
+    }
+
+    //SQUARE MODE
+    if(Cradle_Mode == SQUARE || Cradle_Mode == SQUARE_VARIATION)
+    {
+      process_square(t_curr, &signal);
+    }
+    fflush(NULL);
 
     //Mode depended pulse handeling
     if(Cradle_Mode == SQUARE || Cradle_Mode == ECG)

@@ -32,6 +32,7 @@
         "type_traits": "c",
         "utility": "c",
         "variant": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "unistd.h": "c"
     }
 }

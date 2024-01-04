@@ -29,6 +29,8 @@
 #include <libcom.h>
 #include <pthread.h>
 #include <stdatomic.h>
+#include <math.h>
+#include <limits.h>
 
 #define DEBUG
 
@@ -41,8 +43,7 @@
 #define JOIN_PIN IO_AR9
 
 #define PULSE_COUNT 2
-#define MIN_READINGS 3
-#define MIN_READINGS_VAR 10
+#define MAX_BPM_WINDOW 32
 
 //Sampeling 
 #define CD_PERIOD_MICRO 2000
@@ -80,37 +81,42 @@ typedef struct _pulse_
   int valid;
 } Pulse;
 
+typedef struct _conditioning_
+{
+  int median_window[MAX_BPM_WINDOW];
+  int c_median;
+  int median;
+} Filter;
+
 typedef struct _signal_
 {
+  Filter filter;
   Pulse pulses[PULSE_COUNT]; //Falling Edge timestamps
   int state, curr_pulse;
   int period;
-  int readings[MIN_READINGS_VAR];
-  int idx_reading;
 } Signal;
 
 typedef struct _ecg_data
 {
+  Filter filter;
   struct timeval last;
-  int s_buff[ECG_BUFFER_SIZE]; //Samples
-  int readings[ECG_MEASUREMENT_BUFF]; //measurements
-  int threshold, state, idx_reading, idx_sample, c_event;
+  int threshold, state, c_event;
   int c_sample;
-  long int sum_samples;
+  unsigned long sum_samples;
   Pulse pulse;
 } Ecg_signal;
 
 //Globals
 //FLAGS
-char *Cradle_Modes_Str[] = {"Square     ", "ECG        ", "Square Vari", "ECG Vari   "};
-enum CRADLE_MODES {SQUARE, ECG, SQUARE_VARIATION, ECG_VARIATION};
+char *Cradle_Modes_Str[] = {"Square     ", "ECG        "};
+enum CRADLE_MODES {SQUARE, ECG};
 static int Cradle_Mode = 0;
 
 //PERIOD
 struct timeval start;
 int Glitch_Period = GLITCH_PERIOD_30;
 atomic_int cradle_atom;
-atomic_int period_atom;
+atomic_int bpm_atom;
 atomic_bool output_kalive;
 
 //Get the truth value of the sensor
@@ -122,32 +128,20 @@ bool get_sensor_state()
 }
 
 //lil sorter
-void sort_readings(int data[], int length)
+int int_compare(const void* numA, const void* numB)
 {
-  int swaps = 1;
-  int buffer;
+    const int* num1 = (const int*)numA;
+    const int* num2 = (const int*)numB;
 
-  //If we preformend any swaps -> run sort again
-  //Sorting stops when we perform no swaps anymore. 
-  while (swaps > 0)  
-  {
-    swaps = 0;
-    for (int i = 0; i < length - 1; i++)
-    {
-
-      if(data[i] >= data[i + 1])
-        continue;
-
-      //Copy element A into storage
-      //Set element A to equal B
-      //Restore copy of A into B
-      buffer = data[i];
-      data[i] = data[i + 1];
-      data[i + 1] = buffer;
-
-      swaps++;
+    if (*num1 > *num2) {
+        return 1;
     }
-  }
+    else {
+        if (*num1 == *num2)
+            return 0;
+        else
+            return -1;
+    }
 }
 
 //Calculate microseconds period from rise and fall stamps
@@ -196,35 +190,82 @@ void validate_pulse_square(Signal *signal, Pulse *pulse)
   //Prevent Strage periods from leaking through
   if(delta_micro < MAX_PERIOD_SQUARE && delta_micro > MIN_PERIOD_SQUARE)
   {
-    if(Cradle_Mode == SQUARE)
-    {
-      if(signal->idx_reading >= MIN_READINGS)
-      {
-        return;//Prevent out-of-bounds
-      }
-      signal->readings[signal->idx_reading] = delta_micro;
-      signal->idx_reading++;
-      return;
-    }
-
-    if(Cradle_Mode == SQUARE_VARIATION)
-    {
-      if(signal->idx_reading >= MIN_READINGS)
-      {
-        signal->idx_reading = 0;
-      }
-      signal->readings[signal->idx_reading] = delta_micro;
-      signal->idx_reading++;
-      return;
-    }
-
+    return; //TODO 
   }
 }
 
 
+//FILTERING
+void filter_clear(Filter* filter)
+{
+  memset(filter, 0, sizeof(Filter));
+}
+int filter_median(Filter* filter)
+{
+  qsort(filter->median_window, filter->c_median+1, sizeof(int), int_compare);
+  return filter->median_window[filter->c_median / 2];
+}
+void filter_resolve(Filter* filter)
+{
+  //Calculate new filter median and compare to current median
+  //Clear the filter and only if we had equal medians -> update
+  int new_median = filter_median(filter);
+  if(filter->median == new_median)
+  {
+    atomic_store(&bpm_atom, new_median);
+  }
+  filter_clear(filter);
+  filter->median = new_median;
+}
+
+void filter_push(int bpm, Filter* filter)
+{
+  static int dyn_win;
+  filter->median_window[filter->c_median] = round(bpm / 20) * 20;
+  
+  //Filtering below 80 BPM is not required
+  //Push these values directly
+  if(filter->median_window[filter->c_median] <= 80)
+  {
+    atomic_store(&bpm_atom, filter->median_window[filter->c_median]);
+    filter_clear(filter);
+  }
+
+  if(filter->c_median == 0)
+  {
+    //Calculate desired dynamic window based on BPM
+    //Higher bpm -> more issues -> more measurements
+    //Enforce result as odd number for window centering
+    dyn_win = 2*floor(pow(2.0f, (filter->median_window[0] / 50.0))/2.0);
+    dyn_win = MIN(dyn_win,13);
+  }
+
+  printf("[");
+  for (int i = 0; i < MAX_BPM_WINDOW; i++)
+  {
+    printf("%3d ", filter->median_window[i]);
+  }
+  printf("]\n Median: %d -- BPM: %d\n", filter->median, atomic_load(&bpm_atom));
+
+
+  printf("C: %d --- Dyn: %d\n", filter->c_median, dyn_win);
+  //Clear the filter and process data when:
+  //  * Filter is full
+  //  * We risk an overflow
+  if ( !(filter->c_median >= dyn_win || filter->c_median >= MAX_BPM_WINDOW-1) )
+  {
+    filter->c_median++;
+    return;
+  }
+  //Process the filter
+  filter_resolve(filter);
+  
+}
+
 void process_ecg(struct timeval t_curr, Ecg_signal *signal)
 {
-  static int x, sample, bpm;
+  static int bpm, sample, c_event;
+  static struct timeval events[2] = {{0, 0}, {0, 0}};
 
   if(time_diff_micro(&t_curr, &signal->last) >= CD_PERIOD_MICRO)
   {
@@ -232,43 +273,54 @@ void process_ecg(struct timeval t_curr, Ecg_signal *signal)
     //x = time_diff_micro(&t_curr, &start);
     sample = adc_read_channel_raw(ADC0);
     signal->sum_samples += sample;
-    signal->sum_samples++;
     signal->c_sample++;
     //printf("%d,%d\n", x, signal->s_buff[signal->idx_sample]); //Output CSV
-  }
-
+  } else {return;};
+  
   //Insufficient samples
   if(signal->c_sample < ECG_MEASUREMENT_BUFF) {return;}
+  
+  //Prevent Overflows of the sum_samples
+  //Probably terriable but eh.
+  if(signal->sum_samples > INT_MAX)
+  {
+    signal->sum_samples = signal->sum_samples / 2;
+    signal->c_sample = signal->c_sample / 2;
+  }
 
   //calculate the threshold
   signal->threshold = (signal->sum_samples / signal->c_sample) + 3e4;
-
+  //printf("Threshold: %d  Sample: %d \n", signal->threshold, sample);
   if (sample > signal->threshold && signal->state == 0)
   {
     signal->state = 1;
-    if (signal->c_event >= 1)
+    events[c_event] = t_curr;
+    gpio_set_level(TEST_PIN, GPIO_LEVEL_HIGH);
+
+    if (c_event >= 1)
     {
         //calculate period
-        signal->c_event = 1;
-        bpm = 60 * (500 / time_diff_micro(&t_curr, &signal->pulse.events[0].time));
+        c_event = 1;
+        bpm = round(60.0 * (1000000.0 / (double)time_diff_micro(&events[0], &events[1]))) + 20;
 
-        x = time_diff_micro(&t_curr, &start);
-        printf("%d,%d,%d\n", x, signal->s_buff[signal->idx_sample], signal->threshold); //Output CSV
+        //x = time_diff_micro(&t_curr, &start);
+        //printf("%f,%d,%d,%d\n", bpm, x, sample, signal->threshold); //Output CSV
+        //fflush(NULL);
+
+        filter_push(bpm, &signal->filter);
 
         //swap
-        signal->pulse.events[0].time = signal->pulse.events[1].time;
-        bpm_index = bpm_index + 1;
+        events[0] = events[1];
     }
     else
     {
-      signal->pulse.events[signal->c_event].time = t_curr; 
-      signal->c_event = 1;
+      c_event = 1;
     }
-
-    if (sample < signal->threshold && signal->state == 1)
-    {
-      signal->state = 0;
-    }
+  }
+  if (sample < signal->threshold && signal->state == 1)
+  {
+    signal->state = 0;
+    gpio_set_level(TEST_PIN, GPIO_LEVEL_LOW);
   }
 }
 
@@ -392,38 +444,25 @@ void* fnc_output_thread(void* arg)
     //com_put(&com, HEARTBEAT, data.bpm);
     //com_get(&com, HEARTBEAT, &data.bpm);
     
-    double period;
     struct timespec t_sleep = {0, 10000};
     int mode = atomic_load(&cradle_atom);
-    double frequency;
     int bpm;
 
     while(atomic_load(&output_kalive))
     {
-      double new_period = atomic_load(&period_atom);
-      if(new_period == period && atomic_load(&cradle_atom) == mode)
+      int new_bpm = atomic_load(&bpm_atom);
+      if(new_bpm == bpm && atomic_load(&cradle_atom) == mode)
       {
         nanosleep(&t_sleep, NULL); //sleep in microseconds
         continue;
       }
       mode = atomic_load(&cradle_atom);
-      period = new_period;
-      if(period == 0)
-      {
-        frequency = 0;
-        bpm = 0;
-      } else 
-      {
-        frequency = (500.0) / period;
-        bpm = 60 * frequency; //150ms -> 200  // 1000ms -> 30  //500ms -> 60
-      }
+      bpm = new_bpm;
 
-      printf("---------PERIOD: %f ---------\n", period);
       ui_rprintf(ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, Cradle_Modes_Str[Cradle_Mode]);
-      ui_rprintf(ui, 6, "%qFrequency: %q%f", RGB_PURPLE, RGB_GREEN, frequency);
-      ui_rprintf(ui, 7, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, bpm);
+      ui_rprintf(ui, 6, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, bpm);
 
-      ui_rprintf(ui, 9, "%qGlitch Period: %q%d", RGB_YELLOW, RGB_RED, Glitch_Period);
+      ui_rprintf(ui, 8, "%qGlitch Period: %q%d", RGB_YELLOW, RGB_RED, Glitch_Period);
 
 
       ui_draw(ui);
@@ -472,46 +511,20 @@ int main(void) {
   adc_init();
 
   //---Signal struct---
-  Signal signal;
-  signal.state = 0;
-  signal.curr_pulse = 0;
-  signal.period = 0;
-  signal.idx_reading = 0;
-  memset(signal.readings, 0, sizeof(signal.readings));
-
-  for (int i = 0; i < PULSE_COUNT; i++)
-  {
-    signal.pulses[i].valid = 0;
-    signal.pulses[0].events[0] = (Event){NONE, {0,0}};
-    signal.pulses[0].events[1] = (Event){NONE, {0,0}};
-  }
+  Signal signal = {};
   //---END Signal---
   //---ECG struct---
 
-  Ecg_signal ecg_signal;
-  ecg_signal.state = 0;
-  ecg_signal.threshold = 0;
-  ecg_signal.c_sample = 0;
-  ecg_signal.sum_samples = 0;
-  ecg_signal.idx_sample = 0;
-  ecg_signal.idx_reading = 0;
-  ecg_signal.c_event = 0;
-  
-  memset(ecg_signal.s_buff, 0, sizeof(ecg_signal.s_buff));
-  memset(ecg_signal.readings, 0, sizeof(ecg_signal.readings));
-
-  ecg_signal.pulse.valid = 0;
-  ecg_signal.pulse.events[0] = (Event){NONE, {0,0}};
-  ecg_signal.pulse.events[1] = (Event){NONE, {0,0}};
+  Ecg_signal ecg_signal = {};
 
   //---END ECG----
   //---END Vars---
 
   //Threading
-  atomic_init(&period_atom, 0);
+  atomic_init(&bpm_atom, 0);
   atomic_init(&output_kalive, true);
   atomic_init(&cradle_atom, 0);
-  signal.period = atomic_load(&period_atom);
+  signal.period = atomic_load(&bpm_atom);
   struct thread_arg thrd_args = {&ui, &com};
   pthread_t output_thread;
   pthread_create(&output_thread, NULL, &fnc_output_thread, &thrd_args);
@@ -547,57 +560,22 @@ int main(void) {
 
     gettimeofday(&t_curr, NULL);
     
+
     //ECG MODE
-    if(Cradle_Mode == ECG || Cradle_Mode == ECG_VARIATION)
+    if(Cradle_Mode == ECG)
     {
       process_ecg(t_curr, &ecg_signal);
     }
 
     //SQUARE MODE
-    if(Cradle_Mode == SQUARE || Cradle_Mode == SQUARE_VARIATION)
+    if(Cradle_Mode == SQUARE)
     {
       process_square(t_curr, &signal);
     }
     fflush(NULL);
 
-    //Mode depended pulse handeling
-    if(Cradle_Mode == SQUARE || Cradle_Mode == ECG)
-    {
-      if(signal.idx_reading >= MIN_READINGS)
-      {
-        signal.idx_reading = 0;
-        sort_readings(signal.readings, MIN_READINGS);
-        signal.period = signal.readings[MIN_READINGS / 2] / 1000.0;
-        atomic_store(&period_atom, signal.period);
-      }
-      continue;
-    }
+    //Run pulses through the clamp filtering
 
-    //Try
-    /*
-      Mean of uneven []
-      Average []
-      Smallest distance -> isn't that just mean?? []
-      f(mean, average) []
-      Or maybe pick at random, no clue, statistics was 5 years ago and I am a melon. []
-    */
-    if(Cradle_Mode == SQUARE_VARIATION || Cradle_Mode == ECG_VARIATION)
-    {
-      //Wait for a full dataset
-      if(signal.idx_reading >= MIN_READINGS_VAR)
-      {
-      
-        //Sort
-        sort_readings(signal.readings, MIN_READINGS_VAR);
-
-        //Take the mean -> center index of uneven array
-        signal.period = signal.readings[0];
-        printf("---------PERIOD: %d ---------\n", signal.period);
-        fflush(NULL);
-        atomic_store(&period_atom, signal.period);
-      }
-      continue;
-    }
   }
 
   //threading 

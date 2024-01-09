@@ -49,6 +49,7 @@
 #define CD_PERIOD_MICRO 2000
 #define ECG_BUFFER_SIZE 128
 #define ECG_MEASUREMENT_BUFF 32
+#define ECG_GLITCH_MOV_WINDOW 4
 
 //Times are in microseconds
 #define MAX_PERIOD_SQUARE (1050 * 1000) //Maximum width of a SQUARE period
@@ -108,8 +109,8 @@ typedef struct _ecg_data
 
 //Globals
 //FLAGS
-char *Cradle_Modes_Str[] = {"Square     ", "ECG        "};
-enum CRADLE_MODES {SQUARE, ECG};
+char *Cradle_Modes_Str[] = {"Square     ", "Sqr Glitch", "ECG        ", "ECG Glitch"};
+enum CRADLE_MODES {SQUARE, SQUARE_GLITCH, ECG, ECG_GLITCH};
 static int Cradle_Mode = 0;
 
 //PERIOD
@@ -187,7 +188,7 @@ void validate_pulse_square(Signal *signal, Pulse *pulse)
 
   int delta_micro = time_diff_micro(&pulse->events[0].time, &pulse->events[1].time);
   clear_pulse(pulse);
-  //Prevent Strage periods from leaking through
+  //Prevent Strange periods from leaking through
   if(delta_micro < MAX_PERIOD_SQUARE && delta_micro > MIN_PERIOD_SQUARE)
   {
     return; //TODO 
@@ -265,6 +266,7 @@ void filter_push(int bpm, Filter* filter)
 void process_ecg(struct timeval t_curr, Ecg_signal *signal)
 {
   static int bpm, sample, c_event;
+  static int movmean[ECG_GLITCH_MOV_WINDOW], p_mov;
   static struct timeval events[2] = {{0, 0}, {0, 0}};
 
   if(time_diff_micro(&t_curr, &signal->last) >= CD_PERIOD_MICRO)
@@ -288,8 +290,47 @@ void process_ecg(struct timeval t_curr, Ecg_signal *signal)
     signal->c_sample = signal->c_sample / 2;
   }
 
-  //calculate the threshold
-  signal->threshold = (signal->sum_samples / signal->c_sample) + 3e4;
+  //Split threshold calcuation and add filtering for ECG-Glitch
+  if(Cradle_Mode == ECG_GLITCH)
+  {
+    int mean = (signal->sum_samples / signal->c_sample);
+    int cuttoff = mean + 1e4;
+    signal->threshold =  mean + 8e3;
+
+    //Focus on the T wave
+    //-> Discard peaks and valley's
+    if (sample > cuttoff || sample < 3e4) { return; }
+
+    //Take the moving mean -> window size ECG_GLITCH_MOV_WINDOW
+    if(p_mov >= ECG_GLITCH_MOV_WINDOW)
+    {
+      //Take total and shift buffer
+      int mean_val = 0;
+      for(int i = 0; i < ECG_GLITCH_MOV_WINDOW-1; i++)
+      {
+          mean_val += movmean[i+1];
+          movmean[i] = movmean[i+1];
+      }
+      movmean[ECG_GLITCH_MOV_WINDOW-1] = sample;
+      mean_val += sample;
+
+      //Take the mean as sample value
+      sample = mean_val / ECG_GLITCH_MOV_WINDOW;
+
+    } else {
+      //Fill buffer first
+      movmean[p_mov] = sample;
+      p_mov++;
+      return;
+    }
+
+  } else {
+    //Reset the GLITCH variables
+    p_mov = 0;
+
+    signal->threshold = (signal->sum_samples / signal->c_sample) + 3e4;
+  }
+
   //printf("Threshold: %d  Sample: %d \n", signal->threshold, sample);
   if (sample > signal->threshold && signal->state == 0)
   {
@@ -301,7 +342,7 @@ void process_ecg(struct timeval t_curr, Ecg_signal *signal)
     {
         //calculate period
         c_event = 1;
-        bpm = round(60.0 * (1000000.0 / (double)time_diff_micro(&events[0], &events[1]))) + 20;
+        bpm = round(60.0 * (1000000.0 / (double)time_diff_micro(&events[0], &events[1])));// + 20;
 
         //x = time_diff_micro(&t_curr, &start);
         //printf("%f,%d,%d,%d\n", bpm, x, sample, signal->threshold); //Output CSV
@@ -441,16 +482,15 @@ void* fnc_output_thread(void* arg)
     com_t* com = thrd_args->com;
 
     //outputs
-    //com_put(&com, HEARTBEAT, data.bpm);
-    //com_get(&com, HEARTBEAT, &data.bpm);
+
     
     struct timespec t_sleep = {0, 10000};
-    int mode = atomic_load(&cradle_atom);
-    int bpm;
+    int mode = -1;
+    uint32_t bpm;
 
     while(atomic_load(&output_kalive))
     {
-      int new_bpm = atomic_load(&bpm_atom);
+      uint32_t new_bpm = atomic_load(&bpm_atom);
       if(new_bpm == bpm && atomic_load(&cradle_atom) == mode)
       {
         nanosleep(&t_sleep, NULL); //sleep in microseconds
@@ -458,6 +498,9 @@ void* fnc_output_thread(void* arg)
       }
       mode = atomic_load(&cradle_atom);
       bpm = new_bpm;
+
+      com_put(com, HEARTBEAT, bpm);
+      com_get(com, HEARTBEAT, &bpm);
 
       ui_rprintf(ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, Cradle_Modes_Str[Cradle_Mode]);
       ui_rprintf(ui, 6, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, bpm);
@@ -562,13 +605,13 @@ int main(void) {
     
 
     //ECG MODE
-    if(Cradle_Mode == ECG)
+    if(Cradle_Mode == ECG || Cradle_Mode == ECG_GLITCH)
     {
       process_ecg(t_curr, &ecg_signal);
     }
 
     //SQUARE MODE
-    if(Cradle_Mode == SQUARE)
+    if(Cradle_Mode == SQUARE || Cradle_Mode == SQUARE_GLITCH)
     {
       process_square(t_curr, &signal);
     }

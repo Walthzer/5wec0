@@ -26,11 +26,11 @@
 #define PWM_PERIOD 100000
 
 typedef struct _data_ {
-  int inputs[2];
-  int freq_pwm, ampl_pwm;
+  uint16_t inputs[2];
+  uint16_t freq_pwm, ampl_pwm;
 } Data;
 
-int clamp_1_5(int *val)
+uint16_t clamp_1_5(uint16_t *val)
 {
   *val = *val > 5 ? 5 : *val;
   *val = *val < 1 ? 1 : *val;
@@ -38,19 +38,18 @@ int clamp_1_5(int *val)
   return *val;
 }
 
-int dutycycle_percent(int index)
+uint16_t dutycycle_percent(uint16_t index)
 {
-  static const int lookup[] = {5, 20, 40, 60, 80};
+  static const uint16_t lookup[] = {5, 20, 40, 60, 80};
 
   //Clamp index between 1 and 5
   clamp_1_5(&index);
 
   return (lookup[index - 1]);
 }
-int dutycycle_period(int index)
+uint32_t dutycycle_period(uint16_t index)
 {
-  float decimal = 0.01 * dutycycle_percent(index);
-
+  float decimal = 0.01 * (int)dutycycle_percent(index);
   return (PWM_PERIOD - (PWM_PERIOD * decimal));
 }
 
@@ -67,13 +66,22 @@ int main(void) {
   ui_rcenter(&ui, 1, true);
   ui_rprintf(&ui, 1, "%q%w%tMotors Drivers", RGB_WHITE, RGB_ORANGE, COMIC);
   //interface layout
-  //Inputs: Frequency and Amplitude index
-  ui_rprintf(&ui, 2, "%q--Inputs--", RGB_CYAN);
+  //Setup: Using com or buttons
+  ui_rprintf(&ui, 2, "%q---Setup--", RGB_CYAN);
   ui_rcenter(&ui, 2, true);
+  //Inputs: Frequency and Amplitude index
+  ui_rprintf(&ui, 4, "%q--Inputs--", RGB_CYAN);
+  ui_rcenter(&ui, 4, true);
   //Outputs: Frequency PWM and Amplitude PWM
-  ui_rprintf(&ui, 5, "%q--Outputs--", RGB_CYAN);
-  ui_rcenter(&ui, 5, true);
+  ui_rprintf(&ui, 7, "%q--Outputs--", RGB_CYAN);
+  ui_rcenter(&ui, 7, true);
   ui_draw(&ui);
+
+  //Init COM
+  com_t com;
+  com_init(&com, MOTOR);
+  //Start at 5, 5
+  com_putm(&com, MOTOR, 5, 5);
 
   //Init inputs
   switches_init();
@@ -87,9 +95,11 @@ int main(void) {
   pwm_init(PWM0, PWM_PERIOD); //1Khz -> nanoseconds
   pwm_init(PWM1, PWM_PERIOD); //1Khz -> nanoseconds
 
-  int state = 0;
-  int button0 = get_button_state(0);
-  int button1 = get_button_state(1);
+  uint16_t state = 0;
+  uint16_t button0 = get_button_state(0);
+  uint16_t button1 = get_button_state(1);
+  uint16_t button2 = get_button_state(2);
+  uint16_t use_com = 1;
   Data data = {{1, 1}, 0, 0};
   while (get_switch_state(1))
   {
@@ -106,13 +116,27 @@ int main(void) {
       data.inputs[get_switch_state(0)]+= state;
       button1 = state;
     }
+    state = get_button_state(2);
+    if(state != button2)
+    {
+      use_com += state;
+      if(use_com > 1) {use_com = 0;}
+      button2 = state;
+    }
     //Reset counter
     if(get_button_state(3))
       data.inputs[get_switch_state(0)] = 1;
 
+    //COM
+    if(use_com)
+    {
+      com_getm(&com, MOTOR, &data.inputs[0], &data.inputs[1]);
+    }
+    ui_rprintf(&ui, 3, "%qUse COM: %q%s", RGB_ORANGE, use_com ? RGB_GREEN : RGB_RED, use_com ? "Yes" : "No");
+
     //inputs
-    ui_rprintf(&ui, 3, "%qFrequency:[1-5]: %q%d", RGB_PURPLE, get_switch_state(0) ? RGB_WHITE : RGB_GREEN, clamp_1_5(&data.inputs[0]));
-    ui_rprintf(&ui, 4, "%qAmplitude:[1-5]: %q%d", RGB_YELLOW, get_switch_state(0) ? RGB_GREEN : RGB_WHITE, clamp_1_5(&data.inputs[1]));
+    ui_rprintf(&ui, 5, "%qFrequency:[1-5]: %q%d", RGB_PURPLE, get_switch_state(0) ? RGB_WHITE : RGB_GREEN, clamp_1_5(&data.inputs[0]));
+    ui_rprintf(&ui, 6, "%qAmplitude:[1-5]: %q%d", RGB_YELLOW, get_switch_state(0) ? RGB_GREEN : RGB_WHITE, clamp_1_5(&data.inputs[1]));
 
 
     //Adjust PWM outputs
@@ -130,8 +154,8 @@ int main(void) {
     }
 
     //outputs
-    ui_rprintf(&ui, 6, "%qFreq_Duty[0-90]: %q%d", RGB_PURPLE, get_switch_state(0) ? RGB_WHITE : RGB_GREEN, dutycycle_percent(data.freq_pwm));
-    ui_rprintf(&ui, 7, "%qAmpl_Duty[0-90]: %q%d", RGB_YELLOW, get_switch_state(0) ? RGB_GREEN : RGB_WHITE, dutycycle_percent(data.ampl_pwm));
+    ui_rprintf(&ui, 8, "%qFreq_Duty[0-90]: %q%d", RGB_PURPLE, get_switch_state(0) ? RGB_WHITE : RGB_GREEN, dutycycle_percent(data.freq_pwm));
+    ui_rprintf(&ui, 9, "%qAmpl_Duty[0-90]: %q%d", RGB_YELLOW, get_switch_state(0) ? RGB_GREEN : RGB_WHITE, dutycycle_percent(data.ampl_pwm));
 
     ui_draw(&ui);
   }

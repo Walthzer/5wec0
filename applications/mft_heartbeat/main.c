@@ -3,7 +3,7 @@
  *
  *  Interface:
  *  Switch 1 -> Exits the main loop
- *  Switch 0:
+ *  Switch 0 -> Toggle Filter Skip
  *  Button 3: NC
  *  Button 2: NC
  *  Button 1: Change mode down
@@ -158,43 +158,6 @@ int time_diff_micro(struct timeval *a, struct timeval *b) {
     return -delta;
   return delta;
 }
-bool within_range(int a, int b, int range)
-{
-  //printf("In range?:\n -> a: %d\n -> b: %d +- %d\n -> y/n: %d", a, b, range, (a < b+range) && (a > b-range));
-  return ((a < b+range) && (a > b-range));
-}
-int pulse_full(Pulse *pulse)
-{
-  return (pulse->events[0].type != NONE && pulse->events[1].type != NONE);
-}
-void clear_pulse_event(Event* event)
-{
-  event->type = NONE;
-  event->time = (struct timeval){0, 0};
-}
-void clear_pulse(Pulse* pulse)
-{
-  pulse->valid = 0;
-  clear_pulse_event(&pulse->events[0]);
-  clear_pulse_event(&pulse->events[1]);
-}
-void validate_pulse_square(Signal *signal, Pulse *pulse)
-{
-  if(!pulse_full(pulse))
-  {
-    pynq_error("Trying to validate a non-full pulse??");
-    return;
-  }
-
-  int delta_micro = time_diff_micro(&pulse->events[0].time, &pulse->events[1].time);
-  clear_pulse(pulse);
-  //Prevent Strange periods from leaking through
-  if(delta_micro < MAX_PERIOD_SQUARE && delta_micro > MIN_PERIOD_SQUARE)
-  {
-    return; //TODO 
-  }
-}
-
 
 //FILTERING
 void filter_clear(Filter* filter)
@@ -222,14 +185,16 @@ void filter_resolve(Filter* filter)
 void filter_push(int bpm, Filter* filter)
 {
   static int dyn_win;
-  filter->median_window[filter->c_median] = round(bpm / 20) * 20;
+  bpm = round(bpm / 20.0) * 20;
+  filter->median_window[filter->c_median] = bpm;
   
   //Filtering below 80 BPM is not required
   //Push these values directly
-  if(filter->median_window[filter->c_median] <= 80)
+  if(bpm <= 80 && get_switch_state(0))
   {
-    atomic_store(&bpm_atom, filter->median_window[filter->c_median]);
+    atomic_store(&bpm_atom, bpm);
     filter_clear(filter);
+    filter->median = bpm;
   }
 
   if(filter->c_median == 0)
@@ -263,6 +228,45 @@ void filter_push(int bpm, Filter* filter)
   
 }
 
+
+bool within_range(int a, int b, int range)
+{
+  //printf("In range?:\n -> a: %d\n -> b: %d +- %d\n -> y/n: %d", a, b, range, (a < b+range) && (a > b-range));
+  return ((a < b+range) && (a > b-range));
+}
+int pulse_full(Pulse *pulse)
+{
+  return (pulse->events[0].type != NONE && pulse->events[1].type != NONE);
+}
+void clear_pulse_event(Event* event)
+{
+  event->type = NONE;
+  event->time = (struct timeval){0, 0};
+}
+void clear_pulse(Pulse* pulse)
+{
+  pulse->valid = 0;
+  clear_pulse_event(&pulse->events[0]);
+  clear_pulse_event(&pulse->events[1]);
+}
+void validate_pulse_square(Signal *signal, Pulse *pulse)
+{
+  if(!pulse_full(pulse))
+  {
+    pynq_error("Trying to validate a non-full pulse??");
+    return;
+  }
+
+  int delta_micro = time_diff_micro(&pulse->events[0].time, &pulse->events[1].time);
+  clear_pulse(pulse);
+  //Prevent Strange periods from leaking through
+  if(delta_micro < MAX_PERIOD_SQUARE && delta_micro > MIN_PERIOD_SQUARE)
+  {
+    int bpm = round(60.0 * (500000.0 / (double)delta_micro));
+    filter_push(bpm, &signal->filter);
+  }
+}
+
 void process_ecg(struct timeval t_curr, Ecg_signal *signal)
 {
   static int bpm, sample, c_event;
@@ -286,6 +290,7 @@ void process_ecg(struct timeval t_curr, Ecg_signal *signal)
   //Probably terriable but eh.
   if(signal->sum_samples > INT_MAX)
   {
+    printf("OVERFLOW\n");
     signal->sum_samples = signal->sum_samples / 2;
     signal->c_sample = signal->c_sample / 2;
   }
@@ -294,7 +299,7 @@ void process_ecg(struct timeval t_curr, Ecg_signal *signal)
   if(Cradle_Mode == ECG_GLITCH)
   {
     int mean = (signal->sum_samples / signal->c_sample);
-    int cuttoff = mean + 1e4;
+    int cuttoff = mean + 13e3;
     signal->threshold =  mean + 8e3;
 
     //Focus on the T wave
@@ -342,7 +347,7 @@ void process_ecg(struct timeval t_curr, Ecg_signal *signal)
     {
         //calculate period
         c_event = 1;
-        bpm = round(60.0 * (1000000.0 / (double)time_diff_micro(&events[0], &events[1])));// + 20;
+        bpm = round(60.0 * (1000000.0 / (double)time_diff_micro(&events[0], &events[1])));
 
         //x = time_diff_micro(&t_curr, &start);
         //printf("%f,%d,%d,%d\n", bpm, x, sample, signal->threshold); //Output CSV
@@ -405,7 +410,6 @@ void process_square(struct timeval t_curr, Signal *signal)
 
   if(event == RISE)
   {
-    printf("RISE");
     pulse->events[0].type = event;
     pulse->events[0].time = t_curr;
 
@@ -416,7 +420,6 @@ void process_square(struct timeval t_curr, Signal *signal)
 
   if(event == FALL)
   {
-    printf("FALL");
     pulse->events[1].type = event;
     pulse->events[1].time = t_curr;
 
@@ -462,7 +465,6 @@ void process_square(struct timeval t_curr, Signal *signal)
       }
       //Join pulses
       //Set latest event into last event of pulse 0.
-      printf("JOIN");
       gpio_set_level(JOIN_PIN, GPIO_LEVEL_LOW);
       signal->pulses[0].events[1] = signal->pulses[1].events[1];
       clear_pulse(&signal->pulses[1]);
@@ -486,16 +488,18 @@ void* fnc_output_thread(void* arg)
     
     struct timespec t_sleep = {0, 10000};
     int mode = -1;
+    int low_skip = -1;
     uint32_t bpm;
 
     while(atomic_load(&output_kalive))
     {
       uint32_t new_bpm = atomic_load(&bpm_atom);
-      if(new_bpm == bpm && atomic_load(&cradle_atom) == mode)
+      if(new_bpm == bpm && atomic_load(&cradle_atom) == mode && low_skip == get_switch_state(0))
       {
         nanosleep(&t_sleep, NULL); //sleep in microseconds
         continue;
       }
+      low_skip = get_switch_state(0);
       mode = atomic_load(&cradle_atom);
       bpm = new_bpm;
 
@@ -503,9 +507,9 @@ void* fnc_output_thread(void* arg)
       com_get(com, HEARTBEAT, &bpm);
 
       ui_rprintf(ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, Cradle_Modes_Str[Cradle_Mode]);
-      ui_rprintf(ui, 6, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, bpm);
-
-      ui_rprintf(ui, 8, "%qGlitch Period: %q%d", RGB_YELLOW, RGB_RED, Glitch_Period);
+      ui_rprintf(ui, 4, "%qFilter Skip: %q%s", RGB_ORANGE, get_switch_state(0) ? RGB_GREEN : RGB_RED, get_switch_state(0) ? "80" : "None");
+      ui_rprintf(ui, 6, "%qGlitch Period: %q%d", RGB_YELLOW, RGB_RED, Glitch_Period);
+      ui_rprintf(ui, 9, "%qBPM:[60-240]: %q%d", RGB_PURPLE, RGB_GREEN, bpm);
 
 
       ui_draw(ui);
@@ -530,9 +534,13 @@ int main(void) {
   ui_rprintf(&ui, 2, "%q--Setup--", RGB_CYAN);
   ui_rcenter(&ui, 2, true);
   ui_rprintf(&ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, "???");
+  ui_rprintf(&ui, 4, "%qAdd 20: %q%s", RGB_ORANGE, RGB_RED, "No");
+  //Internal: Glitch-period
+  ui_rprintf(&ui, 5, "%q--Internal--", RGB_CYAN);
+  ui_rcenter(&ui, 5, true);
   //Outputs: Heartbeat
-  ui_rprintf(&ui, 4, "%q--Outputs--", RGB_CYAN);
-  ui_rcenter(&ui, 4, true);
+  ui_rprintf(&ui, 8, "%q--Outputs--", RGB_CYAN);
+  ui_rcenter(&ui, 8, true);
 
   ui_draw(&ui);
 

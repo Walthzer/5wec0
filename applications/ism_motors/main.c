@@ -59,6 +59,7 @@ int main(void) {
   pynq_init();
   ui_t ui;
   ui_init(&ui);
+  display_set_flip(&ui.display, false, false);
 
   //Set header
   ui_rcenter(&ui, 0, true);

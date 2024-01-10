@@ -21,6 +21,8 @@
 #include <libui.h>
 #include <libcom.h>
 
+#define FREQ_PIN IO_AR5
+#define AMPL_PIN IO_AR6
 #define PWM_PERIOD 100000
 
 typedef struct _data_ {
@@ -78,8 +80,9 @@ int main(void) {
 
   //Init PWM
   switchbox_init();
-  switchbox_set_pin(IO_AR5, SWB_PWM0);
-  switchbox_set_pin(IO_AR4, SWB_PWM1);
+  switchbox_set_pin(FREQ_PIN, SWB_PWM0);
+  switchbox_set_pin(AMPL_PIN, SWB_PWM1);
+  
   pwm_init(PWM0, PWM_PERIOD); //1Khz -> nanoseconds
   pwm_init(PWM1, PWM_PERIOD); //1Khz -> nanoseconds
 

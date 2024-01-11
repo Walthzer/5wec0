@@ -6,7 +6,11 @@
 #include <pthread.h>
 #include <stdatomic.h>
 
+#define SKIP_CROSS_ENABLED true
+
 #include <decision.h>
+
+
 
 static Data data;
 atomic_uint_fast16_t freq_atom;
@@ -43,6 +47,8 @@ void* fnc_ui_thread (void* arg)
       ui_rprintf(ui, 5, "%qStress[0-100]: %q%d", RGB_BLUE, RGB_RED, stress);
       ui_rprintf(ui, 7, "%qFrequency[1-5]: %q%d", RGB_PURPLE, RGB_GREEN, freq);
       ui_rprintf(ui, 8, "%qAmplitude[1-5]: %q%d", RGB_PURPLE, RGB_GREEN, ampl);
+
+      ui_rprintf(ui, 9, "%qMODE: %q%s", RGB_ORANGE, get_switch_state(0) ? RGB_RED : RGB_GREEN, get_switch_state(0) ? "Manual" : "Automatic");
 
       ui_draw(ui);
     }
@@ -87,7 +93,7 @@ void* fnc_com_thread (void* arg)
 void move_to(Data *data, Sector *sector)
 {
   fprintf(stderr, "\33[35mMoving into f: %d--A: %d\n", sector->column+1, sector->row+1);
-  fprintf(stderr, "\33[37m");
+  fprintf(stderr, "\33[37m"); //White
 
   //Update Position in data
   data->prv_sect = data->pos_sect;
@@ -102,7 +108,7 @@ void move_to(Data *data, Sector *sector)
 void move_revert(Data *data)
 {
   fprintf(stderr, "\33[33mMoving back to f: %d--A: %d\n", data->prv_sect->column+1, data->prv_sect->row+1);
-  fprintf(stderr, "\33[37m");
+  fprintf(stderr, "\33[37m"); //White
   
   //Push to the I/O threads
   atomic_store(&freq_atom, data->prv_sect->column+1);
@@ -143,8 +149,8 @@ int main(void) {
   atomic_init(&freq_atom, 5);
   atomic_init(&ampl_atom, 5);
   atomic_init(&output_kalive, true);
-  atomic_init(&cry_atom, -1);
-  atomic_init(&bpm_atom, 60);
+  atomic_init(&cry_atom, 100);
+  atomic_init(&bpm_atom, 220);
   atomic_init(&stress_atom, 100);
   pthread_t ui_thread;
   pthread_t com_thread;
@@ -163,7 +169,6 @@ int main(void) {
   data.model[4][4].trg_stress = 200;
   data.pos_sect = &data.model[4][4];
   data.prv_sect = NULL;
-  data.int_bpm = data.int_cry = -1;
   data.sys_strs = 100;
   data.sys_state = IDLE;
   //---------
@@ -183,9 +188,10 @@ int main(void) {
     int bpm;
     printf("Enter new heartrate: ");
     scanf(" %d", &bpm);
-    data.sys_strs = calculate_stress(bpm, atomic_load(&cry_atom));
+    data.sys_strs = calculate_stress(bpm, -1);
   } else 
   {
+    data.sys_strs = calculate_stress(atomic_load(&bpm_atom), atomic_load(&cry_atom));
     fprintf(stderr, "Sensors active, now solving...\n");
   }
  
@@ -206,7 +212,7 @@ int main(void) {
     After moving we observe the stress of the baby
     and store this into the sectors
 
-    -> If the stress rises -> return to previous sector
+    -> If the stress rises or stays constant -> return to previous sector
     -> if it lowers, continue the pathing
     -> panic jump => Store a target stress of two block lower then current stress into sector
        Reset the path to 5/5
@@ -225,24 +231,44 @@ int main(void) {
     now = start;
     //Continue if
     // Stress has changed
-    // 30 seconds have elapsed
-    fprintf(stderr, "waiting...\n");
-    while(data.sys_state != IDLE && data.sys_strs == stress && !has_elapsed_sec(&start, &now, 30))
+    // 15 seconds have elapsed
+    // -> if SKIP_CROSS continue after 2 seconds
+    fprintf(stderr, "\33[96m"); //Bright Cyan
+    fprintf(stderr, "waiting...");
+    while(data.sys_state != IDLE && data.sys_strs == stress && !has_elapsed_sec(&start, &now, 15))
     {
-      int bpm;
-      printf("Enter new heartrate: ");
-      scanf(" %d", &bpm);
-      stress = calculate_stress(bpm, atomic_load(&cry_atom));
-      break;
+      //Skip wait if we just bounced back from a sector.
+      //Due to only one path existing if one doesn't work
+      //You NEED to takethe other.
+      //Source - Funny Luxemburgy man
+      if(data.sys_state == SKIP_CROSS)
+      {
+        sleep_msec(2000);
+        stress = data.pos_sect->trg_stress;
+        break;
+      }
+      if (get_switch_state(0))
+      {
+        int bpm;
+        printf("Enter new heartrate: ");
+        scanf(" %d", &bpm);
+        stress = calculate_stress(bpm, -1);
+        data.sys_state = MANUAL;
+        break;
+      }
+      stress = calculate_stress(atomic_load(&bpm_atom), atomic_load(&cry_atom));
       gettimeofday(&now, NULL);
-      sleep_msec(50); //Prevent Us from blocking the I/O threads
+      sleep_msec(100); //Prevent Us from blocking the I/O threads
     }
     //Debug text
     fprintf(stderr, "Complete: ");
     if(data.sys_state == IDLE)                 {fprintf(stderr, "Sys hasn't moved!\n"); }
+    else if(data.sys_state == SKIP_CROSS)      {fprintf(stderr, "SKIP_CROSS Enabeld\n"); }
+    else if(data.sys_state == MANUAL)          {fprintf(stderr, "Manual Intervention\n"); }
     else if(data.sys_strs != stress)           {fprintf(stderr, "Stress change: %d => %d\n", data.sys_strs, stress); }
     else if(has_elapsed_sec(&start, &now, 30)) {fprintf(stderr, "Timeout after 30 seconds!\n"); }
     else {fprintf(stderr, "NO IDEA????\n"); }
+    fprintf(stderr, "\33[37m"); //White
 
     //Clear the move flag
     data.sys_state = IDLE;
@@ -257,7 +283,7 @@ int main(void) {
       //Stress is now 100
       data.sys_strs = 100;
       fprintf(stderr, "\33[31mPanic has occured, restarting => ");
-      fprintf(stderr, "\33[37m");
+      fprintf(stderr, "\33[37m"); //White
       //Set 2 levels lower of previous sys_stress into sector as target
       //To prevent a panic loop
       data.pos_sect->trg_stress = data.sys_strs-20;
@@ -272,20 +298,20 @@ int main(void) {
     if(data.sys_strs <= stress && data.prv_sect != NULL)
     {
       fprintf(stderr, "\33[93mStress went up, %d => %d;", data.sys_strs, stress);
-      fprintf(stderr, "\33[37m");
+      fprintf(stderr, "\33[37m"); //White
       move_revert(&data);
+      //When stress is constant we can "cross skip"
+      if(SKIP_CROSS_ENABLED && data.sys_strs == stress) { data.sys_state == SKIP_CROSS; }
       continue; //we have to go back to wait for the result of the move
     }
     fprintf(stderr, "\33[32mStress went down %d => %d;\n", data.sys_strs, stress);
-    fprintf(stderr, "\33[37m");
+    fprintf(stderr, "\33[37m"); //White
 
     data.sys_strs = stress;
     ///////////////////////////
     //Action 1 -> Find a known sector adjacent to our current position.
     //and try to move into it
     ///////////////////////////
-
-    wait_until_enter();
 
     //Get our adjacent sectors
     get_adjacent(&data, adj_sectors, data.pos_sect->row, data.pos_sect->column);

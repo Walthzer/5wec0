@@ -19,7 +19,7 @@
 #define MAX_SIZE 5
 #define SIZE_ADJ 4
 
-enum SYS_STATE {IDLE, MOVED, REVERTED};
+enum SYS_STATE {IDLE, MOVED, REVERTED, SKIP_CROSS, MANUAL};
 
 //Inverse Model
 typedef struct _sector_
@@ -34,7 +34,6 @@ typedef struct _data_
   //Amplitude is y;
   Sector model[5][5];
   Sector *pos_sect, *prv_sect;
-  int int_bpm, int_cry;
   int sys_strs;
   int sys_state;
 } Data;
@@ -46,9 +45,10 @@ int get_adjacent(Data* data, Sector** adj_sectors, int row, int col)
   if(row -1 > -1) {found++; adj_sectors[0] = &data->model[row-1][col]; } else {adj_sectors[0] = NULL; }
   //Left
   if(col - 1 > -1) {found++; adj_sectors[1] = &data->model[row][col-1]; }       else {adj_sectors[1] = NULL; }
-  //Up
-  if(row + 1 < MAX_SIZE) {found++; adj_sectors[2] = &data->model[row+1][col]; }        else {adj_sectors[2] = NULL; }
-  //Right -> For now, never move right
+  //Up -> Never go UP
+  adj_sectors[2] = NULL;
+  //if(row + 1 < MAX_SIZE) {found++; adj_sectors[2] = &data->model[row+1][col]; }        else {adj_sectors[2] = NULL; }
+  //Right -> Never move right
   adj_sectors[3] = NULL;
   //if(col + 1 < MAX_SIZE) {found++; adj_sectors[3] = &data->model[row][col+1]; } else {adj_sectors[3] = NULL; }
 

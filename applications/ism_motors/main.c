@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <libui.h>
 #include <libcom.h>
+#include <pthread.h>
+#include <stdatomic.h>
 
 #define FREQ_PIN IO_AR5
 #define AMPL_PIN IO_AR6
@@ -29,6 +31,11 @@ typedef struct _data_ {
   uint16_t inputs[2];
   uint16_t freq_pwm, ampl_pwm;
 } Data;
+
+atomic_uint_fast16_t freq_atom;
+atomic_uint_fast16_t ampl_atom;
+atomic_int output_kalive;
+
 
 uint16_t clamp_1_5(uint16_t *val)
 {
@@ -53,6 +60,24 @@ uint32_t dutycycle_period(uint16_t index)
   return (PWM_PERIOD - (PWM_PERIOD * decimal));
 }
 
+void* fnc_com_thread (void* arg)
+{
+    com_t* com = arg;
+
+    //Inputs
+    uint16_t freq, ampl;
+
+    while(atomic_load(&output_kalive))
+    {
+      com_run(com);
+      if(com_getm(com, MOTOR, &freq, &ampl))
+      {
+        atomic_store(&freq_atom, freq);
+        atomic_store(&ampl_atom, ampl);
+      }
+    }
+    return NULL;
+}
 
 int main(void) {
   pynq_init();
@@ -82,6 +107,13 @@ int main(void) {
   com_init(&com, MOTOR);
   //Start at 5, 5
   com_putm(&com, MOTOR, 5, 5);
+
+  //Threading
+  atomic_init(&output_kalive, true);
+  atomic_init(&freq_atom, 5);
+  atomic_init(&ampl_atom, 5);
+  pthread_t com_thread;
+  pthread_create(&com_thread , NULL, &fnc_com_thread , &com);
 
   //Init inputs
   switches_init();
@@ -130,7 +162,8 @@ int main(void) {
     //COM
     if(use_com)
     {
-      com_getm(&com, MOTOR, &data.inputs[0], &data.inputs[1]);
+      data.inputs[0] = atomic_load(&freq_atom);
+      data.inputs[1] = atomic_load(&ampl_atom);
     }
     ui_rprintf(&ui, 3, "%qUse COM: %q%s", RGB_ORANGE, use_com ? RGB_GREEN : RGB_RED, use_com ? "Yes" : "No");
 
@@ -159,6 +192,8 @@ int main(void) {
 
     ui_draw(&ui);
   }
+  atomic_store(&output_kalive, false);
+  pthread_join(com_thread, NULL);
 
   //Cleanup PWM
   pwm_destroy(PWM0);

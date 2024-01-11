@@ -346,11 +346,10 @@ void process_square(struct timeval t_curr, Signal *signal)
   return;
 }
 
-void* fnc_output_thread(void* arg)
+void* fnc_ui_thread (void* arg)
 {
     struct thread_arg* thrd_args = arg;
     ui_t* ui = thrd_args->ui;
-    com_t* com = thrd_args->com;
 
     //outputs
     struct timespec t_sleep = {0, 10000};
@@ -373,9 +372,6 @@ void* fnc_output_thread(void* arg)
       if(bpm < 60) {bpm = 60;}
       if(bpm > 240) {bpm = 240;}
 
-      com_put(com, HEARTBEAT, bpm);
-      com_get(com, HEARTBEAT, &bpm);
-
       ui_rprintf(ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, Cradle_Modes_Str[Cradle_Mode]);
       ui_rprintf(ui, 4, "%qFilter Skip: %q%s", RGB_ORANGE, get_switch_state(0) ? RGB_GREEN : RGB_RED, get_switch_state(0) ? "80" : "None");
       ui_rprintf(ui, 6, "%qGlitch Period: %q%d", RGB_YELLOW, RGB_RED, Glitch_Period);
@@ -383,6 +379,26 @@ void* fnc_output_thread(void* arg)
 
 
       ui_draw(ui);
+    }
+    return NULL;
+}
+
+void* fnc_com_thread (void* arg)
+{
+    struct thread_arg* thrd_args = arg;
+    com_t* com = thrd_args->com;
+
+    //outputs
+    uint32_t bpm;
+
+    while(atomic_load(&output_kalive))
+    {
+      bpm = atomic_load(&bpm_atom);
+
+      if(bpm < 60) {bpm = 60;}
+      if(bpm > 240) {bpm = 240;}
+
+      com_put(com, HEARTBEAT, bpm);
       com_run(com);
     }
     return NULL;
@@ -447,8 +463,11 @@ int main(void) {
   atomic_init(&cradle_atom, 0);
   signal.period = atomic_load(&bpm_atom);
   struct thread_arg thrd_args = {&ui, &com};
-  pthread_t output_thread;
-  pthread_create(&output_thread, NULL, &fnc_output_thread, &thrd_args);
+  pthread_t ui_thread;
+  pthread_t com_thread;
+  pthread_create(&ui_thread , NULL, &fnc_ui_thread , &thrd_args);
+  pthread_create(&com_thread , NULL, &fnc_com_thread , &thrd_args);
+
 
   int button_states[] = {0, 0};
   int bstate;
@@ -502,7 +521,8 @@ int main(void) {
   //threading 
   //gracefull exit from thread;
   atomic_store(&output_kalive, false);
-  pthread_join(output_thread, NULL);
+  pthread_join(ui_thread , NULL);
+  pthread_join(com_thread , NULL);
 
   //ADC
   adc_destroy();

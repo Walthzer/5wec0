@@ -55,23 +55,27 @@ void com_destroy(com_t *com)
   //Destroy IIC
   iic_destroy(COM_IIC_INDEX);
 }
-void com_run(com_t *com)
+int com_run(com_t *com)
 {
   //Master
   if (com->label == 0)
   {
     //Read from heartbeat
     iic_read_register(COM_IIC_INDEX, COM_BASE_ADRESS + HEARTBEAT, HEARTBEAT, (com->mmap + HEARTBEAT*4), 4);
-    
+    sleep_msec(100);
+
     //Read from crying
     iic_read_register(COM_IIC_INDEX, COM_BASE_ADRESS + CRYING, CRYING, (com->mmap + CRYING*4), 4);
+    sleep_msec(100);
 
     //Send to motor
-    iic_write_register(COM_IIC_INDEX, COM_BASE_ADRESS + MOTOR, MOTOR, (com->mmap + MOTOR*4), 4);
+    return iic_write_register(COM_IIC_INDEX, COM_BASE_ADRESS + MOTOR, MOTOR, (com->mmap + MOTOR*4), 4);
+    sleep_msec(100);
   } else {
     //Slave
     iic_slave_mode_handler(COM_IIC_INDEX);
   }
+  return 1;
 }
 bool com_get(com_t *com, int label, uint32_t *data)
 {

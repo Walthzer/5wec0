@@ -85,8 +85,9 @@ extern void com_destroy(com_t* com);
 /**
  * @brief Perform send and receive operations
  * @param com Handle to the com.
+ * @return amount of transmitted bytes
  */
-extern void com_run(com_t* com);
+extern int com_run(com_t* com);
 
 /**
  * @brief Get data from the buffer

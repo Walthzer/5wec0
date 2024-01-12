@@ -36,7 +36,85 @@ typedef struct _data_
   Sector *pos_sect, *prv_sect;
   int sys_strs;
   int sys_state;
+  int idle_counter;
 } Data;
+
+atomic_uint_fast16_t freq_atom;
+atomic_uint_fast16_t ampl_atom;
+atomic_int stress_atom;
+atomic_int output_kalive;
+atomic_int cry_atom;
+atomic_int bpm_atom;
+
+void* fnc_ui_thread (void* arg)
+{
+    ui_t* ui = arg;
+    //outputs
+    struct timespec t_sleep = {0, 10000};
+    uint16_t freq, ampl, cry, bpm, stress;
+    freq = ampl = cry = bpm = stress = -1;
+
+    while(atomic_load(&output_kalive))
+    {
+      if( atomic_load(&freq_atom) == freq && atomic_load(&ampl_atom) == ampl
+          && atomic_load(&cry_atom) == cry && atomic_load(&bpm_atom) == bpm
+          && atomic_load(&stress_atom) == stress)
+      {
+        nanosleep(&t_sleep, NULL); //sleep in microseconds
+        continue;
+      }
+      freq = atomic_load(&freq_atom);
+      ampl = atomic_load(&ampl_atom);
+      cry = atomic_load(&cry_atom);
+      bpm = atomic_load(&bpm_atom);
+
+      ui_rprintf(ui, 3, "%qBPM[60-240]: %q%d", RGB_BLUE, RGB_RED, bpm);
+      ui_rprintf(ui, 4, "%qCrying[0-100]: %q%d", RGB_BLUE, RGB_RED, cry);
+      ui_rprintf(ui, 5, "%qStress[0-100]: %q%d", RGB_BLUE, RGB_RED, stress);
+      ui_rprintf(ui, 7, "%qFrequency[1-5]: %q%d", RGB_PURPLE, RGB_GREEN, freq);
+      ui_rprintf(ui, 8, "%qAmplitude[1-5]: %q%d", RGB_PURPLE, RGB_GREEN, ampl);
+
+      ui_rprintf(ui, 9, "%qMODE: %q%s", RGB_ORANGE, get_switch_state(0) ? RGB_RED : RGB_GREEN, get_switch_state(0) ? "Manual" : "Automatic");
+
+      ui_draw(ui);
+    }
+    return NULL;
+}
+void* fnc_com_thread (void* arg)
+{
+    com_t* com = arg;
+    //outputs
+    uint32_t bpm, cry;
+
+    while(atomic_load(&output_kalive))
+    {
+      com_putm(com, MOTOR, (uint16_t)atomic_load(&freq_atom), (uint16_t)atomic_load(&ampl_atom));
+
+      com_run(com);
+
+      if(com_get(com, HEARTBEAT, &bpm))
+      {
+        if (bpm < 300 || bpm > 0)
+        {
+          bpm = MAX(bpm, 60);
+          bpm = MIN(bpm, 240);
+
+          atomic_store(&bpm_atom, bpm);
+        }
+      }
+      if(com_get(com, CRYING, &cry))
+      {
+        if (cry < 150 )
+        {
+          bpm = MAX(cry, 0);
+          bpm = MIN(cry, 100);
+
+          atomic_store(&cry_atom, cry);
+        }
+      }  
+    }
+    return NULL;
+}
 
 int get_adjacent(Data* data, Sector** adj_sectors, int row, int col)
 {
@@ -66,7 +144,7 @@ int calculate_stress(int Heartbeat, int Crying)
     stress = cry_stress;
   } else {stress = bpm_stress; };
   
-  fprintf(stderr, "Calculated Stress: %d -- Heart: %d -- Cry: %d\n", stress, Heartbeat, Crying);
+  //fprintf(stderr, "Calculated Stress: %d -- Heart: %d -- Cry: %d\n", stress, Heartbeat, Crying);
   return stress;
 }
 

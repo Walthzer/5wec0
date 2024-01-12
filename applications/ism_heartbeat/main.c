@@ -97,6 +97,11 @@ void filter_push(int bpm, Filter* filter)
     dyn_win = MIN(dyn_win,13);
   }
 
+  if(Cradle_Mode == ECG)
+  {
+    dyn_win = 0;
+  }
+
   printf("[");
   for (int i = 0; i < MAX_BPM_WINDOW; i++)
   {

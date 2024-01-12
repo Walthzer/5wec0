@@ -10,85 +10,7 @@
 
 #include <decision.h>
 
-
-
 static Data data;
-atomic_uint_fast16_t freq_atom;
-atomic_uint_fast16_t ampl_atom;
-atomic_int stress_atom;
-atomic_int output_kalive;
-atomic_int cry_atom;
-atomic_int bpm_atom;
-
-void* fnc_ui_thread (void* arg)
-{
-    ui_t* ui = arg;
-    //outputs
-    struct timespec t_sleep = {0, 10000};
-    uint16_t freq, ampl, cry, bpm, stress;
-    freq = ampl = cry = bpm = stress = -1;
-
-    while(atomic_load(&output_kalive))
-    {
-      if( atomic_load(&freq_atom) == freq && atomic_load(&ampl_atom) == ampl
-          && atomic_load(&cry_atom) == cry && atomic_load(&bpm_atom) == bpm
-          && atomic_load(&stress_atom) == stress)
-      {
-        nanosleep(&t_sleep, NULL); //sleep in microseconds
-        continue;
-      }
-      freq = atomic_load(&freq_atom);
-      ampl = atomic_load(&ampl_atom);
-      cry = atomic_load(&cry_atom);
-      bpm = atomic_load(&bpm_atom);
-
-      ui_rprintf(ui, 3, "%qBPM[60-240]: %q%d", RGB_BLUE, RGB_RED, bpm);
-      ui_rprintf(ui, 4, "%qCrying[0-100]: %q%d", RGB_BLUE, RGB_RED, cry);
-      ui_rprintf(ui, 5, "%qStress[0-100]: %q%d", RGB_BLUE, RGB_RED, stress);
-      ui_rprintf(ui, 7, "%qFrequency[1-5]: %q%d", RGB_PURPLE, RGB_GREEN, freq);
-      ui_rprintf(ui, 8, "%qAmplitude[1-5]: %q%d", RGB_PURPLE, RGB_GREEN, ampl);
-
-      ui_rprintf(ui, 9, "%qMODE: %q%s", RGB_ORANGE, get_switch_state(0) ? RGB_RED : RGB_GREEN, get_switch_state(0) ? "Manual" : "Automatic");
-
-      ui_draw(ui);
-    }
-    return NULL;
-}
-void* fnc_com_thread (void* arg)
-{
-    com_t* com = arg;
-    //outputs
-    uint32_t bpm, cry;
-
-    while(atomic_load(&output_kalive))
-    {
-      com_putm(com, MOTOR, (uint16_t)atomic_load(&freq_atom), (uint16_t)atomic_load(&ampl_atom));
-
-      com_run(com);
-
-      if(com_get(com, HEARTBEAT, &bpm))
-      {
-        if (bpm < 300 || bpm > 0)
-        {
-          bpm = MAX(bpm, 60);
-          bpm = MIN(bpm, 240);
-
-          atomic_store(&bpm_atom, bpm);
-        }
-      }
-      if(com_get(com, CRYING, &cry))
-      {
-        if (cry < 150 )
-        {
-          bpm = MAX(cry, 0);
-          bpm = MIN(cry, 100);
-
-          atomic_store(&cry_atom, cry);
-        }
-      }  
-    }
-    return NULL;
-}
 
 void move_to(Data *data, Sector *sector)
 {
@@ -145,18 +67,6 @@ int main(void) {
   com_init(&com, DECISION);
   com_putm(&com, MOTOR, 5, 5);
 
-  //THREADING
-  atomic_init(&freq_atom, 5);
-  atomic_init(&ampl_atom, 5);
-  atomic_init(&output_kalive, true);
-  atomic_init(&cry_atom, 100);
-  atomic_init(&bpm_atom, 220);
-  atomic_init(&stress_atom, 100);
-  pthread_t ui_thread;
-  pthread_t com_thread;
-  pthread_create(&ui_thread , NULL, &fnc_ui_thread , &ui);
-  pthread_create(&com_thread , NULL, &fnc_com_thread , &com);
-
   //---Init Model---
   for (int idx_r = 0; idx_r < MAX_SIZE; idx_r++)
   {
@@ -171,17 +81,26 @@ int main(void) {
   data.prv_sect = NULL;
   data.sys_strs = 100;
   data.sys_state = IDLE;
+  data.idle_counter = 0;
   //---------
 
   //Init inputs
   switches_init();
   buttons_init();
 
+  //THREADING
+  atomic_init(&freq_atom, 5);
+  atomic_init(&ampl_atom, 5);
+  atomic_init(&output_kalive, true);
+  atomic_init(&cry_atom, 100);
+  atomic_init(&bpm_atom, 60);
+  atomic_init(&stress_atom, 100);
+  pthread_t ui_thread;
+  pthread_t com_thread;
+  pthread_create(&ui_thread , NULL, &fnc_ui_thread , &ui);
+  pthread_create(&com_thread , NULL, &fnc_com_thread , &com);
+
   //Wait until we get data from the sensors
-  while(!get_switch_state(0) || (get_switch_state(1) && /*atomic_load(&cry_atom) != -1 &&*/ atomic_load(&bpm_atom) != 60) )
-  {
-    sleep_msec(50);
-  }
   if(get_switch_state(0))
   {
     fprintf(stderr, "Not using Sensors...\n");
@@ -191,6 +110,11 @@ int main(void) {
     data.sys_strs = calculate_stress(bpm, -1);
   } else 
   {
+    fprintf(stderr, "Waiting on sensors...\n");
+    while(get_switch_state(1) && atomic_load(&bpm_atom) != 60)
+    {
+      sleep_msec(50);
+    }
     data.sys_strs = calculate_stress(atomic_load(&bpm_atom), atomic_load(&cry_atom));
     fprintf(stderr, "Sensors active, now solving...\n");
   }
@@ -231,11 +155,12 @@ int main(void) {
     now = start;
     //Continue if
     // Stress has changed
-    // 15 seconds have elapsed
+    // 30 seconds have elapsed
     // -> if SKIP_CROSS continue after 2 seconds
     fprintf(stderr, "\33[96m"); //Bright Cyan
+    fprintf(stderr, "State: %d", data.sys_state);
     fprintf(stderr, "waiting...");
-    while(data.sys_state != IDLE && data.sys_strs == stress && !has_elapsed_sec(&start, &now, 15))
+    while(data.sys_state != IDLE && data.sys_strs == stress && !has_elapsed_sec(&start, &now, 30))
     {
       //Skip wait if we just bounced back from a sector.
       //Due to only one path existing if one doesn't work
@@ -262,7 +187,7 @@ int main(void) {
     }
     //Debug text
     fprintf(stderr, "Complete: ");
-    if(data.sys_state == IDLE)                 {fprintf(stderr, "Sys hasn't moved!\n"); }
+    if(data.sys_state == IDLE)                 {data.idle_counter++; fprintf(stderr, "Sys hasn't moved!\n"); }
     else if(data.sys_state == SKIP_CROSS)      {fprintf(stderr, "SKIP_CROSS Enabeld\n"); }
     else if(data.sys_state == MANUAL)          {fprintf(stderr, "Manual Intervention\n"); }
     else if(data.sys_strs != stress)           {fprintf(stderr, "Stress change: %d => %d\n", data.sys_strs, stress); }
@@ -273,9 +198,17 @@ int main(void) {
     //Clear the move flag
     data.sys_state = IDLE;
 
-    ///////////////////////////
+    //Catch if the system is spinning its wheels and reset.
+    if (data.idle_counter > 5)
+    {
+      move_to(&data, &data.model[4][4]);
+      data.sys_state = IDLE;
+      sleep_msec(4000);
+    }
+
+    //////////////////////////////////
     //Observe the new stress and act
-    ///////////////////////////
+    //////////////////////////////////
     
     //If panic, restart
     if(stress >= 100)
@@ -301,7 +234,7 @@ int main(void) {
       fprintf(stderr, "\33[37m"); //White
       move_revert(&data);
       //When stress is constant we can "cross skip"
-      if(SKIP_CROSS_ENABLED && data.sys_strs == stress) { data.sys_state == SKIP_CROSS; }
+      if(SKIP_CROSS_ENABLED && data.sys_strs == stress) { data.sys_state = SKIP_CROSS; }
       continue; //we have to go back to wait for the result of the move
     }
     fprintf(stderr, "\33[32mStress went down %d => %d;\n", data.sys_strs, stress);

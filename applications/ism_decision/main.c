@@ -67,58 +67,27 @@ int main(void) {
   com_init(&com, DECISION);
   com_putm(&com, MOTOR, 5, 5);
 
-  //---Init Model---
-  for (int idx_r = 0; idx_r < MAX_SIZE; idx_r++)
-  {
-    for(int idx_c = 0; idx_c < MAX_SIZE; idx_c++)
-    {
-      data.model[idx_r][idx_c] = (Sector){idx_r, idx_c, -1};
-    }
-  }
-  //Top Right
-  data.model[4][4].trg_stress = 200;
-  data.pos_sect = &data.model[4][4];
-  data.prv_sect = NULL;
-  data.sys_strs = 100;
-  data.sys_state = IDLE;
-  data.idle_counter = 0;
-  //---------
-
-  //Init inputs
-  switches_init();
-  buttons_init();
-
-  //THREADING
   atomic_init(&freq_atom, 5);
   atomic_init(&ampl_atom, 5);
   atomic_init(&output_kalive, true);
   atomic_init(&cry_atom, 100);
   atomic_init(&bpm_atom, 60);
   atomic_init(&stress_atom, 100);
+
+  init_system(&data);
+
+  //Init inputs
+  switches_init();
+  buttons_init();
+
+  //THREADING
   pthread_t ui_thread;
   pthread_t com_thread;
   pthread_create(&ui_thread , NULL, &fnc_ui_thread , &ui);
   pthread_create(&com_thread , NULL, &fnc_com_thread , &com);
 
-  //Wait until we get data from the sensors
-  if(get_switch_state(0))
-  {
-    fprintf(stderr, "Not using Sensors...\n");
-    int bpm;
-    printf("Enter new heartrate: ");
-    scanf(" %d", &bpm);
-    data.sys_strs = calculate_stress(bpm, -1);
-  } else 
-  {
-    fprintf(stderr, "Waiting on sensors...\n");
-    while(get_switch_state(1) && atomic_load(&bpm_atom) != 60)
-    {
-      sleep_msec(50);
-    }
-    data.sys_strs = calculate_stress(atomic_load(&bpm_atom), atomic_load(&cry_atom));
-    fprintf(stderr, "Sensors active, now solving...\n");
-  }
- 
+  setup(&data);
+
   //We start at model 5-5
   /*
     We have a preference of movement
@@ -144,23 +113,30 @@ int main(void) {
   */
 
   Sector* adj_sectors[SIZE_ADJ] = {NULL};
-  struct timeval start;
-  struct timeval now;
-
+  struct timeval start, now;
   while (get_switch_state(1))
   { 
+    //Halt program if we finish the model
+    if(data.pos_sect == &data.model[0][0])
+    {
+      fprintf(stderr, "---Completed---\n");
+      wait_until_any_button_pushed();
+      init_system(&data);
+      setup(&data);
+    }
+
     //Wait for results if we just moved:
     int stress = data.sys_strs;
     gettimeofday(&start, NULL);
     now = start;
     //Continue if
     // Stress has changed
-    // 30 seconds have elapsed
+    // 15 seconds have elapsed
     // -> if SKIP_CROSS continue after 2 seconds
     fprintf(stderr, "\33[96m"); //Bright Cyan
     fprintf(stderr, "State: %d", data.sys_state);
     fprintf(stderr, "waiting...");
-    while(data.sys_state != IDLE && data.sys_strs == stress && !has_elapsed_sec(&start, &now, 30))
+    while(data.sys_state != IDLE && data.sys_strs == stress && !has_elapsed_sec(&start, &now, 15))
     {
       //Skip wait if we just bounced back from a sector.
       //Due to only one path existing if one doesn't work
@@ -168,8 +144,17 @@ int main(void) {
       //Source - Funny Luxemburgy man
       if(data.sys_state == SKIP_CROSS)
       {
-        sleep_msec(2000);
+        wait_sec(1);
         stress = data.pos_sect->trg_stress;
+        break;
+      }
+      //After having moved into bottom right squares
+      //Skips immediatly to the end
+      if(data.pos_sect == &data.model[0][1] || data.pos_sect == &data.model[1][0])
+      {
+        wait_sec(1);
+        stress = 20;
+        data.pos_sect->trg_stress = 20;
         break;
       }
       if (get_switch_state(0))
@@ -183,8 +168,10 @@ int main(void) {
       }
       stress = calculate_stress(atomic_load(&bpm_atom), atomic_load(&cry_atom));
       gettimeofday(&now, NULL);
-      sleep_msec(100); //Prevent Us from blocking the I/O threads
+      sched_yield();
     }
+    //Push stress to I/O Threads
+    atomic_store(&stress_atom, stress);
     //Debug text
     fprintf(stderr, "Complete: ");
     if(data.sys_state == IDLE)                 {data.idle_counter++; fprintf(stderr, "Sys hasn't moved!\n"); }
@@ -201,9 +188,9 @@ int main(void) {
     //Catch if the system is spinning its wheels and reset.
     if (data.idle_counter > 5)
     {
-      move_to(&data, &data.model[4][4]);
-      data.sys_state = IDLE;
-      sleep_msec(4000);
+      init_system(&data);
+      setup(&data);
+      wait_sec(3000);
     }
 
     //////////////////////////////////

@@ -67,6 +67,7 @@ void* fnc_ui_thread (void* arg)
       ampl = atomic_load(&ampl_atom);
       cry = atomic_load(&cry_atom);
       bpm = atomic_load(&bpm_atom);
+      stress = atomic_load(&stress_atom);
 
       ui_rprintf(ui, 3, "%qBPM[60-240]: %q%d", RGB_BLUE, RGB_RED, bpm);
       ui_rprintf(ui, 4, "%qCrying[0-100]: %q%d", RGB_BLUE, RGB_RED, cry);
@@ -116,6 +117,72 @@ void* fnc_com_thread (void* arg)
     return NULL;
 }
 
+//determine the stress level of the babys
+int calculate_stress(int Heartbeat, int Crying)
+{
+  int stress;
+  int bpm_stress = 100-(((240-Heartbeat)/20)*10);
+  int cry_stress = ((Crying/25)+1)*10;
+  if(cry_stress < 50 && cry_stress <= bpm_stress && Crying > -1)
+  {
+    stress = cry_stress;
+  } else {stress = bpm_stress; };
+  
+  //fprintf(stderr, "Calculated Stress: %d -- Heart: %d -- Cry: %d\n", stress, Heartbeat, Crying);
+  return stress;
+}
+
+void init_system(Data* data)
+{
+    //---Init Model---
+  for (int idx_r = 0; idx_r < MAX_SIZE; idx_r++)
+  {
+    for(int idx_c = 0; idx_c < MAX_SIZE; idx_c++)
+    {
+      data->model[idx_r][idx_c] = (Sector){idx_r, idx_c, -1};
+    }
+  }
+  //Top Right
+  data->model[4][4].trg_stress = 200;
+  data->pos_sect = &data->model[4][4];
+  data->prv_sect = NULL;
+  data->sys_strs = 100;
+  data->sys_state = IDLE;
+  data->idle_counter = 0;
+  //---------
+
+  atomic_store(&freq_atom, 5);
+  atomic_store(&ampl_atom, 5);
+  atomic_store(&cry_atom, 100);
+  atomic_store(&bpm_atom, 60);
+  atomic_store(&stress_atom, 100);
+
+  sleep_msec(5000);
+}
+
+void setup(Data* data)
+{
+  //Wait until we get data from the sensors
+  if(get_switch_state(0))
+  {
+    fprintf(stderr, "Not using Sensors...\n");
+    int bpm;
+    printf("Enter new heartrate: ");
+    scanf(" %d", &bpm);
+    data->sys_strs = calculate_stress(bpm, -1);
+  } else 
+  {
+    fprintf(stderr, "Waiting on sensors...\n");
+    while(get_switch_state(1) && atomic_load(&bpm_atom) < 200)
+    {
+      sleep_msec(50);
+    }
+    data->sys_strs = calculate_stress(atomic_load(&bpm_atom), atomic_load(&cry_atom));
+    fprintf(stderr, "Sensors active, tn solving...\n");
+  }
+}
+
+
 int get_adjacent(Data* data, Sector** adj_sectors, int row, int col)
 {
   int found = 0;
@@ -131,21 +198,6 @@ int get_adjacent(Data* data, Sector** adj_sectors, int row, int col)
   //if(col + 1 < MAX_SIZE) {found++; adj_sectors[3] = &data->model[row][col+1]; } else {adj_sectors[3] = NULL; }
 
   return found;
-}
-
-//determine the stress level of the babys
-int calculate_stress(int Heartbeat, int Crying)
-{
-  int stress;
-  int bpm_stress = 100-(((240-Heartbeat)/20)*10);
-  int cry_stress = ((Crying/25)+1)*10;
-  if(cry_stress < 50 && cry_stress <= bpm_stress && Crying > -1)
-  {
-    stress = cry_stress;
-  } else {stress = bpm_stress; };
-  
-  //fprintf(stderr, "Calculated Stress: %d -- Heart: %d -- Cry: %d\n", stress, Heartbeat, Crying);
-  return stress;
 }
 
 //Calculate microseconds period from rise and fall stamps
@@ -175,4 +227,12 @@ void wait_until_enter(void)
   getchar();
   getchar();
   fprintf(stderr, "\033[F\033[2K.");*/
+}
+
+void wait_sec(int seconds)
+{
+  struct timeval ts, tn;
+  gettimeofday(&ts, NULL);
+  tn = ts;
+  while(!has_elapsed_sec(&ts, &tn, seconds)) {gettimeofday(&tn, NULL); sched_yield(); };
 }

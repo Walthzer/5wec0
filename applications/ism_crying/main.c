@@ -47,18 +47,12 @@ int main(void) {
   ui_rprintf(&ui, 0, "%q%w%tRYB 24", RGB_WHITE, RGB_ORANGE, COMIC);
   ui_rcenter(&ui, 1, true);
   ui_rprintf(&ui, 1, "%q%w%tHeartbeat", RGB_WHITE, RGB_ORANGE, COMIC);
-  //interface layout
-  //Mode: Square/ECG
-  ui_rprintf(&ui, 2, "%q--Setup--", RGB_CYAN);
+  //Internal: N.V.T.
+  ui_rprintf(&ui, 2, "%q--Internal--", RGB_CYAN);
   ui_rcenter(&ui, 2, true);
-  ui_rprintf(&ui, 3, "%qMode: %q%s", RGB_ORANGE, RGB_RED, "???");
-  ui_rprintf(&ui, 4, "%qAdd 20: %q%s", RGB_ORANGE, RGB_RED, "No");
-  //Internal: Glitch-period
-  ui_rprintf(&ui, 5, "%q--Internal--", RGB_CYAN);
+  //Outputs: Crying
+  ui_rprintf(&ui, 5, "%q--Outputs--", RGB_CYAN);
   ui_rcenter(&ui, 5, true);
-  //Outputs: Heartbeat
-  ui_rprintf(&ui, 8, "%q--Outputs--", RGB_CYAN);
-  ui_rcenter(&ui, 8, true);
 
   ui_draw(&ui);
 
@@ -110,7 +104,7 @@ int main(void) {
     } else {continue;};
     
     //Insufficient samples
-    if(c_sample < WINDOW_SIZE) {continue;}
+    if(c_sample < WINDOW_SIZE) { continue; }
     
     //We have enough samples, calculate the mean and cleanup
     mean = (sum_samples / (double)c_sample);
